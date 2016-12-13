@@ -1,15 +1,10 @@
 <?php
 
 //CONNECT TO database
-$database = 0;
 
 
+//include 'database/connect.php';
+//include 'function/function.php';
 
 
-
-
-
-require "database/connect.php";
-
-
-    ?>
+?>
