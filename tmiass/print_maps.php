@@ -31,7 +31,7 @@ if(!isset($_SESSION['id'])){
 				}else{ 
 					$SQL = mysql_query("SELECT `name` FROM `client` WHERE `id_client`='".$client."'");
 					$result = mysql_fetch_assoc($SQL);
-					echo 'Client - '.$result.' | ';
+					echo 'Client - '.$result['name'].' | ';
 					} 
                 if($status=='0' || empty($status)){
 					echo 'Status - ALL | ';
@@ -48,7 +48,7 @@ if(!isset($_SESSION['id'])){
 				}else{
 					$SQL = mysql_query("SELECT `name` FROM `users` WHERE `id_user`='".$employee."'");
 					$result = mysql_fetch_assoc($SQL);
-				   echo 'Employee - '.$result.' | ';
+				   echo 'Employee - '.$result['name'].' | ';
 				   } 
 				if(empty($entity)){
 					echo 'Sheet Repair - ALL | ';
@@ -60,7 +60,7 @@ if(!isset($_SESSION['id'])){
                 <tr>
                     <th>Id:</th>
                     <th>Client:</th>
-                    <th>Mark/Modelo: </th>
+                    <th>Description: </th>
                     <th>Status:</th>
                     <th>Employee:</th>
                     <th>Time Work:</th>          
@@ -97,11 +97,12 @@ if(!isset($_SESSION['id'])){
                 }else{
                     $ext5 = ' `users`.`id_user`=`users`.`id_user` ';  
                 }
-                $SQL = "SELECT `client`.`name` AS 'clientname' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'idcli' ,`users`.`username` AS 'employname' ,`equipment`.`mark/model` AS 'mark' , `equipment`.`id` AS 'idd' , `equip_status`.`final_time` AS 'work' 
+                $SQL = "SELECT `client`.`name` AS 'clientname' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'idcli' ,`users`.`username` AS 'employname' ,`equip_problem`.`description(employee)` AS 'descript' , `equipment`.`id` AS 'idd' , `equip_status`.`final_time` AS 'work' 
                             FROM `equipment` 
                             INNER JOIN `equip_status`ON `equip_status`.`id` = `equipment`.`id`
                             INNER JOIN `client`ON `client`.`id_client` = `equipment`.`id_client`
                             INNER JOIN `users`ON `users`.`id_user` = `equipment`.`id_user` 
+							INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
                             WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5."
                             ORDER BY `equipment`.`id`";
                                 
@@ -111,7 +112,7 @@ if(!isset($_SESSION['id'])){
                         echo '<tr>';   
                         echo '<td>'.$result_SQL['idd'].'</td>';  
                         echo '<td>'.$result_SQL['clientname'].'</td>';
-                        echo '<td>'.$result_SQL['mark'].'</td>';
+                        echo '<td>'.$result_SQL['descript'].'</td>';
                         echo '<td>'.$result_SQL['stats'].'</td>';
                         echo '<td>'.$result_SQL['employname'].'</td>';
                         echo '<td>'.$result_SQL['work'].'</td>';

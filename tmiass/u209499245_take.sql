@@ -1,11 +1,12 @@
+
 -- phpMyAdmin SQL Dump
 -- version 3.5.2.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 12, 2013 at 07:52 PM
--- Server version: 5.5.27
--- PHP Version: 5.4.7
+-- Host: localhost
+-- Generation Time: Jul 09, 2013 at 08:12 PM
+-- Server version: 5.1.61
+-- PHP Version: 5.2.17
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `takemore`
+-- Database: `u209499245_take`
 --
 
 -- --------------------------------------------------------
@@ -34,14 +35,19 @@ CREATE TABLE IF NOT EXISTS `client` (
   `phone` int(9) NOT NULL,
   `private` int(1) NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `client`
 --
 
 INSERT INTO `client` (`id_client`, `name`, `address`, `email`, `phone`, `private`) VALUES
-(2, 'manel', 'rua dos ananas', 'rui_flexa@hotmail.com', 921812821, 0);
+(1, 'bfbgfg', 'asdad', '', 2147483647, 1),
+(2, 'JMS', 'Av Fontainhas', 'rafte11@hotmail.com', 0, 0),
+(3, 'manel', 'rua dos ananas', 'rui@hotmail.com', 91843434, 0),
+(4, 'vcxvxcv', 'rua das couves', 'radft@hotmail.com', 918182828, 0),
+(5, 'hdfg', 'dfgfdg', '', 0, 1),
+(6, 'asd', 'asdad', 'asd@hotmail.com', 23432, 0);
 
 -- --------------------------------------------------------
 
@@ -64,17 +70,21 @@ CREATE TABLE IF NOT EXISTS `equipment` (
   `service` varchar(500) NOT NULL,
   `provided` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `equipment`
 --
 
 INSERT INTO `equipment` (`id`, `id_user`, `id_client`, `id_service`, `entity`, `cod`, `budget`, `equipment`, `mark/model`, `n_serie`, `accessories`, `service`, `provided`) VALUES
-(1, 3, 0, 0, 1, '17481', '', '', '', '', '', '', ''),
-(2, 3, 0, 0, 1, '5030', '', '', '', '', '', '', ''),
-(3, 3, 2, 0, 1, '95', '', '', '', '', '', '', ''),
-(4, 3, 2, 0, 1, '19116', '', '', '', '', '', '', '');
+(1, 1, 2, 0, 1, '358314432', '32423', '', '', '', '', 'asdasd', ''),
+(2, 1, 1, 0, 1, '817474039', '453534', '', '', '', '', 'sdfsdf', ''),
+(3, 1, 2, 0, 1, '1463443295', '345345', '', '', '', '', 'vxvxc', ''),
+(4, 1, 0, 0, 2, '153318581', '23', 'yuggyg', '', 'gvvyu', 'vyiiv', 'cytcyt', 'hbikn'),
+(5, 1, 3, 0, 1, '3482482', '56', '', '', '', '', 'sdcsdc', ''),
+(6, 1, 2, 0, 2, '2115807315', '', '', '', '', '', '', ''),
+(7, 1, 2, 0, 2, '753674001', '56', 'sfasf', 'saf', 'sfasf', 'saf', 'saf', ''),
+(8, 1, 1, 0, 1, '1790761215', '50', '', '', '', '', 'fdg', '');
 
 -- --------------------------------------------------------
 
@@ -88,17 +98,21 @@ CREATE TABLE IF NOT EXISTS `equip_problem` (
   `description(client)` varchar(500) NOT NULL,
   `description(employee)` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `equip_problem`
 --
 
 INSERT INTO `equip_problem` (`id`, `problem/damage`, `description(client)`, `description(employee)`) VALUES
-(1, '', '', ''),
-(2, '', '', ''),
-(3, '', '', ''),
-(4, '', '', '');
+(1, '', '', 'asdasdasd'),
+(2, '', '', 'dsfsdf'),
+(3, '', '', 'vxcvxc'),
+(4, 'vuvut', 'ycyrd', 'hfc'),
+(5, '', '', 'ccsdcsd'),
+(6, '', '', ''),
+(7, 'asaf', 'saf', 'saf'),
+(8, '', '', 'gdfg');
 
 -- --------------------------------------------------------
 
@@ -113,17 +127,21 @@ CREATE TABLE IF NOT EXISTS `equip_status` (
   `end_date` datetime NOT NULL,
   `final_time` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `equip_status`
 --
 
 INSERT INTO `equip_status` (`id`, `status`, `start_date`, `end_date`, `final_time`) VALUES
-(1, 'In Execution', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
-(2, 'In Execution', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
-(3, 'In Execution', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
-(4, 'Ready', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '');
+(1, 'Under Repair', '2012-12-23 08:11:11', '2012-12-25 09:11:11', '49 : 00 H'),
+(2, 'Waits', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
+(3, 'Closed Billing', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
+(4, 'Waits', '2012-12-23 08:11:11', '2012-12-25 09:11:11', '49 : 00 H'),
+(5, 'Closed Guaranty', '2012-12-23 08:11:11', '2013-01-07 23:45:00', '375 : 33 H'),
+(6, 'Budgeted', '2012-12-23 08:11:11', '2013-04-06 23:00:00', '2509 : 48 H'),
+(7, 'Budgeted', '0000-00-00 00:00:00', '0000-00-00 00:00:00', ''),
+(8, 'Closed Contract', '2012-12-23 08:11:11', '2012-12-25 09:11:11', '49 : 00 H');
 
 -- --------------------------------------------------------
 
@@ -138,14 +156,14 @@ CREATE TABLE IF NOT EXISTS `service` (
   `email` varchar(100) NOT NULL,
   `phone` int(9) NOT NULL,
   PRIMARY KEY (`id_service`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `service`
 --
 
 INSERT INTO `service` (`id_service`, `name`, `address`, `email`, `phone`) VALUES
-(3, 'rui', 'rua das couves', 'rasdasdas@hotmail.com', 435435435);
+(1, 'asd', 'assdasd', 'dsadasd@hotmail.com', 435435435);
 
 -- --------------------------------------------------------
 
@@ -162,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `service_problem` (
   `sending_date` datetime NOT NULL,
   `delivery_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 
 --
 -- Dumping data for table `service_problem`
@@ -171,7 +189,12 @@ CREATE TABLE IF NOT EXISTS `service_problem` (
 INSERT INTO `service_problem` (`id`, `check`, `budget`, `confirmation`, `reported_problem`, `sending_date`, `delivery_date`) VALUES
 (1, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 0, ' ', 0, ' ', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 0, ' ', 0, ' ', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 0, ' ', 0, ' ', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 0, '', 0, '', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -182,20 +205,20 @@ INSERT INTO `service_problem` (`id`, `check`, `budget`, `confirmation`, `reporte
 CREATE TABLE IF NOT EXISTS `users` (
   `id_user` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `password` varchar(32) NOT NULL,
   `email` varchar(100) NOT NULL,
   `status` int(1) NOT NULL,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id_user`, `username`, `password`, `email`, `status`) VALUES
-(1, 'rui', 'ca60a666306940f1f227996d6671002f', 'r_mns_21@hotmail.com', 2),
-(3, 'raul', 'ca60a666306940f1f227996d6671002f', 'rafte11@hotmail.com', 1),
-(4, 'lopes', '582fc884d6299814fbd4f12c1f9ae70f', 'rafte11@hotmail.com', 1);
+INSERT INTO `users` (`id_user`, `username`, `name`, `password`, `email`, `status`) VALUES
+(1, 'admin', 'Admin', 'ca60a666306940f1f227996d6671002f', 'r_mns_21@hotmail.com', 2),
+(2, 'rui', 'rui', 'ca60a666306940f1f227996d6671002f', 'rui_flexa@hotmail.com', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

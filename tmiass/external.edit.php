@@ -9,7 +9,7 @@ if(!isset($_SESSION['id'])){
 <?php include("inc/menu.php"); ?>
 <div id="content">
   <div class="titlecontent">
-    <h1>Home</h1>
+    <p><a href="<?php echo check('home.php'); ?>">Home</a> <span> >> </span><a href="#">Sheet Repair</a><span> >> </span><a href="#">External</a><span> >> </span><a href="#">External Edit</a></p>
   </div>
   <div class="bodycontent">
  <?php
@@ -62,10 +62,8 @@ if(!isset($_SESSION['id'])){
               <select name="status" id="status">
                <option <?php active('0',$field3['status'])?> value='0'>Select Status</option>
                <option <?php active('Waits',$field3['status'])?> value="Waits">Waits</option>
-               <option <?php active('In Execution',$field3['status'])?> value="In Execution">In Execution</option>
                <option <?php active('Budgeted',$field3['status'])?> value="Budgeted">Budgeted</option>
                <option <?php active('Under Repair',$field3['status'])?> value="Under Repair">Under Repair</option>
-               <option <?php active('Ready',$field3['status'])?> value="Ready">Ready</option>
                <option <?php active('Closed Billing',$field3['status'])?> value="Closed Billing">Closed Billing</option>
                <option <?php active('Closed Guaranty',$field3['status'])?> value="Closed Guaranty">Closed Guaranty</option>
                <option <?php active('Closed Contract',$field3['status'])?> value="Closed Contract">Closed Contract</option>

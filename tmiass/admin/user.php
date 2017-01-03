@@ -54,7 +54,6 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
             <td>
               <select name="status" id="status">
                   <option value="0">Employee</option>
-                  <option value="1">Moderator</option>
                   <option value="2">Administrator</option>
               </select>
             </td>
@@ -82,9 +81,6 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 			switch ($field['status']){
 				case 0:
 					$echo = 'Employee';
-					break;
-				case 1:
-					$echo = 'Moderator';
 					break;
 				case 2:
 					$echo = 'Administrador';

@@ -108,10 +108,8 @@ if(!isset($_SESSION['id'])){
               <select name="status" id="status">
                <option value='0'>Select Status</option>
                <option value="Waits">Waits</option>
-               <option value="In Execution">In Execution</option>
                <option value="Budgeted">Budgeted</option>
                <option value="Under Repair">Under Repair</option>
-               <option value="Ready">Ready</option>
                <option value="Closed Billing">Closed Billing</option>
                <option value="Closed guarantee">Closed guarantee</option>
                <option value="Closed Contract">Closed Contract</option>

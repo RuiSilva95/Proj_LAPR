@@ -42,10 +42,8 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
             <select name="status" id="status">
                <option <?php active('0',$_POST['status'])?> value='0'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp- See All -</option>
                <option <?php active('Waits',$_POST['status'])?> value="Waits">Waits</option>
-               <option <?php active('In Execution',$_POST['status'])?> value="In Execution">In Execution</option>
                <option <?php active('Budgeted',$_POST['status'])?> value="Budgeted">Budgeted</option>
                <option <?php active('Under Repair',$_POST['status'])?> value="Under Repair">Under Repair</option>
-               <option <?php active('Ready',$_POST['status'])?> value="Ready">Ready</option>
                <option <?php active('Closed Billing',$_POST['status'])?> value="Closed Billing">Closed Billing</option>
                <option <?php active('Closed Guaranty',$_POST['status'])?> value="Closed Guaranty">Closed Guaranty</option>
                <option <?php active('Archive',$_POST['status'])?> value="Archive">Archive</option>
@@ -103,7 +101,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
         <tr>
           <th width="42" scope="col">Id:</th>
           <th scope="col">Client:</th>
-          <th scope="col">Marc/Model:</th>
+          <th scope="col">Description:</th>
           <th scope="col">Status:</th>
           <th scope="col">Employee:</th>
           <th scope="col">Time Work:</th>
@@ -145,12 +143,13 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                 }  
 			  
             //*************************************************************
-			$campos_query = "`client`.`name` AS 'client_name' ,`equipment`.`entity` AS 'enty' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'id_cli' , `users`.`name` AS 'user_name' ,`equipment`.`mark/model` AS 'mark' , `equipment`.`id` AS 'idd' ,`equip_status`.`final_time` AS 'total_temp' ";
+			$campos_query = "`client`.`name` AS 'client_name' ,`equipment`.`entity` AS 'enty' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'id_cli' , `users`.`name` AS 'user_name' ,`equip_problem`.`description(employee)` AS 'descript' , `equipment`.`id` AS 'idd' ,`equip_status`.`final_time` AS 'total_temp' ";
 			
             $final_query  = "FROM `equipment` 
                              INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
                              INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
                              INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
+							 INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
                              WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5." ORDER BY `equipment`.`id`";
 			$maximo = 5;
                 $pagina = $_GET["pagina"];
@@ -169,7 +168,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
               echo '<tr>';   
               echo '<td>'.$result_SQL['idd'].'</td>';  
               echo '<td>'.$result_SQL['client_name'].'</td>';
-              echo '<td>'.$result_SQL['mark'].'</td>';
+              echo '<td>'.$result_SQL['descript'].'</td>';
               echo '<td '; echo ''.tint($result_SQL['stats']).'>'.$result_SQL['stats'].'</td>';
               echo '<td>'.$result_SQL['user_name'].'</td>';
 			  echo '<td>'.$result_SQL['total_temp'].'</td>';

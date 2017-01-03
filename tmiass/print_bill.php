@@ -120,6 +120,12 @@ if(!isset($_SESSION['id'])){
                     echo '<p>'.$field3['provided'].'</p>';
                 }
                 ?>
+                 <?php
+                if(!empty($field3['budget'])){ 
+                    echo '<h2>Price:</h2>';
+                    echo '<p>'.$field3['budget'].'€</p>';
+                }else{echo '<h2>Price:</h2> <br> _______________€';}
+                ?>
             </div>
             <p class="long"><span class="left1">O Cliente <br /><br /><br /> ________________________________________</span><span class="right1">O Técnico/Consultor <br /><br /><br />________________________________________</span></p>
             <hr />

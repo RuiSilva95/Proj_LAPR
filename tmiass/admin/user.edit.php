@@ -72,7 +72,6 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
           <td>
             <select name="status" id="status" onchange="verificaOpcao(this.value)">
                <option <?php active($field['status'],'0')?> value='0'>Employee</option>
-               <option <?php active($field['status'],'1')?> value='1'>Moderator</option>
                <option <?php active($field['status'],'2')?> value='2'>Administrator</option>
             </select>
           </td>

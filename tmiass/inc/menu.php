@@ -11,19 +11,13 @@
     <li><a href="<?php echo check('client.php');?>">Client</a></li>
     <li><a href="<?php echo check('service.php');?>">Service</a></li>
     <?php 
-	switch(access('status')) {
-    case 1:
-        echo '<li><a href="#">proj2</a></li>';
-        break;
-    case 2:
-        echo '<li><a href="#">proj2</a></li>
-			  <li><a href="#">administration</a>
+	if(access('status')=='2'){
+        echo '<li><a href="#">administration</a>
 			  <ul>
 			    <li><a href="'.check('admin/mapping.php').'">Mapping</a></li>
 				<li><a href="'.check('admin/user.php').'">User Management</a></li>
 			  </ul>
 			</li>';
-        break;
 	}
 	 ?>
   </ul>

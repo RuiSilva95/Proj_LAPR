@@ -37,17 +37,11 @@ switch($var){
 	case 'Waits':
 	echo 'bgcolor="#eff773"';
 	break;
-	case 'In Execution':
-	echo 'bgcolor="#eaf44c"';
-	break;
 	case 'Budgeted':
 	echo 'bgcolor="#1c85fb"';
 	break;
 	case 'Under Repair':
 	echo 'bgcolor="#ffffff"';
-	break;
-	case 'Ready':
-	echo 'bgcolor="#ff3737"';
 	break;
 	case 'Closed Billing':
 	echo 'bgcolor="#0dfd01"';
@@ -56,7 +50,7 @@ switch($var){
 	echo 'bgcolor="#08b000"';
 	break;
 	case 'Closed Contract':
-	echo 'bgcolor="#076f02"';
+	echo 'bgcolor="#98FF92"';
 	break;
 	case 'Archive':
 	echo 'bgcolor="b3b3b3"';
