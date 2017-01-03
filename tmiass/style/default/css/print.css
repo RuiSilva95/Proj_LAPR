@@ -1,0 +1,140 @@
+/*****************************Imprimir 2********************************/
+#content{
+    width:630px;
+    height:500px;
+    margin: 40px 10px;
+    font: 1em arial, sans-serif;
+    }
+    
+#content .n{
+    float: right;
+    }
+ 
+#content table{
+    margin: 10px 0;
+    }
+ 
+#content table td{
+    padding: 5px 5px;
+    }
+ 
+#content .na{
+    width: 100px;
+    }
+    
+#content p{
+    height:200px;
+    }
+ 
+  /*****************************Imprimir**********************************/
+#A4{
+    width:900px;
+    height:1200px;
+    font: 15px/1em arial, sans-serif;
+    padding:20px 20px;
+    }
+    
+#A4 .center{
+    height: 1000px;
+    }
+    
+#A4 .logo{
+    font-size: 23px;
+    color:red;
+    }
+
+#A4 .left{
+    float:left;
+    text-align:left;
+    }
+  
+#A4 .right{
+    float:right;
+    text-align:right;
+    }
+    
+#A4 .left1{
+    float:left;
+    text-align:center;
+    margin-bottom:50px;
+    }
+  
+#A4 .right1{
+    float:right;
+    text-align:center;
+    margin-bottom:50px;
+    }
+  
+#A4 h1{
+    font-size: 22px;
+    }
+    
+#A4 h2{
+    font-size: 17px;
+    margin-top:50px;
+    }
+  
+#A4 .long{
+    width:900px;
+    display:table;
+    }
+    
+#A4 span{
+    font-weight: bold;
+    font-size: 17px;
+    text-align:center;
+    }
+  
+#A4 .box{
+    border:1 solid;
+    }
+    
+#A4 table tr td{
+    width: 300px;
+    font-size:15px;
+    }
+    
+#A4 .box tr{
+    height: 70px;
+    }
+    
+    
+#A4 .assign{
+    text-align: center;
+    }
+    
+#A4 img{
+    width: 100px;
+    height: 65px;
+    margin-left: 50px;
+    }
+    
+#A4 .logo{
+    width: 400px;
+    height: 65px;
+    margin-left: 0px;
+    }
+/*****************************Imprimir 3********************************/
+.list{
+    margin: 20px auto;
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+    }
+.list th{
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background: #DEDEDE;
+    }
+.list td{
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+    }
