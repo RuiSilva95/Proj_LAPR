@@ -21,16 +21,16 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
             <td width="70"><label for="Client">Client</label></td>
             <td width="173">
             <select name="client" id="client">
-               <?php 
+               <?php
 				echo '<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp- See All -</option>';
 				echo '<option ';?><?php active('priv',$_POST['client'])?><?php echo ' value="priv">Private</option>';
-                $SQL = mysql_query("SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC");
-                  if(mysql_num_rows($SQL)>=1){
-                     while($field = mysql_fetch_assoc($SQL)){
+                $SQL = mysqli_query($conn,"SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC");
+                  if(mysqli_num_rows($SQL)>=1){
+                     while($field = mysqli_fetch_assoc($SQL)){
                        echo '<option ';?><?php active($field['id_client'],$_POST['client'])?><?php echo ' value="'.$field['id_client'].'">'.$field['name'].'</option>';
                      }
                   }else{
-                       echo '<option value="0">No value found</option>'; 
+                       echo '<option value="0">No value found</option>';
                   }
                ?>
               </select>
@@ -54,15 +54,15 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
             <td><label for="Employee">Employee</label></td>
             <td>
              <select name="employee" id="employee">
-               <?php 
+               <?php
 				echo '<option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp- See All -</option>';
-                $SQL = mysql_query("SELECT * FROM `users` ORDER BY `name` ASC");
-                  if(mysql_num_rows($SQL)>=1){
-                     while($field = mysql_fetch_assoc($SQL)){
+                $SQL = mysqli_query($conn,"SELECT * FROM `users` ORDER BY `name` ASC");
+                  if(mysqli_num_rows($SQL)>=1){
+                     while($field = mysqli_fetch_assoc($SQL)){
                        echo '<option ';?><?php active($field['id_user'],$_POST['employee'])?><?php echo ' value="'.$field['id_user'].'">'.$field['name'].'</option>';
                      }
                   }else{
-                       echo '<option value="0">No value found</option>'; 
+                       echo '<option value="0">No value found</option>';
                   }
                ?>
               </select>
@@ -114,38 +114,38 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                 }elseif($_POST['client']=='priv'){
                     $ext1 ='`client`.`private`=1 AND';
                 }else{
-                    $ext1 = ' ';    
+                    $ext1 = ' ';
                 }
 			//*************************************************************
                 if($_POST['status']){
                     $ext2 = "`equip_status`.`status` LIKE '".$_POST['status']."' AND ";
                 }else{
-                    $ext2 = ' ';  
+                    $ext2 = ' ';
                 }
-			
+
 			//*************************************************************
                 if(!empty($_POST['entity'])){
-                    $ext3 =  "`equipment`.`entity`='".$_POST['entity']."' AND "; 
+                    $ext3 =  "`equipment`.`entity`='".$_POST['entity']."' AND ";
                 }else{
-                    $ext3 = ' ';  
-                }  
-			//*************************************************************	
+                    $ext3 = ' ';
+                }
+			//*************************************************************
 				if(!empty($_POST['date1']) AND !empty($_POST['date2'])){
-                     $ext4 = "(`start_date`>='".$_POST['date1']."' AND `end_date`<='".$_POST['date2']."') AND "; 
+                     $ext4 = "(`start_date`>='".$_POST['date1']."' AND `end_date`<='".$_POST['date2']."') AND ";
                 }else{
-                     $ext4 = ' ';  
+                     $ext4 = ' ';
                 }
 			//*************************************************************
                 if($_POST['employee']!=0){
-                    $ext5 =  "`users`.`id_user`='".$_POST['employee']."'" ; 
+                    $ext5 =  "`users`.`id_user`='".$_POST['employee']."'" ;
                 }else{
-                    $ext5 = ' `users`.`id_user`=`users`.`id_user` ';  
-                }  
-			  
+                    $ext5 = ' `users`.`id_user`=`users`.`id_user` ';
+                }
+
             //*************************************************************
 			$campos_query = "`client`.`name` AS 'client_name' ,`equipment`.`entity` AS 'enty' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'id_cli' , `users`.`name` AS 'user_name' ,`equip_problem`.`description(employee)` AS 'descript' , `equipment`.`id` AS 'idd' ,`equip_status`.`final_time` AS 'total_temp' ";
-			
-            $final_query  = "FROM `equipment` 
+
+            $final_query  = "FROM `equipment`
                              INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
                              INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
                              INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
@@ -158,15 +158,15 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                 }
                 $inicio = $pagina - 1;
                 $inicio = $maximo * $inicio;
-                
+
                 $strCount = "SELECT COUNT(*) AS 'num_registros' $final_query";
-                $query = mysql_query($strCount);
-                $row = mysql_fetch_array($query);
+                $query = mysqli_query($conn,$strCount);
+                $row = mysqli_fetch_array($query);
                 $total = $row["num_registros"];
-                $sql = mysql_query("SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die(mysql_error());
-                while ($result_SQL = mysql_fetch_assoc($sql)) {
-              echo '<tr>';   
-              echo '<td>'.$result_SQL['idd'].'</td>';  
+                $sql = mysqli_query($conn,"SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die(mysqli_error());
+                while ($result_SQL = mysqli_fetch_assoc($sql)) {
+              echo '<tr>';
+              echo '<td>'.$result_SQL['idd'].'</td>';
               echo '<td>'.$result_SQL['client_name'].'</td>';
               echo '<td>'.$result_SQL['descript'].'</td>';
               echo '<td '; echo ''.tint($result_SQL['stats']).'>'.$result_SQL['stats'].'</td>';
@@ -174,16 +174,16 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 			  echo '<td>'.$result_SQL['total_temp'].'</td>';
               if($result_SQL['enty']=='2'){
                 echo '<td>Internal</td>';
-                echo '<td> 
+                echo '<td>
 				<a class="myButton" href="'.check('internal.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
 				<a class="myButton" href="'.check('internal.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
               }else{
                 echo '<td>External</td>';
-                echo '<td> 
+                echo '<td>
 				<a class="myButton" href="'.check('external.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
-				<a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';    
-              }   
-			  $value = explode(" ",$result_SQL['total_temp']); 
+				<a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
+              }
+			  $value = explode(" ",$result_SQL['total_temp']);
 			  $hora += $value[0];
 			  $minutos += $value[2];
             }
@@ -199,7 +199,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 			$sep = explode('.', $horas);
 			$hora += $sep[0];
 			$minutos = $sep[1];
-			
+
             echo '<td colspan="2">'.sprintf('%02d Horas e %02d Minutos', $hora, $minutos).'</td>';
             echo '<td><a class="myButton" href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
                     echo '</tr>';
@@ -208,7 +208,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                 $pgs = ceil($total / $maximo);
                 if($pgs > 1 ) {
                     echo "<br /><span>";
-					
+
                     if($menos > 0) {
                         echo "<a href=".$_SERVER['PHP_SELF']."?pagina=$menos>anterior</a>&nbsp; ";
                     }
@@ -223,7 +223,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                         echo " <a href=".$_SERVER['PHP_SELF']."?pagina=$mais>próxima</a>";
                     }
 					echo '</span>';
-                }            
+                }
 		?>
         </tr>
       </table>

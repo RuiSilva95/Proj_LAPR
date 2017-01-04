@@ -15,15 +15,15 @@ if(!isset($_SESSION['id'])){
     $idcli = protect($_GET['idcli']);
     $empr = protect($_GET['empr']);
     
-    $SQL1 = mysql_query("SELECT * FROM `equip_status` WHERE `id`='".$id."'");
-    $SQL2 = mysql_query("SELECT * FROM `client` WHERE `id_client`='".$idcli."'");
-    $SQL3 = mysql_query("SELECT * FROM `equipment` WHERE `id`='".$id."'");
-    $SQL4 = mysql_query("SELECT * FROM `equip_problem` WHERE `id`='".$id."'");
+    $SQL1 = mysqli_query($conn,"SELECT * FROM `equip_status` WHERE `id`='".$id."'");
+    $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='".$idcli."'");
+    $SQL3 = mysqli_query($conn,"SELECT * FROM `equipment` WHERE `id`='".$id."'");
+    $SQL4 = mysqli_query($conn,"SELECT * FROM `equip_problem` WHERE `id`='".$id."'");
     
-    $field1 = mysql_fetch_assoc($SQL1);
-    $field2 = mysql_fetch_assoc($SQL2);
-    $field3 = mysql_fetch_assoc($SQL3);
-    $field4 = mysql_fetch_assoc($SQL4);
+    $field1 = mysqli_fetch_assoc($SQL1);
+    $field2 = mysqli_fetch_assoc($SQL2);
+    $field3 = mysqli_fetch_assoc($SQL3);
+    $field4 = mysqli_fetch_assoc($SQL4);
     ?>
         <div id="A4">
             <div class="center">

@@ -29,8 +29,8 @@ if(!isset($_SESSION['id'])){
 				}elseif($client=='priv'){
 					echo 'Client - Private | ';
 				}else{ 
-					$SQL = mysql_query("SELECT `name` FROM `client` WHERE `id_client`='".$client."'");
-					$result = mysql_fetch_assoc($SQL);
+					$SQL = mysqli_query($conn,"SELECT `name` FROM `client` WHERE `id_client`='".$client."'");
+					$result = mysqli_fetch_assoc($SQL);
 					echo 'Client - '.$result['name'].' | ';
 					} 
                 if($status=='0' || empty($status)){
@@ -46,8 +46,8 @@ if(!isset($_SESSION['id'])){
             	if($employee=='0' || empty($employee)){
 				   echo 'Employee - ALL | ';
 				}else{
-					$SQL = mysql_query("SELECT `name` FROM `users` WHERE `id_user`='".$employee."'");
-					$result = mysql_fetch_assoc($SQL);
+					$SQL = mysqli_query($conn,"SELECT `name` FROM `users` WHERE `id_user`='".$employee."'");
+					$result = mysqli_fetch_assoc($SQL);
 				   echo 'Employee - '.$result['name'].' | ';
 				   } 
 				if(empty($entity)){
@@ -106,9 +106,9 @@ if(!isset($_SESSION['id'])){
                             WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5."
                             ORDER BY `equipment`.`id`";
                                 
-                $SQL = mysql_query($SQL) or die(mysql_error());  
-                if(mysql_num_rows($SQL)>=1){
-                    while($result_SQL = mysql_fetch_assoc($SQL)){
+                $SQL = mysqli_query($conn,$SQL) or die(mysqli_error());  
+                if(mysqli_num_rows($SQL)>=1){
+                    while($result_SQL = mysqli_fetch_assoc($SQL)){
                         echo '<tr>';   
                         echo '<td>'.$result_SQL['idd'].'</td>';  
                         echo '<td>'.$result_SQL['clientname'].'</td>';

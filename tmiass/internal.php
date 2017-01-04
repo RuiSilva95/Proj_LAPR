@@ -63,17 +63,17 @@ if(!isset($_SESSION['id'])){
                 	echo 'If not selected Client. Write at least name';
 					$verf = 1;
 				 }else{ 
-					 mysql_query("INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
-					 $client = mysql_result(mysql_query("SELECT MAX(`id_client`) FROM `client`"),0,0);
+					 mysqli_query($conn,"INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
+					 $client = mysqli_result(mysqli_query($conn,"SELECT MAX(`id_client`) FROM `client`"),0,0);
 				 }
 				if(empty($verf)) {
-			  mysql_query("INSERT INTO `equipment` VALUE('','".$employee."','".$client."','".$service."','2','".$cod."','".$budget."','".$equipment."','".$mark."','".$n_serie."','".$accessories."','".$service_provided."','".$material_supplied."')")or die(mysql_error());
-              mysql_query("INSERT INTO `equip_problem` VALUE('','".$problem."','".$descri_client."','".$descri_employee."')")or die(mysql_error());
-              mysql_query("INSERT INTO `equip_status` VALUE('','".$status."','".$initial_date."','".$final_date."','".$working_hours."')")or die(mysql_error());
-			  mysql_query("INSERT INTO `service_problem` VALUE('','".$check."','".$budget_service."','".$radio."','".$reported_problem."','".$sending_date."','".$delivery_date."')")or die(mysql_error());
+			  mysqli_query($conn,"INSERT INTO `equipment` VALUE('','".$employee."','".$client."','".$service."','2','".$cod."','".$budget."','".$equipment."','".$mark."','".$n_serie."','".$accessories."','".$service_provided."','".$material_supplied."')")or die(mysqli_error());
+              mysqli_query($conn,"INSERT INTO `equip_problem` VALUE('','".$problem."','".$descri_client."','".$descri_employee."')")or die(mysqli_error());
+              mysqli_query($conn,"INSERT INTO `equip_status` VALUE('','".$status."','".$initial_date."','".$final_date."','".$working_hours."')")or die(mysqli_error());
+			  mysqli_query($conn,"INSERT INTO `service_problem` VALUE('','".$check."','".$budget_service."','".$radio."','".$reported_problem."','".$sending_date."','".$delivery_date."')")or die(mysqli_error());
               if(isset($_POST['submit2'])){
-                $SQL = mysql_query("Select * FROM `equipment` WHERE `cod`='$cod'");
-                $SQL = mysql_fetch_assoc($SQL);
+                $SQL = mysqli_query($conn,"Select * FROM `equipment` WHERE `cod`='$cod'");
+                $SQL = mysqli_fetch_assoc($SQL);
                 $id = $SQL['id'];
                 $idcli = $SQL['id_client'];
                 header('Location:'.check('home.php').'?imp=0&id='.$id.'&idcli='.$idcli.'');
@@ -92,9 +92,9 @@ if(!isset($_SESSION['id'])){
               <select name="client" onchange="verificaOpcao(this.value)">
                 <?php 
 				echo '<option value="0">Select Client</option>';
-                $SQL = mysql_query("SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC");
-                  if(mysql_num_rows($SQL)>=1){
-                     while($field = mysql_fetch_assoc($SQL)){
+                $SQL = mysqli_query($conn,"SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC");
+                  if(mysqli_num_rows($SQL)>=1){
+                     while($field = mysqli_fetch_assoc($SQL)){
                        echo '<option value='.$field['id_client'].'>'.$field['name'].'</option>'; 
                      }
                   }else{
@@ -121,9 +121,9 @@ if(!isset($_SESSION['id'])){
               <select name="employee" id="employee">
               <?php
               echo '<option value="0">Select Employee</option>';
-                $SQL = mysql_query("SELECT * FROM `users`  ORDER BY `username` ASC");
-                  if(mysql_num_rows($SQL)>=1){
-                     while($field = mysql_fetch_assoc($SQL)){
+                $SQL = mysqli_query($conn,"SELECT * FROM `users`  ORDER BY `username` ASC");
+                  if(mysqli_num_rows($SQL)>=1){
+                     while($field = mysqli_fetch_assoc($SQL)){
                        echo '<option value='.$field['id_user'].'>'.$field['name'].'</option>'; 
                      }
                   }else{
@@ -203,9 +203,9 @@ if(!isset($_SESSION['id'])){
                 <select name="service" id="service">
                 	<?php
 					  echo '<option value="0">Select Employee</option>';
-						$SQL = mysql_query("SELECT * FROM `service` ORDER BY `name` ASC");
-						  if(mysql_num_rows($SQL)>=1){
-							 while($field = mysql_fetch_assoc($SQL)){
+						$SQL = mysqli_query($conn,"SELECT * FROM `service` ORDER BY `name` ASC");
+						  if(mysqli_num_rows($SQL)>=1){
+							 while($field = mysqli_fetch_assoc($SQL)){
 							   echo '<option value='.$field['id_service'].'>'.$field['name'].'</option>'; 
 							 }
 						  }else{
