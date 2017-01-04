@@ -1,10 +1,8 @@
-<?php
+<?php 
+ob_start();
+session_start();
+error_reporting(0); 
 
-//CONNECT TO database
-
-
-//include 'database/connect.php';
-//include 'function/function.php';
-
-
+require("database/connect.inc.php");
+require("functions/class.config.php");
 ?>

@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Wild Life of TRUMP</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- Manual adjust css -->
-    <link style="stylesheet" href="css/style.css">
-  </head>
-  <body>
+<?php 
+if(is_file("core/init.php")){
+	include("core/init.php");
+}else{
+	include("../core/init.php");
+}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<?php 
+echo '<link href="'.check('style/default/css/layout.css').'" rel="stylesheet" type="text/css" />';
+echo '<script type="text/javascript" src="'.check('ajax/ajax.js').'"></script>';
+?>
