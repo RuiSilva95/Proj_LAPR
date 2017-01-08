@@ -1,4 +1,5 @@
 <?php
+
 //proteção sobre injecção no SQL
 function protect($string)
 {
@@ -24,9 +25,11 @@ function check($link)
 function access($fill)
 {
     global $conn;
-    $login_check=mysqli_query($conn, "SELECT * FROM `users` WHERE `id_user`='".$_SESSION['id']."'");
-    $get_if = mysqli_fetch_assoc($login_check);
-    return $get_if[$fill];
+    $query = 'SELECT * FROM users WHERE id_user='.$_SESSION['id'].'';
+    $result=mysqli_query($conn, $query) or die(mysqli_error());
+    $row = mysqli_fetch_assoc($result);
+
+    return $row[$fill];
 }
 
 //Activar forms Select quando se retorna valor
@@ -66,11 +69,11 @@ function tint($var)
 }
 
 //Fazer calculo das horas de trabalho nas fichas
-If ($_GET['code'] == "1") {
+if ($_GET['code'] == "1") {
     $input1 = $_GET['input1'];
     $input2 = $_GET['input2'];
 
-    If(!empty($input1) && !empty($input2)) {
+    if(!empty($input1) && !empty($input2)) {
         $horaInicial  = strtotime($input1);
         $horaFinal    = strtotime($input2);
         $totalSegundos = ($horaFinal - $horaInicial);
@@ -84,4 +87,23 @@ If ($_GET['code'] == "1") {
         echo $hora."H : ".$minuto." M";
     }
 }
+
+//Verificação da password
+function hash_equals($str1, $str2)
+{
+    if(strlen($str1) != strlen($str2)) {
+        return false;
+    }
+    else{
+           // XOR
+           $res = $str1 ^ $str2;
+           $ret = 0;
+        for($i = strlen($res) - 1; $i >= 0; $i--){
+             // OR to ret - if all equal then return 0
+            $ret |= ord($res[$i]);
+        }
+           return !$ret;
+    }
+}
+
 ?>

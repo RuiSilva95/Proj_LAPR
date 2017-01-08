@@ -3,7 +3,7 @@ function javascript(arg){
     var result = "working_hours";
     var input1 = document.repair_form.initial_date.value;
     var input2 = document.repair_form.final_date.value;
-    var url = "core/functions/class.config.php?code="+arg+"&input1="+input1+"&input2="+input2;
+    var url = "core/functions/function.php?code="+arg+"&input1="+input1+"&input2="+input2;
     if (result==""){
         document.getElementById(result).innerHTML="";
         return;

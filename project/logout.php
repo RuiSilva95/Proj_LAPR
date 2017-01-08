@@ -1,22 +1,44 @@
 <?php
+require "core/init.php";
+
+if(!isset($_SESSION['id'])) {
+    header('Location:'.'login.php');
+}else{
     session_start();
     session_destroy();
+}
+
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="1.5; url=index.php"/>
-<link href="style/default/css/login_logout.css" rel="stylesheet" type="text/css" />
-<title>Takemore.com - Logout</title>
-</head>
-<body>
-<div id="box">
-  <div id="panel">
-    <span>Saiu com Sucesso </span>
-    <img src="style/default/img/logo2.png" />
-    <span>Obrigado pela Visita</span>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="refresh" content="1.5; url=index.php"/>
+        <title>Takemore.com</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Optional theme -->
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- Manuel change -->
+        <link href="css/login_logout.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+
+    <div class="login">
+        <h4>Saiu com Sucesso </h4>
+        <img src="img/logo2.png" />
+        <h4>Obrigado pela Visita</h4>
     </div>
-</div>
 </body>
+
+<!-- Jquery  CDN -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="js/bootstrap.min.js"></script>
 </html>
