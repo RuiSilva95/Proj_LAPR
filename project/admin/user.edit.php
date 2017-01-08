@@ -17,10 +17,10 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
    $apg = protect($_GET['apg']);
         
    if(!empty($apg)){
-     mysqli_query($conn,"DELETE FROM `users` WHERE `id_user`='".$apg."'")or die(mysqli_error());
+     mysqli_query($conn,"DELETE FROM `users` WHERE `id_user`='".$apg."'")or die("Error:".mysqli_error($conn));
      header('Location:'.check('user.php'));
    }elseif(!empty($id)){
-     $SQL = mysqli_query($conn,"SELECT * FROM `users` WHERE `id_user`='".$id."'")or die(mysqli_error());
+     $SQL = mysqli_query($conn,"SELECT * FROM `users` WHERE `id_user`='".$id."'")or die("Error:".mysqli_error($conn));
      $field = mysqli_fetch_assoc($SQL);
      if($_POST['submit']){
 		$name = protect($_POST['name']);
@@ -33,9 +33,9 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 		}else{
 			$password = md5($password);
 			}
-		$SQL1 = mysqli_query($conn,"SELECT * FROM `users` WHERE `username`='".$username."' AND `id_user`!='".$id."'")or die(mysqli_error());
-		$SQL2 = mysqli_query($conn,"SELECT * FROM `users` WHERE `email`='".$email."' AND `id_user`!='".$id."'")or die(mysqli_error());
-		$SQL3 = mysqli_query($conn,"SELECT * FROM `users` WHERE `name`='".$name."' AND `id_user`!='".$id."'")or die(mysqli_error());
+		$SQL1 = mysqli_query($conn,"SELECT * FROM `users` WHERE `username`='".$username."' AND `id_user`!='".$id."'")or die("Error:".mysqli_error($conn));
+		$SQL2 = mysqli_query($conn,"SELECT * FROM `users` WHERE `email`='".$email."' AND `id_user`!='".$id."'")or die("Error:".mysqli_error($conn));
+		$SQL3 = mysqli_query($conn,"SELECT * FROM `users` WHERE `name`='".$name."' AND `id_user`!='".$id."'")or die("Error:".mysqli_error($conn));
 				if(mysqli_num_rows($SQL1)==1){
 				  echo 'Username '.$username.' exist';
 				}elseif(mysqli_num_rows($SQL2)==1){
@@ -43,7 +43,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 				}elseif(mysqli_num_rows($SQL3)==1){
 				  echo 'Name '.$name.' exist'; 	
 				}else{
-		            mysqli_query($conn,"UPDATE `users` SET `username`='".$username."',`password`='".$password."',`email`='".$email."',`status`='".$status."' WHERE `id_user`='".$id."'")or die(mysqli_Error()); 
+		            mysqli_query($conn,"UPDATE `users` SET `username`='".$username."',`password`='".$password."',`email`='".$email."',`status`='".$status."' WHERE `id_user`='".$id."'")or die("Error:".mysqli_error($conn)); 
 		            header('Location:'.check('user.php'));
 				}
         }

@@ -25,8 +25,8 @@ function check($link)
 function access($fill)
 {
     global $conn;
-    $query = 'SELECT * FROM users WHERE id_user='.$_SESSION['id'].'';
-    $result=mysqli_query($conn, $query) or die(mysqli_error());
+    $query = 'SELECT * FROM users WHERE id_user='.$_SESSION['id'].';';
+    $result=mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
     $row = mysqli_fetch_assoc($result);
 
     return $row[$fill];
@@ -36,7 +36,7 @@ function access($fill)
 function active($valor1,$valor2)
 {
     if ($valor1 == $valor2) {
-          echo 'selected';
+          return 'selected';
     }
 }
 
@@ -87,6 +87,7 @@ if ($_GET['code'] == "1") {
         echo $hora."H : ".$minuto." M";
     }
 }
+
 
 //Verificação da password
 function hash_equals($str1, $str2)

@@ -42,10 +42,10 @@ if(!isset($_SESSION['id'])) {
                     }
                 }
                 if(empty($verf)) {
-                    mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','','1','".$cod."','".$budget."','','','','','".$service_provided."','')")or die(mysqli_error());
-                    mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','','','".$description."')")or die(mysqli_error());
-                    mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','". $initial_date."','".$final_date."','".$working_hours."')")or die(mysqli_error());
-                    mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','','','','','','')")or die(mysqli_error());
+                    mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','','1','".$cod."','".$budget."','','','','','".$service_provided."','')")or die("Error:".mysqli_error($conn));
+                    mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','','','".$description."')")or die("Error:".mysqli_error($conn));
+                    mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','". $initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
+                    mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','','','','','','')")or die("Error:".mysqli_error($conn));
                     if(isset($_POST['submit2'])) {
                          $SQL = mysqli_query($conn, "Select * FROM `equipment` WHERE `cod`='$cod'");
                          $SQL = mysqli_fetch_assoc($SQL);

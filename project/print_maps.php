@@ -106,7 +106,7 @@ if(!isset($_SESSION['id'])){
                             WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5."
                             ORDER BY `equipment`.`id`";
                                 
-                $SQL = mysqli_query($conn,$SQL) or die(mysqli_error());  
+                $SQL = mysqli_query($conn,$SQL) or die("Error:".mysqli_error($conn));  
                 if(mysqli_num_rows($SQL)>=1){
                     while($result_SQL = mysqli_fetch_assoc($SQL)){
                         echo '<tr>';   

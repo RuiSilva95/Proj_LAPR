@@ -25,15 +25,15 @@ if(!isset($_SESSION['id'])){
 		  if(empty($name)&& empty($address)){
                     echo 'The name and address field are required';
 		  }else{
-			  $SQL1 = mysqli_query($conn,"SELECT * FROM `client` WHERE `name`='".$name."' AND `private`='0'")or die(mysqli_error());
-              $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `address`='".$address."'  AND `private`='0'")or die(mysqli_error());
+			  $SQL1 = mysqli_query($conn,"SELECT * FROM `client` WHERE `name`='".$name."' AND `private`='0'")or die("Error:".mysqli_error($conn));
+              $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `address`='".$address."'  AND `private`='0'")or die("Error:".mysqli_error($conn));
 			  
 			  if(mysqli_num_rows($SQL1)==1){
                  echo 'Name "'.$name.'" exists';
               }else if(mysqli_num_rows($SQL2)==1){
                  echo 'Address "'.$address.'" exists';
               }else{
-                 mysqli_query($conn,"INSERT INTO `client`(`name`,`address`,`email`,`phone`,`private`) VALUE('".$name."','".$address."','".$email."','".$phone."','0')") or die(mysqli_error());
+                 mysqli_query($conn,"INSERT INTO `client`(`name`,`address`,`email`,`phone`,`private`) VALUE('".$name."','".$address."','".$email."','".$phone."','0')") or die("Error:".mysqli_error($conn));
                     }
 		  }
 		}
@@ -72,7 +72,7 @@ if(!isset($_SESSION['id'])){
             <th width="170" scope="col"></th>
           </tr>
           <?php 
-            $SQL= mysqli_query($conn,"SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC")or die(mysqli_error());
+            $SQL= mysqli_query($conn,"SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC")or die("Error:".mysqli_error($conn));
             if(mysqli_num_rows($SQL)>0){
               while($field = mysqli_fetch_assoc($SQL)){
                  echo '<tr>';

@@ -26,7 +26,7 @@ if(isset($_SESSION['id'])) {
 
     <div class="login">
 
-    <img src="img/logo2.png"/>
+    <img src="img/takemore_lg.png"/>
         <form method="post">
             <input type="text" name="user" placeholder="Username" required="required" value="<?php echo $_POST['user'];?>">
             <input type="password" name="pass" placeholder="Password" required="required" value="<?php echo $_POST['pass'];?>">
@@ -37,7 +37,7 @@ if(isset($_SESSION['id'])) {
                 $username=protect($_POST['user']);
                 $password=protect($_POST['pass']);
                 $query =  'SELECT * FROM users WHERE username="'.$username.'"';
-                $result = mysqli_query($conn, $query) or die(mysqli_error());
+                $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                 if(mysqli_num_rows($result)==1) {
                     $row = mysqli_fetch_assoc($result);
 

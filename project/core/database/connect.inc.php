@@ -4,7 +4,9 @@ $mysqli_user ='root';
 $mysqli_pass ='12345';
 $mysqli_db   ='take';
 
-if(!@$conn = mysqli_connect($mysqli_host, $mysqli_user, $mysqli_pass, $mysqli_db)) {
-    die(mysqli_error());
+$conn = mysqli_connect($mysqli_host, $mysqli_user, $mysqli_pass, $mysqli_db);
+
+if(mysqli_connect_errno()) {
+    die("Failed to connect:".mysqli_connect_error());
 }
 ?>

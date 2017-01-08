@@ -17,24 +17,24 @@ if(!isset($_SESSION['id'])){
    $apg = protect($_GET['apg']);
         
    if(!empty($apg)){
-     mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='".$apg."'")or die(mysqli_error());
+     mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='".$apg."'")or die("Error:".mysqli_error($conn));
      header('Location:'.check('client.php'));
    }elseif(!empty($id)){
-     $SQL = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='".$id."'")or die(mysqli_error());
+     $SQL = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='".$id."'")or die("Error:".mysqli_error($conn));
      $field = mysqli_fetch_assoc($SQL);
 	   if($_POST['submit']){
 		 $name = protect($_POST['name']);
 		 $address = protect($_POST['address']);
 		 $email = protect($_POST['email']);
 		 $phone = protect($_POST['phone']); 
-		 $SQL1 = mysqli_query($conn,"SELECT * FROM `client` WHERE `name`='".$name."' AND `id_client`!='".$id."'  AND `private`='0'")or die(mysqli_error());
-		 $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `email`='".$email."' AND `id_client`!='".$id."'  AND `private`='0'")or die(mysqli_error());
+		 $SQL1 = mysqli_query($conn,"SELECT * FROM `client` WHERE `name`='".$name."' AND `id_client`!='".$id."'  AND `private`='0'")or die("Error:".mysqli_error($conn));
+		 $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `email`='".$email."' AND `id_client`!='".$id."'  AND `private`='0'")or die("Error:".mysqli_error($conn));
 				if(mysqli_num_rows($SQL1)==1){
 				  echo 'Name '.$name.' exist';
 				}elseif(mysqli_num_rows($SQL2)==1){
 				  echo 'Email '.$email.' exist'; 
 				}else{	
-		 			mysqli_query($conn,"UPDATE `client` SET `name`='".$name."',`address`='".$address."',`email`='".$email."',`phone`='".$phone."' WHERE `id_client`='".$id."'")or die(mysqli_error());
+		 			mysqli_query($conn,"UPDATE `client` SET `name`='".$name."',`address`='".$address."',`email`='".$email."',`phone`='".$phone."' WHERE `id_client`='".$id."'")or die("Error:".mysqli_error($conn));
 					 header('Location:'.check('client.php'));
 				}
 	   }

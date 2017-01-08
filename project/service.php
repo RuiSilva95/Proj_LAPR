@@ -25,15 +25,15 @@ if(!isset($_SESSION['id'])){
 			  if(empty($name)&& empty($address)){
 						echo 'The name and address field are required';
 			  }else{
-				  $SQL1 = mysqli_query($conn,"SELECT * FROM `service` WHERE `name`='".$name."'")or die(mysqli_error());
-				  $SQL2 = mysqli_query($conn,"SELECT * FROM `service` WHERE `address`='".$address."'")or die(mysqli_error());
+				  $SQL1 = mysqli_query($conn,"SELECT * FROM `service` WHERE `name`='".$name."'")or die("Error:".mysqli_error($conn));
+				  $SQL2 = mysqli_query($conn,"SELECT * FROM `service` WHERE `address`='".$address."'")or die("Error:".mysqli_error($conn));
 				  
 				  if(mysqli_num_rows($SQL1)==1){
                     echo 'Name "'.$name.'" exist';
                   }else if(mysqli_num_rows($SQL2)==1){
                     echo 'Address "'.$address.'" exist';
                   }else{
-                    mysqli_query($conn,"INSERT INTO `service`(`name`,`address`,`email`,`phone`) VALUE('".$name."','".$address."','".$email."','".$phone."')") or die(mysqli_error());
+                    mysqli_query($conn,"INSERT INTO `service`(`name`,`address`,`email`,`phone`) VALUE('".$name."','".$address."','".$email."','".$phone."')") or die("Error:".mysqli_error($conn));
                   }
 			 }
 		}
@@ -71,7 +71,7 @@ if(!isset($_SESSION['id'])){
             <th width="170" scope="col"></th>
           </tr>
 		  <?php 
-            $SQL= mysqli_query($conn,"SELECT * FROM `service` ORDER BY `name` ASC")or die(mysqli_error());
+            $SQL= mysqli_query($conn,"SELECT * FROM `service` ORDER BY `name` ASC")or die("Error:".mysqli_error($conn));
             if(mysqli_num_rows($SQL)>0){
               while($field = mysqli_fetch_assoc($SQL)){
                  echo '<tr>';

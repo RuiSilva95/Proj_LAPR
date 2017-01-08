@@ -67,10 +67,10 @@ if(!isset($_SESSION['id'])){
 					 $client = mysqli_result(mysqli_query($conn,"SELECT MAX(`id_client`) FROM `client`"),0,0);
 				 }
 				if(empty($verf)) {
-			  mysqli_query($conn,"INSERT INTO `equipment` VALUE('','".$employee."','".$client."','".$service."','2','".$cod."','".$budget."','".$equipment."','".$mark."','".$n_serie."','".$accessories."','".$service_provided."','".$material_supplied."')")or die(mysqli_error());
-              mysqli_query($conn,"INSERT INTO `equip_problem` VALUE('','".$problem."','".$descri_client."','".$descri_employee."')")or die(mysqli_error());
-              mysqli_query($conn,"INSERT INTO `equip_status` VALUE('','".$status."','".$initial_date."','".$final_date."','".$working_hours."')")or die(mysqli_error());
-			  mysqli_query($conn,"INSERT INTO `service_problem` VALUE('','".$check."','".$budget_service."','".$radio."','".$reported_problem."','".$sending_date."','".$delivery_date."')")or die(mysqli_error());
+			  mysqli_query($conn,"INSERT INTO `equipment` VALUE('','".$employee."','".$client."','".$service."','2','".$cod."','".$budget."','".$equipment."','".$mark."','".$n_serie."','".$accessories."','".$service_provided."','".$material_supplied."')")or die("Error:".mysqli_error($conn));
+              mysqli_query($conn,"INSERT INTO `equip_problem` VALUE('','".$problem."','".$descri_client."','".$descri_employee."')")or die("Error:".mysqli_error($conn));
+              mysqli_query($conn,"INSERT INTO `equip_status` VALUE('','".$status."','".$initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
+			  mysqli_query($conn,"INSERT INTO `service_problem` VALUE('','".$check."','".$budget_service."','".$radio."','".$reported_problem."','".$sending_date."','".$delivery_date."')")or die("Error:".mysqli_error($conn));
               if(isset($_POST['submit2'])){
                 $SQL = mysqli_query($conn,"Select * FROM `equipment` WHERE `cod`='$cod'");
                 $SQL = mysqli_fetch_assoc($SQL);

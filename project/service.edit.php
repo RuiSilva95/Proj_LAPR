@@ -16,24 +16,24 @@ if(!isset($_SESSION['id'])){
     $id = protect($_GET['id']);
     $apg = protect($_GET['apg']);
     if(!empty($apg)){
-        mysqli_query($conn,"DELETE FROM `service` WHERE `id_service`='".$apg."'")or die(mysqli_error());
+        mysqli_query($conn,"DELETE FROM `service` WHERE `id_service`='".$apg."'")or die("Error:".mysqli_error($conn));
         header('Location:'.check('service.php'));
     }elseif(!empty($id)){
-        $SQL = mysqli_query($conn,"SELECT * FROM `service` WHERE `id_service`='".$id."'")or die(mysqli_error());
+        $SQL = mysqli_query($conn,"SELECT * FROM `service` WHERE `id_service`='".$id."'")or die("Error:".mysqli_error($conn));
         $field = mysqli_fetch_assoc($SQL);
         if($_POST['submit']){
             $name = protect($_POST['name']);
             $address = protect($_POST['address']);
             $email = protect($_POST['email']);
             $phone = protect($_POST['phone']); 
-			$SQL1 = mysqli_query($conn,"SELECT * FROM `service` WHERE `name`='".$name."' AND `id_service`!='".$id."'")or die(mysqli_error());
-		 $SQL2 = mysqli_query($conn,"SELECT * FROM `service` WHERE `email`='".$email."' AND `id_service`!='".$id."'")or die(mysqli_error());
+			$SQL1 = mysqli_query($conn,"SELECT * FROM `service` WHERE `name`='".$name."' AND `id_service`!='".$id."'")or die("Error:".mysqli_error($conn));
+		 $SQL2 = mysqli_query($conn,"SELECT * FROM `service` WHERE `email`='".$email."' AND `id_service`!='".$id."'")or die("Error:".mysqli_error($conn));
 				if(mysqli_num_rows($SQL1)==1){
 				  echo 'Name '.$name.' exist';
 				}elseif(mysqli_num_rows($SQL2)==1){
 				  echo 'Email '.$email.' exist'; 
 				}else{	
-                    mysqli_query($conn,"UPDATE `service` SET `name`='".$name."',`address`='".$address."',`email`='".$email."',`phone`='".$phone."' WHERE `id_service`='".$id."'")or die(mysqli_error());
+                    mysqli_query($conn,"UPDATE `service` SET `name`='".$name."',`address`='".$address."',`email`='".$email."',`phone`='".$phone."' WHERE `id_service`='".$id."'")or die("Error:".mysqli_error($conn));
                     header('Location:'.check('service.php'));
 				}
         }

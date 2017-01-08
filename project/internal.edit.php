@@ -19,19 +19,19 @@ if(!isset($_SESSION['id'])){
         $empr = protect($_GET['empr']);
         
         if(!empty($apg)){
-            mysqli_query($conn,"DELETE FROM `equip_problem` WHERE `id`='$apg'")or die(mysqli_error());
-            mysqli_query($conn,"DELETE FROM `equipment` WHERE `id`='$apg'")or die(mysqli_error());
-            mysqli_query($conn,"DELETE FROM `equip_status` WHERE `id`='$apg'")or die(mysqli_error());
-            mysqli_query($conn,"DELETE FROM `service_problem` WHERE `id`='$apg'")or die(mysqli_error());
-            mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='$cli' AND `private`='1'")or die(mysqli_error());
+            mysqli_query($conn,"DELETE FROM `equip_problem` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
+            mysqli_query($conn,"DELETE FROM `equipment` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
+            mysqli_query($conn,"DELETE FROM `equip_status` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
+            mysqli_query($conn,"DELETE FROM `service_problem` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
+            mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='$cli' AND `private`='1'")or die("Error:".mysqli_error($conn));
             
             header('Location:'.'home.php');
         }elseif(!empty($id)){
-            $SQL1 = mysqli_query($conn,"SELECT * FROM `equip_problem` WHERE `id`='$id'")or die(mysqli_error());
-            $SQL2 = mysqli_query($conn,"SELECT * FROM `equipment` WHERE `id`='$id'")or die(mysqli_error());
-            $SQL3 = mysqli_query($conn,"SELECT * FROM `equip_status` WHERE `id`='$id'")or die(mysqli_error());
-            $SQL4 = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='$cli'")or die(mysqli_error());
-            $SQL5 = mysqli_query($conn,"SELECT * FROM `service_problem` WHERE `id`='$id'")or die(mysqli_error());
+            $SQL1 = mysqli_query($conn,"SELECT * FROM `equip_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+            $SQL2 = mysqli_query($conn,"SELECT * FROM `equipment` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+            $SQL3 = mysqli_query($conn,"SELECT * FROM `equip_status` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+            $SQL4 = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='$cli'")or die("Error:".mysqli_error($conn));
+            $SQL5 = mysqli_query($conn,"SELECT * FROM `service_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
 			
             $field1 = mysqli_fetch_assoc($SQL1);
             $field2 = mysqli_fetch_assoc($SQL2);
@@ -259,22 +259,22 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])|| isset($_POST['submit3']
 		mysqli_query($conn,"INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
 		$cli = mysqli_result(mysqli_query($conn,"SELECT MAX(`id_client`) FROM `client`"),0,0);	
 		} else{
-		mysqli_query($conn,"UPDATE `client` SET `name`='".$name."' , `address`='".$address."' , `phone`='".$phone."' , `private`='1' WHERE `id_client`='".$cli."'")or die(mysqli_error());	
+		mysqli_query($conn,"UPDATE `client` SET `name`='".$name."' , `address`='".$address."' , `phone`='".$phone."' , `private`='1' WHERE `id_client`='".$cli."'")or die("Error:".mysqli_error($conn));	
 		}
     }else{
 		if($field4['private']==1){
-		mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='".$cli."'")or die(mysqli_error());
+		mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='".$cli."'")or die("Error:".mysqli_error($conn));
 		$cli = $client;	
 		}
 	}
 	
-    mysqli_query($conn,"UPDATE `equipment` SET `id_user`='".$employee."' , `id_client`='".$client."' , `id_service`='".$service."' ,  `budget`='".$budget."' , `equipment`='".$equipment."' , `mark/model`='".$mark."' , `n_serie`='".$n_serie."' , `accessories`='".$accessories."' , `service`='".$service_provided."' , `provided`='".$material_supplied."' WHERE `id`='".$_GET['id']."'")or die(mysqli_error());
+    mysqli_query($conn,"UPDATE `equipment` SET `id_user`='".$employee."' , `id_client`='".$client."' , `id_service`='".$service."' ,  `budget`='".$budget."' , `equipment`='".$equipment."' , `mark/model`='".$mark."' , `n_serie`='".$n_serie."' , `accessories`='".$accessories."' , `service`='".$service_provided."' , `provided`='".$material_supplied."' WHERE `id`='".$_GET['id']."'")or die("Error:".mysqli_error($conn));
 	
-    mysqli_query($conn,"UPDATE `equip_problem` SET `problem/damage`='".$problem."' , `description(client)`='".$descri_client."' , `description(employee)`='".$descri_employee."'  WHERE `id`='".$id."'")or die(mysqli_error());
+    mysqli_query($conn,"UPDATE `equip_problem` SET `problem/damage`='".$problem."' , `description(client)`='".$descri_client."' , `description(employee)`='".$descri_employee."'  WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
 	
-    mysqli_query($conn,"UPDATE `equip_status` SET `start_date`='".$initial_date."' , `end_date`='".$final_date."' , `final_time`='".$working_hours."' , `status`='".$status."' WHERE `id`='".$id."'")or die(mysqli_error());
+    mysqli_query($conn,"UPDATE `equip_status` SET `start_date`='".$initial_date."' , `end_date`='".$final_date."' , `final_time`='".$working_hours."' , `status`='".$status."' WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
 	
-    mysqli_query($conn,"UPDATE `service_problem` SET `check`='".$check."' , `budget`='".$budget_service."' , `reported_problem`='".$reported_problem."' , `sending_date`='".$sending_date."' , `delivery_date`='".$delivery_date."' , `confirmation`='".$radio."'  WHERE `id`='".$id."'")or die(mysqli_error());
+    mysqli_query($conn,"UPDATE `service_problem` SET `check`='".$check."' , `budget`='".$budget_service."' , `reported_problem`='".$reported_problem."' , `sending_date`='".$sending_date."' , `delivery_date`='".$delivery_date."' , `confirmation`='".$radio."'  WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
 	
     
     

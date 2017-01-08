@@ -1,16 +1,3 @@
-
-    <?php
-    if(access('status')=='2') {
-        echo '<li><a href="#">administration</a>
-			  <ul>
-			    <li><a href="'.check('admin/mapping.php').'">Mapping</a></li>
-				<li><a href="'.check('admin/user.php').'">User Management</a></li>
-			  </ul>
-			</li>';
-    }
-    ?>
-
-
 <!-- Navigation -->
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -21,8 +8,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="<?php echo check('home.php');?>">Takemore.com</a>
+        <a class="navbar-brand" href="<?php echo check('home.php');?>"><img style="max-width:180px; margin-top: -7px;"
+             src="<?php echo check('img/takemore_lg.png');?>"></a>
     </div>
+
+
+
+
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
@@ -109,7 +101,18 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user">  </i>&nbsp&nbsp<?php echo access('name'); ?>&nbsp&nbsp<b class="caret"></b></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <?php
+                    $pinc = access('data');
+                if($pinc!=null) {
+                    echo '<img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="18" height="18">';
+                }else{
+                    echo '<i class="fa fa-user"> </i>';
+                }
+                ?>
+                &nbsp&nbsp<?php echo access('name'); ?>&nbsp&nbsp
+                <b class="caret"></b>
+            </a>
             <ul class="dropdown-menu">
                 <li>
                     <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -129,6 +132,9 @@
     </ul>
 
 
+
+
+
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
@@ -136,7 +142,7 @@
                 <a href="<?php echo check('home.php');?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-arrows-v"></i> Sheet repair <i class="fa fa-fw fa-caret-down"></i></a>
+                <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-file"></i> Sheet Repair <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="drop1" class="collapse">
                     <li>
                         <a href="<?php echo check('external.php');?>">External</a>
@@ -147,15 +153,15 @@
                 </ul>
             </li>
             <li class="active">
-                <a href="<?php echo check('client.php');?>"><i class="fa fa-fw fa-file"></i> Client </a>
+                <a href="<?php echo check('client.php');?>"><i class="fa fa-fw fa-users"></i> Client </a>
             </li>
             <li>
-                <a href="<?php echo check('service.php');?>"><i class="fa fa-fw fa-dashboard"></i> Service </a>
+                <a href="<?php echo check('service.php');?>"><i class="fa fa-fw fa-wrench"></i> Service </a>
             </li>
             <?php
             if(access('status')=='1') {
                 echo '<li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-arrows-v"></i> administration <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-unlock-alt"></i> administration <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="drop2" class="collapse">
                         <li>
                             <a href="'.check('admin/mapping.php').'">Mapping</a>

@@ -163,7 +163,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
                 $query = mysqli_query($conn,$strCount);
                 $row = mysqli_fetch_array($query);
                 $total = $row["num_registros"];
-                $sql = mysqli_query($conn,"SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die(mysqli_error());
+                $sql = mysqli_query($conn,"SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die("Error:".mysqli_error($conn));
                 while ($result_SQL = mysqli_fetch_assoc($sql)) {
               echo '<tr>';
               echo '<td>'.$result_SQL['idd'].'</td>';

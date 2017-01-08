@@ -31,7 +31,7 @@ if(!isset($_SESSION['id'])) {
 
     <div class="login">
         <h4>Saiu com Sucesso </h4>
-        <img src="img/logo2.png" />
+        <img src="img/takemore-lg.png" />
         <h4>Obrigado pela Visita</h4>
     </div>
 </body>

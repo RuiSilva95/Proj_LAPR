@@ -24,9 +24,9 @@ DROP TABLE IF EXISTS `client`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `client` (
   `id_client` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL,
-  `address` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
+  `name` text NOT NULL,
+  `address` text NOT NULL,
+  `email` text NOT NULL,
   `phone` int(9) NOT NULL,
   `private` int(1) NOT NULL,
   PRIMARY KEY (`id_client`)
@@ -201,7 +201,7 @@ CREATE TABLE `users` (
   `password` text NOT NULL,
   `email` text NOT NULL,
   `status` int(1) NOT NULL,
-  `data` mediumblob NOT NULL,
+  `data` mediumblob,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -212,7 +212,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (6,'Rui','admin','$1$r1C0feSA$H3R.bZ53GoCA9oVCgaylN/','rmns95@gmail.com',1,'123');
+INSERT INTO `users` VALUES (6,'Rui','admin','$1$r1C0feSA$H3R.bZ53GoCA9oVCgaylN/','rmns95@gmail.com',1,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -225,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-08 18:11:21
+-- Dump completed on 2017-01-08 23:11:51

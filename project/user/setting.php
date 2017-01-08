@@ -17,7 +17,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
     <?php	
 	if(isset($_POST['submit'])){
 		$name= protect($_POST['name']);
-		mysqli_query($conn,"UPDATE `users` SET `name`='".$name."' WHERE `id_user`='".access('id_user')."'")or die(mysqli_error());
+		mysqli_query($conn,"UPDATE `users` SET `name`='".$name."' WHERE `id_user`='".access('id_user')."'")or die("Error:".mysqli_error($conn));
 	}
 	?>
     <table width="305" >
@@ -39,7 +39,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
 			if(md5($old_password) == access('password')){
 				if(!empty($new_password) && !empty($again_password)){
 					if($new_password == $again_password){
-						mysqli_query($conn,"UPDATE `users` SET `password`='".md5($new_password)."' WHERE `id_user`='".access('id_user')."'")or die(mysqli_error());
+						mysqli_query($conn,"UPDATE `users` SET `password`='".md5($new_password)."' WHERE `id_user`='".access('id_user')."'")or die("Error:".mysqli_error($conn));
 						header('Location:'.check('logout.php'));
 					}else{
 						echo 'Repeat Password is Wrong';

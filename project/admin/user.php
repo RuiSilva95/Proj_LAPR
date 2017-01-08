@@ -25,14 +25,14 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
               if(empty($name)&& empty($password)){
                 echo 'The name and address field are required';   
               }else{
-                $SQL1 = mysqli_query($conn,"SELECT * FROM `users` WHERE `username`='".$name."'")or die(mysqli_error());
-				$SQL2 = mysqli_query($conn,"SELECT * FROM `users` WHERE `email`='".$email."'")or die(mysqli_error());
+                $SQL1 = mysqli_query($conn,"SELECT * FROM `users` WHERE `username`='".$name."'")or die("Error:".mysqli_error($conn));
+				$SQL2 = mysqli_query($conn,"SELECT * FROM `users` WHERE `email`='".$email."'")or die("Error:".mysqli_error($conn));
 				if(mysqli_num_rows($SQL1)==1){
 				  echo 'Name '.$name.' exist';
 				}elseif(mysqli_num_rows($SQL2)==1){
 				  echo 'Email '.$email.' exist'; 
 				}else{
-				  mysqli_query($conn,"INSERT INTO `users`(`username`,`name`,`password`,`email`,`status`) VALUE('".$name."','".$name."','".md5($password)."','".$email."','".$status."')") or die(mysqli_error());
+				  mysqli_query($conn,"INSERT INTO `users`(`username`,`name`,`password`,`email`,`status`) VALUE('".$name."','".$name."','".md5($password)."','".$email."','".$status."')") or die("Error:".mysqli_error($conn));
                 }
               } 
            }
@@ -75,7 +75,7 @@ if(!isset($_SESSION['id']) && $_SESSION['id']==2){
           <th width="170" scope="col"></th>
         </tr>
         <?php 
-        $SQL = mysqli_query($conn,"SELECT * FROM `users` ORDER BY `username` ASC")or die(mysqli_error());
+        $SQL = mysqli_query($conn,"SELECT * FROM `users` ORDER BY `username` ASC")or die("Error:".mysqli_error($conn));
         if(mysqli_num_rows($SQL)>0){
           while($field = mysqli_fetch_assoc($SQL)){
 			switch ($field['status']){
