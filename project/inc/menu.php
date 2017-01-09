@@ -138,36 +138,36 @@
     <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-            <li>
+            <li <?php echo (current_file()=='home.php')? 'class="active"':'';?>>
                 <a href="<?php echo check('home.php');?>"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li>
                 <a href="javascript:;" data-toggle="collapse" data-target="#drop1"><i class="fa fa-fw fa-file"></i> Sheet Repair <i class="fa fa-fw fa-caret-down"></i></a>
                 <ul id="drop1" class="collapse">
-                    <li>
+                    <li <?php echo (current_file()=='external.php')? 'class="active"':'';?>>
                         <a href="<?php echo check('external.php');?>">External</a>
                     </li>
-                    <li>
+                    <li <?php echo (current_file()=='internal.php')? 'class="active"':'';?>>
                         <a href="<?php echo check('internal.php');?>">Internal</a>
                     </li>
                 </ul>
             </li>
-            <li class="active">
+            <li <?php echo (current_file()=='client.php')? 'class="active"':'';?>>
                 <a href="<?php echo check('client.php');?>"><i class="fa fa-fw fa-users"></i> Client </a>
             </li>
-            <li>
+            <li <?php echo (current_file()=='service.php')? 'class="active"':'';?>>
                 <a href="<?php echo check('service.php');?>"><i class="fa fa-fw fa-wrench"></i> Service </a>
             </li>
             <?php
             if(access('status')=='1') {
                 echo '<li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-unlock-alt"></i> administration <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-unlock-alt"></i> Administration <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="drop2" class="collapse">
                         <li>
                             <a href="'.check('admin/mapping.php').'">Mapping</a>
                         </li>
                         <li>
-                            <a href="'.check('admin/user.php').'">User Management</a>
+                            <a href="'.check('admin/user.php').'"><i class="fa fa-fw fa-user"> </i> User Management</a>
                         </li>
                     </ul>
                 </li>';

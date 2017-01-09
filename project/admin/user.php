@@ -1,117 +1,175 @@
-<?php include("../inc/head.php"); 
+<?php require "../inc/head.php";
 
-if(!isset($_SESSION['id']) && $_SESSION['id']==2){
+if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
-?>
-<title>Takemore.com - User Management</title>
-<?php include("../inc/header.php"); ?>
-<?php include("../inc/menu.php"); ?>
-<div id="content">
-  <div class="titlecontent">
-    <p><a href="<?php echo check('home.php'); ?>">Home</a> <span> >> </span> Administrador <span> >> </span><a href="<?php echo check('user.php'); ?>">User Management</a></p>
-  </div>
-  <div class="bodycontent">
-	<div id="left-column">
-   	  <form id="user_form" name="user_form" method="POST" action="<?php echo $current_file; ?>">
-        <table width="261">
-          <?php 
-            if(isset($_POST['submit'])){
-              $name = protect($_POST['name']);
-              $password = protect($_POST['password']);
-			  $email = protect($_POST['email']);
-              $status = protect($_POST['status']);
-              if(empty($name)&& empty($password)){
-                echo 'The name and address field are required';   
-              }else{
-                $SQL1 = mysqli_query($conn,"SELECT * FROM `users` WHERE `username`='".$name."'")or die("Error:".mysqli_error($conn));
-				$SQL2 = mysqli_query($conn,"SELECT * FROM `users` WHERE `email`='".$email."'")or die("Error:".mysqli_error($conn));
-				if(mysqli_num_rows($SQL1)==1){
-				  echo 'Name '.$name.' exist';
-				}elseif(mysqli_num_rows($SQL2)==1){
-				  echo 'Email '.$email.' exist'; 
-				}else{
-				  mysqli_query($conn,"INSERT INTO `users`(`username`,`name`,`password`,`email`,`status`) VALUE('".$name."','".$name."','".md5($password)."','".$email."','".$status."')") or die("Error:".mysqli_error($conn));
-                }
-              } 
-           }
-           ?>
-          <tr>
-            <td width="84"><label for="name">Name*:</label></td>
-            <td width="171"><input name="name" type="text" id="name" maxlength="50" /></td>
-          </tr>
-          <tr>
-            <td><label for="password">Password*:</label></td>
-            <td><input name="password" type="text" id="password" maxlength="100" /></td>
-          </tr>
-          <tr>
-            <td><label for="email">Email:</label></td>
-            <td><input type="text" name="email" id="email" /></td>
-          </tr>
-          <tr>
-            <td><label for="status">Status:</label></td>
-            <td>
-              <select name="status" id="status">
-                  <option value="0">Employee</option>
-                  <option value="2">Administrator</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td><input type="submit" name="submit" id="submit" value="Create" /></td>
-          </tr>
-        </table>
-   	  </form>
-    </div>
-    <div id="right-column">
-      <table name="list" id="list">
-        <tr>
-          <th scope="col">Username:</th>
-          <th scope="col">Name:</th>
-          <th scope="col">Email:</th>
-          <th scope="col">Status:</th>
-          <th width="170" scope="col"></th>
-        </tr>
-        <?php 
-        $SQL = mysqli_query($conn,"SELECT * FROM `users` ORDER BY `username` ASC")or die("Error:".mysqli_error($conn));
-        if(mysqli_num_rows($SQL)>0){
-          while($field = mysqli_fetch_assoc($SQL)){
-			switch ($field['status']){
-				case 0:
-					$echo = 'Employee';
-					break;
-				case 2:
-					$echo = 'Administrador';
-					break;
-				} 
-             echo '<tr>';
-             echo '<td> '.$field['username'].' </td>';
-			 echo '<td> '.$field['name'].' </td>';
-			 echo '<td> '.$field['email'].' </td>';
-             echo '<td> '. $echo .' </td>';
-             echo '<td> 
-			          <a class="myButton" href="'.check('user.edit.php').'?id='.$field['id_user'].'">Edit</a>  
-			          <a class="myButton" href="'.check('user.edit.php').'?apg='.$field['id_user'].'">Delete</a>
-				  </td>';
-             echo '</tr>';
-          }
+
+
+if(isset($_POST['submit1'])) {
+    $name = protect($_POST['name']);
+    $username = protect($_POST['username']);
+    $password = protect($_POST['password']);
+    $email = protect($_POST['email']);
+    $status = protect($_POST['status']);
+    $data = file_get_contents($_FILES['pic']['tmp_name']);
+    $data = mysqli_real_escape_string($conn, $data);
+
+
+    $query = 'SELECT * FROM users WHERE username="'.$username.'";';
+    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+    if(mysqli_num_rows($result)==0) {
+        $query = 'SELECT * FROM users WHERE email="'.$email.'";';
+        $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+        if(mysqli_num_rows($result)==0) {
+
+            $query = 'INSERT INTO users(name, username, password, email, status, data) VALUE("'.$name.'","'.$username.'","'.crypt($password).'","'.$email.'","'.$status.'","'.$data.'");';
+            mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
         }else{
-          echo '<tr>';
-          echo '<td colspan="3"> No field found </td>';
-          echo '</tr>';
+            $wrongpass = 2;
+            echo 'Email '.$email.' exist';
+
         }
-       ?>
-       </table>
+    }else{
+        $wrongpass = 1;
+        echo 'Name '.$name.' exist';
+    }
+}
+
+
+
+?>
+
+<div id="wrapper">
+        <?php require "../inc/menu.php"; ?>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            User Management
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="../home.php">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#">Administration</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-user"> </i> User Management
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <br>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <form name="user_form" method="POST" action="<?php echo current_file(); ?> enctype="multipart/form-data"">
+                            <div class="form-group">
+                                <label for="Name">Name*:</label>
+                                <input type="text" name="name" class="form-control" id="Name" required="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Username">username*:</label>
+                                <input type="text" name="username" class="form-control" id="Username" required="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Password">Password*:</label>
+                                <input type="password" name="password" class="form-control" id="Password" required="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Email">Email*:</label>
+                                <input type="email" name="email" class="form-control" id="Email" required="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Status">Status:</label>
+                                <select name="status" class="form-control" id="Status">
+                                    <option value="0">Employee</option>
+                                    <option value="1">Administrator</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="File_input" class="col-sm-3">Picture:</label>
+                                <input type="file" name="pic" id="File_input">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="submit1" class="btn btn-default" id="submit" value="Create" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-7 col-lg-offset-1">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Picture</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $query = 'SELECT * FROM users ORDER BY name ASC;';
+                                    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                                    if(mysqli_num_rows($result)>0) {
+                                        while($row = mysqli_fetch_assoc($result)){
+                                            switch ($row['status']){
+                                            case 0:
+                                                $stat = 'Employee';
+                                                break;
+                                            case 1:
+                                                $stat = 'Administrador';
+                                                break;
+                                            }
+
+                                            echo '<tr>';
+                                            echo '<td> '.$row['name'].' </td>';
+                                            echo '<td> '.$row['username'].' </td>';
+                                            echo '<td> '.$row['email'].' </td>';
+                                            echo '<td> '. $stat .' </td>';
+                                            if($row['data']!=null) {
+                                                echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
+                                            }else{
+                                                echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
+                                            }
+
+                                            echo '<td>
+                            			          <a class="btn btn-default" href="'.current_file().'?edit='.$row['$row'].'">Edit</a>
+                            			          <a class="btn btn-default" href="'.current_file().'?apg='.$row['$row'].'">Delete</a>
+                            				  </td>';
+                                            echo '</tr>';
+                                        }
+                                    }else{
+                                        echo '<tr>';
+                                        echo '<td colspan="6"> <center>No field found</center></td>';
+                                        echo '</tr>';
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
     </div>
-  </div>
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-</div>
-<?php include("../inc/footer.php"); ?>
+    <!-- /#wrapper -->
+<?php require "../inc/footer.php"; ?>

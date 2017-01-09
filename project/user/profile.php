@@ -42,7 +42,7 @@ if(!isset($_SESSION['id'])) {
                         </div>
                         <div class="form-group">
                             <label for="ChangeEmail">Status:</label>
-                            <p class="form-control-static"><?php echo (access('status')==1)? 'Administrador': 'Empregado'; ?></p>
+                            <p class="form-control-static"><?php echo (access('status')==1)? 'Administrator': 'Employee'; ?></p>
                         </div>
                     </div>
 

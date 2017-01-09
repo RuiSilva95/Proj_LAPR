@@ -100,7 +100,7 @@ if(isset($_POST['submit1'])) {
                                 <input type="password" name="again_password" class="form-control" id="Again_Password" required="required"/>
                                 <p class="help-block"><?php echo($wrongpass==2)? 'Repeat Password is Wrong': ''; ?></p>
                             </div>
-                            <p class="help-block"><?php echo($wrongpass==3)? 'Password Change': ''; ?></p>
+                            <p class="help-block"><span class="label label-success"><?php echo($wrongpass==3)? 'Password Change': ''; ?></span></p>
                             <div class="form-group">
                                 <input type="submit" name="submit2" class="btn btn-default" value="Change password" />
                             </div>
@@ -111,15 +111,15 @@ if(isset($_POST['submit1'])) {
                         <form method="POST" name="formchangepassword" action="<?php echo current_file(); ?>" enctype="multipart/form-data">
 
                             <div class="form-group">
-                            <label for="File_input">File input:</label><br><br>
-                            <?php
-                            $pinc = access('data');
-                            if($pinc!=null) {
-                                echo '<i class="fa-border" style="font-size:118px"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="108" width="518"></i>';
-                            }else{
-                                echo '<i class="fa fa-user fa-border" style="font-size:118px"> </i>';
-                            }
-                            ?>
+                                <label for="File_input">Picture:</label><br><br>
+                                <?php
+                                $pinc = access('data');
+                                if($pinc!=null) {
+                                    echo '<i class="fa-border" style="font-size:118px"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="108" width="518"></i>';
+                                }else{
+                                    echo '<i class="fa fa-user fa-border" style="font-size:118px"> </i>';
+                                }
+                                ?>
                             </div>
 
                             <div class="form-group">
