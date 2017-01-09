@@ -47,7 +47,6 @@ if(!isset($_SESSION['id'])) {
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             DashBoard
-                            <small>Subheading</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li class="active">
@@ -60,7 +59,7 @@ if(!isset($_SESSION['id'])) {
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <form method="POST" class="form-inline" action="">
+                        <form method="POST" class="form-inline" action="<?php echo current_file(); ?>">
                             <legend><h2>Filter</h2></legend>
 
                             <div class="col-lg-2 form-group">
@@ -125,7 +124,7 @@ if(!isset($_SESSION['id'])) {
 
                             <div class="col-lg-2 form-group">
                                 <label for="NumberId">Number ID</label>
-                                <input type="text" name="numberid" class="form-control" id="NumberId" />
+                                <input type="text" name="numberid" class="form-control" id="NumberId" value="<?php echo $_POST['numberid']; ?>"  />
                             </div>
 
                             <div class="col-md-2 form-group"><br>

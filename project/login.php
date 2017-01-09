@@ -27,7 +27,7 @@ if(isset($_SESSION['id'])) {
     <div class="login">
 
     <img src="img/takemore_lg.png"/>
-        <form method="post">
+        <form method="POST" <?php echo current_file(); ?>>
             <input type="text" name="user" placeholder="Username" required="required" value="<?php echo $_POST['user'];?>">
             <input type="password" name="pass" placeholder="Password" required="required" value="<?php echo $_POST['pass'];?>">
 
@@ -36,6 +36,7 @@ if(isset($_SESSION['id'])) {
             if (isset($_POST['submit'])) {
                 $username=protect($_POST['user']);
                 $password=protect($_POST['pass']);
+
                 $query =  'SELECT * FROM users WHERE username="'.$username.'"';
                 $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                 if(mysqli_num_rows($result)==1) {
@@ -47,11 +48,11 @@ if(isset($_SESSION['id'])) {
                         header('Location:'.'home.php');
 
                     }else{
-                        echo 'password invalido volte tentar<br />';
+                        echo '<p style="color:#fff">password invalid try again</p>';
 
                     }
                 }else{
-                    echo 'Username invalido volte tentar<br />';
+                    echo '<p style="color:#fff">Username invalid try again</p>';
 
                 }
                 mysqli_close($conn);

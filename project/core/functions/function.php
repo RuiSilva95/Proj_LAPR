@@ -8,8 +8,12 @@ function protect($string)
 }
 
 //Detetar pagina que utilizador está
-$current_file = explode('/', $_SERVER['SCRIPT_NAME']);
-$current_file = end($current_file);
+function current_file()
+{
+    $current_file = explode('/', $_SERVER['SCRIPT_NAME']);
+    $current_file = end($current_file);
+    return $current_file;
+}
 
 //Verifica url dos componentes
 function check($link)

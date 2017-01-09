@@ -14,7 +14,7 @@ if(!isset($_SESSION['id'])) {
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="refresh" content="1.5; url=index.php"/>
+        <meta http-equiv="refresh" content="1.5; url=login.php"/>
         <title>Takemore.com</title>
 
         <!-- Latest compiled and minified CSS -->
@@ -31,7 +31,7 @@ if(!isset($_SESSION['id'])) {
 
     <div class="login">
         <h4>Saiu com Sucesso </h4>
-        <img src="img/takemore-lg.png" />
+        <img src="img/takemore_lg.png"/>
         <h4>Obrigado pela Visita</h4>
     </div>
 </body>

@@ -103,7 +103,7 @@
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <?php
-                    $pinc = access('data');
+                $pinc = access('data');
                 if($pinc!=null) {
                     echo '<img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="18" height="18">';
                 }else{
@@ -115,7 +115,7 @@
             </a>
             <ul class="dropdown-menu">
                 <li>
-                    <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    <a href="<?php echo check('user/profile.php'); ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
