@@ -52,9 +52,9 @@ DROP TABLE IF EXISTS `equip_problem`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `equip_problem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `problem/damage` varchar(500) NOT NULL,
-  `description(client)` varchar(500) NOT NULL,
-  `description(employee)` varchar(500) NOT NULL,
+  `problem/damage` text NOT NULL,
+  `description(client)` text NOT NULL,
+  `description(employee)` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -81,7 +81,7 @@ CREATE TABLE `equip_status` (
   `status` varchar(100) NOT NULL,
   `start_date` datetime NOT NULL,
   `end_date` datetime NOT NULL,
-  `final_time` varchar(50) NOT NULL,
+  `final_time` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -109,14 +109,14 @@ CREATE TABLE `equipment` (
   `id_client` int(11) NOT NULL,
   `id_service` int(11) NOT NULL,
   `entity` int(1) NOT NULL,
-  `cod` varchar(50) NOT NULL,
-  `budget` varchar(50) NOT NULL,
-  `equipment` varchar(100) NOT NULL,
-  `mark/model` varchar(100) NOT NULL,
-  `n_serie` varchar(100) NOT NULL,
-  `accessories` varchar(500) NOT NULL,
-  `service` varchar(500) NOT NULL,
-  `provided` varchar(500) NOT NULL,
+  `cod` text NOT NULL,
+  `budget` text NOT NULL,
+  `equipment` text NOT NULL,
+  `mark/model` text NOT NULL,
+  `n_serie` text NOT NULL,
+  `accessories` text NOT NULL,
+  `service` text NOT NULL,
+  `provided` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,9 +168,9 @@ DROP TABLE IF EXISTS `service_problem`;
 CREATE TABLE `service_problem` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `check` int(1) NOT NULL,
-  `budget` varchar(50) NOT NULL,
+  `budget` text NOT NULL,
   `confirmation` tinyint(1) NOT NULL,
-  `reported_problem` varchar(500) NOT NULL,
+  `reported_problem` text NOT NULL,
   `sending_date` datetime NOT NULL,
   `delivery_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
