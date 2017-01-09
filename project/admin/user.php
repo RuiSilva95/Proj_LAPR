@@ -49,15 +49,16 @@ if(isset($_POST['submit1'])) {
     $query = 'SELECT * FROM users WHERE username="'.$username.'";';
     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
     $row = mysqli_fetch_assoc($result);
+
     if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_user'])) {
         $query = 'SELECT * FROM users WHERE email="'.$email.'";';
         $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
         $row = mysqli_fetch_assoc($result);
-        if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $email==$row['email'])) {
 
+        if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_user'])) {
             $query = 'UPDATE users SET '.$data.' name="'.$name.'", username="'.$username.'",  email="'.$email.'", status='.$status.' WHERE id_user='.$id.';';
-            echo $query;
             mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+            $_GET['edit']='';
         }else{
             $wrongpass1 = 2;
         }
@@ -155,9 +156,8 @@ if(isset($_POST['submit1'])) {
                             </div>
                         </form>
                     </div>
+
                     <div class="col-lg-9">
-
-
                         <div class="table-responsive">
                             <table class="table table-hover table-striped ">
                                 <thead>
