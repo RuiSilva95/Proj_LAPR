@@ -1,20 +1,79 @@
-<?php require "../inc/head.php";
+<?php require "inc/head.php";
 
 if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
+
+
+if(isset($_POST['submit1'])) {
+    $name = protect($_POST['name']);
+    $address = protect($_POST['address']);
+    $email = protect($_POST['email']);
+    $phone = protect($_POST['phone']);
+
+    $query = 'SELECT * FROM service WHERE name="'.$name.'";';
+    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+    if(mysqli_num_rows($result)==0) {
+        $query = 'SELECT * FROM service WHERE email="'.$email.'";';
+        $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+        if(mysqli_num_rows($result)==0) {
+            $query = 'INSERT INTO service(name, address, email, phone) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.');';
+            mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+        }else{
+            $wrongpass = 2;
+        }
+    }else{
+        $wrongpass = 1;
+    }
+}else if(isset($_GET['sav'])) {
+    $id =protect($_GET['edit']);
+    $name = protect($_GET['name']);
+    $address = protect($_GET['address']);
+    $email = protect($_GET['email']);
+    $phone = protect($_GET['phone']);
+
+
+    $query = 'SELECT * FROM service WHERE name="'.$name.'";';
+    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+    $row = mysqli_fetch_assoc($result);
+
+    if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_service'])) {
+        $query = 'SELECT * FROM service WHERE email="'.$email.'";';
+        $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+        $row = mysqli_fetch_assoc($result);
+
+        if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_service'])) {
+            $query = 'UPDATE service SET name="'.$name.'", address="'.$address.'",  email="'.$email.'", phone='.$phone.' WHERE id_service='.$id.';';
+            mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+            $_GET['edit']='';
+        }else{
+            $wrongpass1 = 2;
+        }
+    }else{
+        $wrongpass1 = 1;
+    }
+
+}else if(isset($_GET['delet'])) {
+    $query = 'DELETE FROM service WHERE id_service='.$_GET['delet'].';';
+    mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+}
+
+
+
 ?>
 
 <div id="wrapper">
-        <?php require "../inc/menu.php"; ?>
+        <?php require "inc/menu.php"; ?>
         <div id="page-wrapper">
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            User Management
+                            Service
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -28,9 +87,132 @@ if(!isset($_SESSION['id'])) {
                 </div>
                 <!-- /.row -->
                 <br>
+                <div class="row">
+                    <?php
+                    if($wrongpass1==1) {
+                        echo '
+                            <div class="alert alert-danger">
+                                <strong>Oh snap!</strong> Name "'.$name.'" on edit already exist.
+                            </div>';
+                    }else if($wrongpass1==2) {
+                        echo '
+                            <div class="alert alert-danger">
+                                <strong>Oh snap!</strong> Email "'.$email.'" on edit already exist.
+                            </div>';
+                    }
+                    ?>
+                    <div class="col-lg-3">
+                        <form name="service_form" method="POST" action="<?php echo current_file(); ?>" enctype="multipart/form-data">
+                            <div class="form-group <?php echo($wrongpass==1)? 'has-error': ''; ?>">
+                                <label for="Name">Name*:</label>
+                                <input type="text" name="name" class="form-control" id="Name" required="required"/>
+                                <p class="help-block"><?php echo($wrongpass==1)? 'Name "'.$name.'" exist': ''; ?></p>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="Adress">Adress*:</label>
+                                <input type="text" name="address" class="form-control" id="Adress" required="required"/>
+                                <p class="help-block"></p>
+                            </div>
 
+                            <div class="form-group <?php echo($wrongpass==2)? 'has-error': ''; ?>">
+                                <label for="Email">Email*:</label>
+                                <input type="email" name="email" class="form-control" id="Email" required="required"/>
+                                <p class="help-block"><?php echo($wrongpass==2)? 'Email "'.$email.'" exist': ''; ?></p>
+                            </div>
 
+                            <div class="form-group">
+                                <label for="Phone">Phone:</label>
+                                <input type="text" name="phone" class="form-control" id="Phone" maxlength="9"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="submit1" class="btn btn-default" id="submit" value="Create" />
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped ">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $pageNumber=3;
+
+                                $offset= (mysqli_real_escape_string($conn, $_GET["page"])-1)*$pageNumber;
+                                if($offset<0) {
+                                    $offset=0;
+                                }
+
+                                $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM service;'));
+
+                                $query = 'SELECT * FROM service ORDER BY name ASC LIMIT '.$pageNumber.' OFFSET '.$offset.';';
+                                $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+                                if(mysqli_num_rows($result)>0) {
+                                    while($row = mysqli_fetch_assoc($result)){
+
+                                        if($row['id_service']==$_GET['edit'] && isset($_GET['edit'])) {
+                                            echo '<form name="edit_form" method="GET"';
+
+                                            echo '<tr>';
+                                            echo '<td class="col-md-2"> <input type="text" name="name" class="form-control" width="10" value="'.$row['name'].'" required="required"> </td>';
+                                            echo '<td class="col-md-2"> <input type="text" name="address" class="form-control" value="'.$row['address'].'" required="required"> </td>';
+                                            echo '<td> <input type="email" name="email" class="form-control" value="'.$row['email'].'" required="required"> </td>';
+                                            echo '<td> <input type="text" name="phone" class="form-control" value="'.$row['phone'].'" maxlength="9"</td>';
+                                            echo '<td>
+                                                  <button type="submit" name="sav" class="btn btn-default">Save</button>
+                                                  <a class="btn btn-default" href="'.current_file().'?page='.$_GET['page'].'">Cancel</a>
+                                                  </td>';
+                                            echo '</tr>';
+                                            echo '<input type="hidden" name="edit" value="'. $row["id_service"]. '">';
+                                            echo '<input type="hidden" name="page" value="'. $_GET['page']. '">';
+                                            echo '</form>';
+                                        }else{
+                                            echo '<tr>';
+                                            echo '<td> '.$row['name'].' </td>';
+                                            echo '<td> '.$row['address'].' </td>';
+                                            echo '<td> '.$row['email'].' </td>';
+                                            echo '<td> '.$row['phone'].' </td>';
+
+                                            echo '<td>
+                                                  <a class="btn btn-default" href="'.current_file().'?edit='.$row['id_service'].'">Edit</a>
+                                                  <a class="btn btn-default" href="'.current_file().'?delet='.$row['id_service'].'">Delete</a>
+                                                  </td>';
+                                            echo '</tr>';
+                                        }
+                                    }
+                                }else{
+                                    echo '<tr>';
+                                    echo '<td colspan="6"> <center>No field found</center></td>';
+                                    echo '</tr>';
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <nav aria-label="...">
+                            <center>
+                                <ul class="pagination pagination-sm">
+                                    <?php
+                                    for($i=0;$i<($count/$pageNumber);$i++){
+                                        echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page='.($i+1).'">'.($i+1).'</a></li>';
+                                    }
+                                    ?>
+                                </ul>
+                            </center>
+                        </nav>
+                    </div>
+
+                </div>
 
             </div>
             <!-- /.container-fluid -->
@@ -40,126 +222,4 @@ if(!isset($_SESSION['id'])) {
 
     </div>
     <!-- /#wrapper -->
-<?php require "../inc/footer.php"; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php require "inc/head.php";
-
-if(!isset($_SESSION['id'])) {
-    echo "Não tes acesso a esta pagina";
-    die();
-}
-?>
-<title>Takemore.com - Service</title>
-<?php require "inc/header.php"; ?>
-<?php require "inc/menu.php"; ?>
-<div id="content">
-  <div class="titlecontent">
-    <p><a href="<?php echo check('home.php'); ?>">Home</a><span> >> </span><a href="<?php echo check('service.php'); ?>">Service</a></p>
-  </div>
-  <div class="bodycontent">
-    <div id="left-column">
-     <form id="service_form" name="service_form" method="POST" action="<?php echo $current_file; ?>">
-        <table width="261">
-            <?php
-            if(isset($_POST['submit'])) {
-                       $name = protect($_POST['name']);
-                       $address = protect($_POST['address']);
-                       $email = protect($_POST['email']);
-                       $phone = protect($_POST['phone']);
-                if(empty($name)&& empty($address)) {
-                    echo 'The name and address field are required';
-                }else{
-                    $SQL1 = mysqli_query($conn, "SELECT * FROM `service` WHERE `name`='".$name."'")or die("Error:".mysqli_error($conn));
-                    $SQL2 = mysqli_query($conn, "SELECT * FROM `service` WHERE `address`='".$address."'")or die("Error:".mysqli_error($conn));
-
-                    if(mysqli_num_rows($SQL1)==1) {
-                           echo 'Name "'.$name.'" exist';
-                    }else if(mysqli_num_rows($SQL2)==1) {
-                        echo 'Address "'.$address.'" exist';
-                    }else{
-                         mysqli_query($conn, "INSERT INTO `service`(`name`,`address`,`email`,`phone`) VALUE('".$name."','".$address."','".$email."','".$phone."')") or die("Error:".mysqli_error($conn));
-                    }
-                }
-            }
-            ?>
-          <tr>
-            <td width="84"><label for="name">Name*:</label></td>
-            <td width="171"><input name="name" type="text" id="name" maxlength="50" /></td>
-          </tr>
-          <tr>
-            <td><label for="address">Address*:</label></td>
-            <td><input name="address" type="text" id="address" maxlength="100" /></td>
-          </tr>
-          <tr>
-            <td><label for="email">Email:</label></td>
-            <td><input name="email" type="text" id="email" maxlength="100" /></td>
-          </tr>
-          <tr>
-            <td><label for="phone">Phone:</label></td>
-            <td><input name="phone" type="text" id="phone" maxlength="9" /></td>
-          </tr>
-          <tr>
-            <td>&nbsp;</td>
-            <td><input name="submit" type="submit" value="Create" /></td>
-          </tr>
-       </table>
-     </form>
-     </div>
-     <div id="right-column">
-       <table name="list" id="list">
-          <tr>
-            <th scope="col">Name:</th>
-            <th scope="col">Address:</th>
-            <th scope="col">Email:</th>
-            <th scope="col">Phone:</th>
-            <th width="170" scope="col"></th>
-          </tr>
-            <?php
-            $SQL= mysqli_query($conn, "SELECT * FROM `service` ORDER BY `name` ASC")or die("Error:".mysqli_error($conn));
-            if(mysqli_num_rows($SQL)>0) {
-                while($field = mysqli_fetch_assoc($SQL)){
-                     echo '<tr>';
-                     echo '<td> '.$field['name'].' </td>';
-                     echo '<td> '.$field['address'].' </td>';
-                     echo '<td> '.$field['email'].' </td>';
-                     echo '<td> '.$field['phone'].' </td>';
-                     echo '<td> <a class="myButton" href="'.check('service.edit.php').'?id='.$field['id_service'].'">Edit</a>
-				            <a class="myButton" href="'.check('service.edit.php').'?apg='.$field['id_service'].'">Delete</a> </td>';
-                     echo '</tr>';
-                     echo '</tr>';
-                }
-            }else{
-                echo '<tr>';
-                echo '<td colspan="5"> No field found </td>';
-                echo '</tr>';
-            }
-                    ?>
-        </table>
-     </div>
-  </div>
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-</div>
 <?php require "inc/footer.php"; ?>

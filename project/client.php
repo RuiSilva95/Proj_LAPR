@@ -57,7 +57,7 @@ if(isset($_POST['submit1'])) {
     }
 
 }else if(isset($_GET['delet'])) {
-    $query = 'DELETE FROM client WHERE id-client='.$_GET['delet'].';';
+    $query = 'DELETE FROM client WHERE id_client='.$_GET['delet'].';';
     mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
 }
 
