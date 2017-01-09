@@ -20,15 +20,15 @@ if(is_file("core/init.php")) {
     <title>Takemore.com</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo check('css/bootstrap.min.css'); ?>" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="<?php echo check('css/sb-admin.css'); ?>" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="css/plugins/morris.css" rel="stylesheet">
+    <link href="<?php echo check('css/plugins/morris.css'); ?>" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo check('css/font-awesome.min.css'); ?>" rel="stylesheet" type="text/css">
 </head>
 <body>

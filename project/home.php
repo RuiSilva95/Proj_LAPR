@@ -7,7 +7,6 @@ if(!isset($_SESSION['id'])) {
 */
 ?>
 
-
 <script>
     var url = window.location.toString();
     var query_string = url.split('?');
