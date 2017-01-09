@@ -28,13 +28,46 @@ if(isset($_POST['submit1'])) {
             mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
         }else{
             $wrongpass = 2;
-            echo 'Email '.$email.' exist';
-
         }
     }else{
         $wrongpass = 1;
-        echo 'Name '.$name.' exist';
     }
+}else if(isset($_GET['sav'])) {
+    $id =protect($_GET['edit']);
+    $name = protect($_GET['name']);
+    $username = protect($_GET['username']);
+    $email = protect($_GET['email']);
+    $status = protect($_GET['status']);
+    if(isset($_FILES['pic'])) {
+        echo 'entrou';
+        $data = file_get_contents($_FILES['pic']['tmp_name']);
+        $data = mysqli_real_escape_string($conn, $data);
+        $data = 'data="'.$data.'",';
+    }else{
+        $data = ' ';
+    }
+    $query = 'SELECT * FROM users WHERE username="'.$username.'";';
+    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+    $row = mysqli_fetch_assoc($result);
+    if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_user'])) {
+        $query = 'SELECT * FROM users WHERE email="'.$email.'";';
+        $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+        $row = mysqli_fetch_assoc($result);
+        if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $email==$row['email'])) {
+
+            $query = 'UPDATE users SET '.$data.' name="'.$name.'", username="'.$username.'",  email="'.$email.'", status='.$status.' WHERE id_user='.$id.';';
+            echo $query;
+            mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+        }else{
+            $wrongpass1 = 2;
+        }
+    }else{
+        $wrongpass1 = 1;
+    }
+
+}else if(isset($_GET['delet'])) {
+    $query = 'DELETE FROM users WHERE id_user='.$_GET['delet'].';';
+    mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
 }
 
 
@@ -67,16 +100,30 @@ if(isset($_POST['submit1'])) {
                 <!-- /.row -->
                 <br>
                 <div class="row">
-                    <div class="col-lg-4">
-                        <form name="user_form" method="POST" action="<?php echo current_file(); ?> enctype="multipart/form-data"">
+                    <?php
+                    if($wrongpass1==1) {
+                        echo '
+                            <div class="alert alert-danger">
+                                <strong>Oh snap!</strong> Username "'.$username.'" on edit already exist.
+                            </div>';
+                    }else if($wrongpass1==2) {
+                        echo '
+                            <div class="alert alert-danger">
+                                <strong>Oh snap!</strong> Email "'.$email.'" on edit already exist.
+                            </div>';
+                    }
+                    ?>
+                    <div class="col-lg-3">
+                        <form name="user_form" method="POST" action="<?php echo current_file(); ?>" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="Name">Name*:</label>
                                 <input type="text" name="name" class="form-control" id="Name" required="required"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group <?php echo($wrongpass==1)? 'has-error': ''; ?>">
                                 <label for="Username">username*:</label>
                                 <input type="text" name="username" class="form-control" id="Username" required="required"/>
+                                <p class="help-block"><?php echo($wrongpass==1)? 'Username "'.$username.'" exist': ''; ?></p>
                             </div>
 
                             <div class="form-group">
@@ -84,9 +131,10 @@ if(isset($_POST['submit1'])) {
                                 <input type="password" name="password" class="form-control" id="Password" required="required"/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group <?php echo($wrongpass==2)? 'has-error': ''; ?>">
                                 <label for="Email">Email*:</label>
                                 <input type="email" name="email" class="form-control" id="Email" required="required"/>
+                                <p class="help-block"><?php echo($wrongpass==2)? 'Email "'.$email.'" exist': ''; ?></p>
                             </div>
 
                             <div class="form-group">
@@ -107,8 +155,9 @@ if(isset($_POST['submit1'])) {
                             </div>
                         </form>
                     </div>
+                    <div class="col-lg-9">
 
-                    <div class="col-lg-7 col-lg-offset-1">
+
                         <div class="table-responsive">
                             <table class="table table-hover table-striped ">
                                 <thead>
@@ -123,8 +172,17 @@ if(isset($_POST['submit1'])) {
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $query = 'SELECT * FROM users ORDER BY name ASC;';
+                                    $pageNumber=3;
+
+                                    $offset= (mysqli_real_escape_string($conn, $_GET["page"])-1)*$pageNumber;
+                                    if($offset<0) {
+                                        $offset=0;
+                                    }
+
+                                    $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM users;'));
+                                    $query = 'SELECT * FROM users ORDER BY name ASC LIMIT '.$pageNumber.' OFFSET '.$offset.';';
                                     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
                                     if(mysqli_num_rows($result)>0) {
                                         while($row = mysqli_fetch_assoc($result)){
                                             switch ($row['status']){
@@ -132,26 +190,55 @@ if(isset($_POST['submit1'])) {
                                                 $stat = 'Employee';
                                                 break;
                                             case 1:
-                                                $stat = 'Administrador';
+                                                $stat = 'Administrator';
                                                 break;
                                             }
 
-                                            echo '<tr>';
-                                            echo '<td> '.$row['name'].' </td>';
-                                            echo '<td> '.$row['username'].' </td>';
-                                            echo '<td> '.$row['email'].' </td>';
-                                            echo '<td> '. $stat .' </td>';
-                                            if($row['data']!=null) {
-                                                echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
-                                            }else{
-                                                echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
-                                            }
+                                            if($row['id_user']==$_GET['edit'] && isset($_GET['edit'])) {
+                                                echo '<form name="edit_form" method="GET"';
 
-                                            echo '<td>
-                            			          <a class="btn btn-default" href="'.current_file().'?edit='.$row['$row'].'">Edit</a>
-                            			          <a class="btn btn-default" href="'.current_file().'?apg='.$row['$row'].'">Delete</a>
-                            				  </td>';
-                                            echo '</tr>';
+                                                echo '<tr>';
+                                                echo '<td class="col-md-2"> <input type="text" name="name" class="form-control" width="10" value="'.$row['name'].'" required="required"> </td>';
+                                                echo '<td class="col-md-2"> <input type="text" name="username" class="form-control" value="'.$row['username'].'" required="required"> </td>';
+                                                echo '<td> <input type="email" name="email" class="form-control" value="'.$row['email'].'" required="required"> </td>';
+                                                echo '<td>
+                                                        <select name="status" class="form-control" id="Status">
+                                                            <option value="0" '.active('0', $row['status']).'>Employee</option>
+                                                            <option value="1" '.active('1', $row['status']).'>Administrator</option>
+                                                        </select>
+                                                 </td>';
+                                                if($row['data']!=null) {
+                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
+                                                }else{
+                                                    echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
+                                                }
+                                                echo '<td>
+                                			          <button type="submit" name="sav" class="btn btn-default">Save</button>
+                                			          <a class="btn btn-default" href="'.current_file().'?page='.$_GET['page'].'">Cancel</a>
+                    				                  </td>';
+                                                echo '</tr>';
+                                                echo '<input type="hidden" name="edit" value="'. $row["id_user"]. '">';
+                                                echo '<input type="hidden" name="page" value="'. $_GET['page']. '">';
+                                                echo '</form>';
+                                            }else{
+                                                echo '<tr>';
+                                                echo '<td> '.$row['name'].' </td>';
+                                                echo '<td> '.$row['username'].' </td>';
+                                                echo '<td> '.$row['email'].' </td>';
+                                                echo '<td> '. $stat .' </td>';
+
+                                                if($row['data']!=null) {
+                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
+                                                }else{
+                                                    echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
+                                                }
+
+                                                echo '<td>
+                                			          <a class="btn btn-default" href="'.current_file().'?edit='.$row['id_user'].'">Edit</a>
+                                			          <a class="btn btn-default" href="'.current_file().'?delet='.$row['id_user'].'">Delete</a>
+                    				                  </td>';
+                                                echo '</tr>';
+                                            }
                                         }
                                     }else{
                                         echo '<tr>';
@@ -161,9 +248,21 @@ if(isset($_POST['submit1'])) {
                                     ?>
                                 </tbody>
                             </table>
+                            <nav aria-label="...">
+                                <center>
+                                    <ul class="pagination pagination-sm">
+                                        <?php
+                                        for($i=0;$i<($count/$pageNumber);$i++){
+                                            echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page='.($i+1).'">'.($i+1).'</a></li>';
+                                        }
+                                        ?>
+                                    </ul>
+                                </center>
+                            </nav>
                         </div>
                     </div>
                 </div>
+                <br>
             </div>
             <!-- /.container-fluid -->
 

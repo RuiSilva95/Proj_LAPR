@@ -9,7 +9,7 @@
 <!-- Morris Charts JavaScript -->
 <script src="<?php echo check('js/plugins/morris/raphael.min.js'); ?>"></script>
 <script src="<?php echo check('js/plugins/morris/morris.min.js'); ?>"></script>
-<script src="<?php echo check('js/plugins/morris/morris-data.js'); ?>"></script>'); ?>"
+<script src="<?php echo check('js/plugins/morris/morris-data.js'); ?>"></script>
 <!-- Flot Charts JavaScript -->
 <script src="<?php echo check('js/plugins/flot/jquery.flot.js'); ?>"></script>
 <script src="<?php echo check('js/plugins/flot/jquery.flot.tooltip.min.js'); ?>"></script>
