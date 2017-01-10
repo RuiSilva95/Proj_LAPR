@@ -12,21 +12,13 @@
              src="<?php echo check('img/takemore_lg.png');?>"></a>
     </div>
 
-
-<?php
-$result = mysqli_query($conn, $query);
-while ($row = mysqli_fetch_assoc($result)) {
-
-}
-?>
-
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
                 <?php
-
+                $query = 'SELECT * FROM message WHERE para = "'.$_SESSION['id'].'" ORDER BY para DESC LIMIT 3';
                 $result = mysqli_query($conn, $query);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $querypic = 'SELECT * FROM users WHERE id_user = "'.$row["de"].'"';
@@ -109,7 +101,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                     <a href="<?php echo check('user/profile.php'); ?>"><i class="fa fa-fw fa-user"></i> Profile</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+                    <a href="<?php echo check('user/inbox.php'); ?>"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
                 </li>
                 <li>
                     <a href="<?php echo check('user/setting.php'); ?>"><i class="fa fa-fw fa-gear"></i> Settings</a>

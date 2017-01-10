@@ -1,5 +1,5 @@
 <?php
-require "inc/head.php";
+require "../inc/head.php";
 
 if(!isset($_SESSION['id'])) {
     echo "Não tens acesso a esta pagina";
@@ -29,7 +29,7 @@ if(isset($_POST['submit2'])) {
 
 
 <div id="wrapper">
-        <?php require "inc/menu.php"; ?>
+        <?php require "../inc/menu.php"; ?>
         <div id="page-wrapper">
             <div class="container-fluid">
                 <!-- Page Heading -->
@@ -215,7 +215,7 @@ if(isset($_POST['submit2'])) {
           <!-- /#page-wrapper -->
       </div>
       <!-- /#wrapper -->
-    <?php require "inc/footer.php"; ?>
+    <?php require "../inc/footer.php"; ?>
 
 
 <div class="container">
