@@ -112,7 +112,6 @@ if(isset($_POST['submit1'])) {
                             <div class="form-group">
                                 <label for="Adress">Adress*:</label>
                                 <input type="text" name="address" class="form-control" id="Adress" required="required"/>
-                                <p class="help-block"></p>
                             </div>
 
                             <div class="form-group <?php echo($wrongpass==2)? 'has-error': ''; ?>">
@@ -210,16 +209,13 @@ if(isset($_POST['submit1'])) {
                                 </ul>
                             </center>
                         </nav>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
             <!-- /.container-fluid -->
-
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 <?php require "inc/footer.php"; ?>

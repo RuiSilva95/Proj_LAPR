@@ -1,18 +1,79 @@
-<?php require "inc/head.php"; 
+<?php require "inc/head.php";
 
 if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
+
+
 ?>
-<title>Takemore.com - External</title>
-<?php require "inc/header.php"; ?>
-<?php require "inc/menu.php"; ?>
-<div id="content">
-  <div class="titlecontent">
- <p><a href="<?php echo check('home.php'); ?>">Home</a> <span> >> </span><a href="#">Sheet Repair</a><span> >> </span><a href="<?php echo check('external.php'); ?>">External</a></p>
-  </div>
-  <div class="bodycontent">
+
+<div id="wrapper">
+        <?php require "inc/menu.php"; ?>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Client
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="../home.php">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#">Sheet Repair</a>
+                            </li>
+                            <li class="active">
+                                 External
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <br>
+
+                <div class="row">
+                    <div class="col-lg-12">
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="Description">Description:</label>
+                            <textarea  name="description" class="form-control" id="Description" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Service_Provided">Service Provided:</label>
+                            <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Budget">Budget:</label>
+                            <input type="text" name="budget" class="form-control" id="Budget"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" name="submit1" class="btn btn-default" id="submit" value="Create" />
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        <!-- /.container-fluid -->
+    </div>
+</div>
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<?php require "inc/footer.php"; ?>
+
+
+
     <form id="repair_form" name="repair_form" method="POST" action="<?php echo $current_file; ?>">
         <?php
         if(isset($_POST['submit']) || isset($_POST['submit2'])) {
@@ -59,6 +120,7 @@ if(!isset($_SESSION['id'])) {
             }
         }
     ?>
+
          <table>
         <tr>
           <td><label for="client">Client:</label></td>

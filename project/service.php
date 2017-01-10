@@ -211,7 +211,7 @@ if(isset($_POST['submit1'])) {
                             </center>
                         </nav>
                     </div>
-
+                </div>
                 </div>
 
             </div>
