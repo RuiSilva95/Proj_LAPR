@@ -353,22 +353,22 @@ Nós vamos ligar a sua empresa com os sistemas de parceiros certificados, todos 
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/microsoft_partner.png" class="img-responsive img-centered" alt="">
+                        <img src="img/partner/microsoft_partner.png" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/hppartner.png" class="img-responsive img-centered" alt="">
+                        <img src="img/partner/hppartner.png" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/tmi_avat.jpg" class="img-responsive img-centered" alt="">
+                        <img src="img/partner/tmi_avat.jpg" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/sagepartner.png" class="img-responsive img-centered" alt="">
+                        <img src="img/partner/sagepartner.png" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
             </div>
