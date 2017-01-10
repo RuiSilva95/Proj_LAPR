@@ -30,12 +30,12 @@ function javascript(arg) {
 
 //Verificação de um select. Caso valor seja superior 0 vai proibir escrita em alguns textbox
 function verificaOpcao(valor) {
-    if (valor >= 0) {
+    if (valor > 0) {
         document.getElementById("Name").disabled = true;
         document.getElementById("Address").disabled = true;
         document.getElementById("Email").disabled = true;
         document.getElementById("Phone").disabled = true;
-    } else if (valor == 'NULL') {
+    } else if (valor == 0) {
         document.getElementById("Name").disabled = false;
         document.getElementById("Address").disabled = false;
         document.getElementById("Email").disabled = false;

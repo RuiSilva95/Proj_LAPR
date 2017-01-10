@@ -6,45 +6,74 @@ if(!isset($_SESSION['id'])) {
 }
 
 
-if(isset($_POST['submit']) || isset($_POST['submit2'])) {
-      $client = protect($_POST['client']);
-      $status = protect($_POST['status']);
-      $employee = protect($_POST['employee']);
+if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
+
+      $id_client = protect($_POST['client']);
+      $id_status = protect($_POST['status']);
+      $id_employee = protect($_POST['employee']);
+
       $name = protect($_POST['name']);
       $address = protect($_POST['address']);
+      $email = protect($_POST['email']);
       $phone = protect($_POST['phone']);
+
       $initial_date = protect($_POST['initial_date']);
       $final_date = protect($_POST['final_date']);
       $working_hours = protect($_POST['working_hours']);
+
       $description = protect($_POST['description']);
       $service_provided = protect($_POST['service_provided']);
       $budget = protect($_POST['budget']);
-      $cod = rand();
-    if($status==0 && $employee==0) {
-        echo 'Fill required fields';
+
+    if($id_status=='null') {
+        echo 'Need Select Status';
+
     }else{
-        if($client==0) {
-            if(empty($name)) {
-                 echo 'If not selected Client. Write at least name';
-                $verf = 1;
-            }else{
-                mysqli_query($conn, "INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
-                $client = mysqli_result(mysqli_query($conn, "SELECT MAX(`id_client`) FROM `client`"), 0, 0);
+
+        if($id_employee==0) {
+            echo 'Need Select Employee';
+        }else{
+            if($id_client==0) {
+                $query = 'SELECT * FROM client WHERE name="'.$name.'"';
+                $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                if(mysqli_num_rows($result)==0) {
+                    $query = 'SELECT * FROM client WHERE email="'.$email.'"';
+                    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+                    if(mysqli_num_rows($result)==0) {
+                        $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
+                        mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                        $id_client = mysqli_insert_id($conn);
+                        $verf = 1;
+                    }else{
+                        echo 'Email client exist';
+                        $verf = 0;
+                    }
+                }else{
+                    echo 'Name client exist';
+                    $verf = 0;
+                }
             }
-        }
-        if(empty($verf)) {
-            mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','','1','".$cod."','".$budget."','','','','','".$service_provided."','')")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','','','".$description."')")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','". $initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','','','','','','')")or die("Error:".mysqli_error($conn));
-            if(isset($_POST['submit2'])) {
-                 $SQL = mysqli_query($conn, "Select * FROM `equipment` WHERE `cod`='$cod'");
-                 $SQL = mysqli_fetch_assoc($SQL);
-                 $id = $SQL['id'];
-                 $idcli = $SQL['id_client'];
-                 header('Location:'.check('home.php').'?imp=1&id='.$id.'&idcli='.$idcli.'&empr='.$employee.'');
+
+
+            if($verf==1) {
+                die('entrou1');
+                mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','','1','".$cod."','".$budget."','','','','','".$service_provided."','')")or die("Error:".mysqli_error($conn));
+                mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','','','".$description."')")or die("Error:".mysqli_error($conn));
+                mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','". $initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
+                mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','','','','','','')")or die("Error:".mysqli_error($conn));
+                if(isset($_POST['submit2'])) {
+                     $SQL = mysqli_query($conn, "Select * FROM `equipment` WHERE `cod`='$cod'");
+                     $SQL = mysqli_fetch_assoc($SQL);
+                     $id = $SQL['id'];
+                     $idcli = $SQL['id_client'];
+                     header('Location:'.check('home.php').'?imp=1&id='.$id.'&idcli='.$idcli.'&empr='.$employee.'');
+                }else{
+                    header('Location:'.check('home.php'));
+                }
             }else{
-                 header('Location:'.check('home.php'));
+
+                die('entrou2');
             }
         }
     }
@@ -86,7 +115,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                 <label for="Client">Client</label>
                                 <select name="client" class="form-control" id="client" onchange="verificaOpcao(this.value)">
                                     <?php
-                                    echo '<option value="NULL"> -- Select Client -- </option>';
+                                    echo '<option value="0"> -- Select Client -- </option>';
                                     $query = 'SELECT * FROM client WHERE private=0 ORDER BY name ASC;';
                                     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                                     if(mysqli_num_rows($result)>=1) {
@@ -94,7 +123,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                             echo '<option value="'.$row['id_client'].'" '.active($row['id_client'], $_POST['client']).' >'.$row['name'].'</option>';
                                         }
                                     }else{
-                                        echo '<option value="NULL">No value found</option>';
+                                        echo '<option value="0">No value found</option>';
                                     }
                                     ?>
                                 </select>
@@ -103,7 +132,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                             <div class="form-group col-lg-3">
                                 <label for="Status">Status</label>
                                 <select name="status" class="form-control" id="Status">
-                                    <option value='NULL'> -- Select Status -- </option>
+                                    <option value="0"> -- Select Status -- </option>
                                     <option value="Waits" <?php echo active('Waits', $_POST['status']); ?>>Waits</option>
                                     <option value="Budgeted" <?php echo active('Budgeted', $_POST['status']); ?>>Budgeted</option>
                                     <option value="Under Repair" <?php echo active('Under Repair', $_POST['status']); ?>>Under Repair</option>
@@ -118,7 +147,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                 <label for="Employee">Employee</label>
                                     <select name="employee" class="form-control" id="employee">
                                         <?php
-                                        echo '<option value="NULL"> -- Select Employee -- </option>';
+                                        echo '<option value="0"> -- Select Employee -- </option>';
                                         $query = 'SELECT * FROM users ORDER BY name ASC;';
                                         $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                                         if(mysqli_num_rows($result)>=1) {
@@ -126,7 +155,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                                 echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
                                             }
                                         }else{
-                                            echo '<option value="NULL">No value found</option>';
+                                            echo '<option value="0">No value found</option>';
                                         }
                                         ?>
                                     </select>
@@ -140,12 +169,12 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
                                 <label for="Name">Name*:</label>
-                                <input type="text" name="name" class="form-control" id="Name"/>
+                                <input type="text" name="name" class="form-control" id="Name"  required="required"/>
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <label for="Address">Address*:</label>
-                                <input type="text" name="address" class="form-control" id="Address" required="required"/>
+                                <label for="Address">Address:</label>
+                                <input type="text" name="address" class="form-control" id="Address"/>
                             </div>
 
                             <div class="form-group col-lg-3">

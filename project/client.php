@@ -12,11 +12,11 @@ if(isset($_POST['submit1'])) {
     $email = protect($_POST['email']);
     $phone = protect($_POST['phone']);
 
-    $query = 'SELECT * FROM client WHERE name="'.$name.'" AND private=0;';
+    $query = 'SELECT * FROM client WHERE name="'.$name.'";';
     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
 
     if(mysqli_num_rows($result)==0) {
-        $query = 'SELECT * FROM client WHERE email="'.$email.'" AND private=0;';
+        $query = 'SELECT * FROM client WHERE email="'.$email.'";';
         $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
 
         if(mysqli_num_rows($result)==0) {
@@ -36,12 +36,12 @@ if(isset($_POST['submit1'])) {
     $phone = protect($_GET['phone']);
 
 
-    $query = 'SELECT * FROM client WHERE name="'.$name.'" AND private=0;';
+    $query = 'SELECT * FROM client WHERE name="'.$name.'";';
     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
     $row = mysqli_fetch_assoc($result);
 
     if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_client'])) {
-        $query = 'SELECT * FROM client WHERE email="'.$email.'" AND private=0;';
+        $query = 'SELECT * FROM client WHERE email="'.$email.'";';
         $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
         $row = mysqli_fetch_assoc($result);
 
@@ -110,8 +110,8 @@ if(isset($_POST['submit1'])) {
                             </div>
 
                             <div class="form-group">
-                                <label for="Address">Address*:</label>
-                                <input type="text" name="address" class="form-control" id="Address" required="required"/>
+                                <label for="Address">Address:</label>
+                                <input type="text" name="address" class="form-control" id="Address"/>
                             </div>
 
                             <div class="form-group <?php echo($wrongpass==2)? 'has-error': ''; ?>">

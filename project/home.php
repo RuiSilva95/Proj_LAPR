@@ -33,7 +33,7 @@ if(!isset($_SESSION['id'])) {
         var params = query_string[1].split('&');
         var param_item = params[3].split('=');
         var empr = param_item[1];
-        window.open('print_bill.php?id='+id+'&idcli='+idcli+'&empr='+empr,'_blank')
+        window.open('print_bill.php?id='+id+'&entity='+entity,'_blank')
     }
 </script>
 

@@ -163,7 +163,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
                                 <label for="Name">Name*:</label>
-                                <input type="text" name="name" class="form-control" id="Name"/>
+                                <input type="text" name="name" class="form-control" id="Name"  required="required"/>
                             </div>
 
                             <div class="form-group col-lg-3">
@@ -173,7 +173,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                                 <label for="Email">Email*:</label>
-                                <input type="email" name="email" class="form-control" id="Email"/>
+                                <input type="email" name="email" class="form-control" id="Email"  required="required"/>
                             </div>
 
                             <div class="form-group col-lg-3">
