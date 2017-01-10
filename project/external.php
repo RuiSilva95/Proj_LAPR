@@ -65,7 +65,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 $id_extend = mysqli_insert_id($conn);
 
                 if(isset($_POST['submit2'])) {
-                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=extend');
+                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=external');
                 }else{
                     header('Location: '.check('home.php'));
                 }

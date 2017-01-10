@@ -5,8 +5,8 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
-if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
+if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
       $id_client = protect($_POST['client']);
       $id_status = protect($_POST['status']);
       $id_employee = protect($_POST['employee']);
@@ -20,9 +20,36 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
       $final_date = protect($_POST['final_date']);
       $working_hours = protect($_POST['working_hours']);
 
-      $description = protect($_POST['description']);
+      $equipment = protect($_POST['equipment']);
+      $mark = protect($_POST['mark']);
+      $n_serie = protect($_POST['n_serie']);
+      $accessories = protect($_POST['accessories']);
+
+      $problem = protect($_POST['problem']);
+      $descri_client = protect($_POST['descri_client']);
+      $descri_employee = protect($_POST['descri_employee']);
       $service_provided = protect($_POST['service_provided']);
+      $material_supplied = protect($_POST['material_supplied']);
+
+      $check = protect($_POST['check']);
+      $id_service = protect($_POST['service']);
+      $budget_service = protect($_POST['budget_service']);
+      $sending_date = protect($_POST['sending_date']);
+      $delivery_date = protect($_POST['delivery_date']);
+      $reported_problem = protect($_POST['reported_problem']);
+      $radio = protect($_POST['radio']);
+
       $budget = protect($_POST['budget']);
+
+
+    if($check==0) {
+        $budget_service = ' ';
+        $sending_date = ' ';
+        $delivery_date = ' ';
+        $reported_problem = ' ';
+        $radio = ' ';
+        $id_service = ' ';
+    }
 
     if($id_status=='null') {
         echo 'Need Select Status';
@@ -59,90 +86,40 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_eqip = mysqli_insert_id($conn);
 
-                echo $query = 'INSERT INTO external(id_client, id_user, id_equipment_status, description, service_provided, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', "'.$description.'","'.$service_provided.'","'.$budget.'")';
+
+
+                $query = 'INSERT INTO product(equipment, mark_models, nSeries, acessories) VALUE("'.$equipment.'","'. $mark.'","'.$n_serie.'","'.$accessories.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_product = mysqli_insert_id($conn);
+
+
+
+                $query = 'INSERT INTO equip_problem(problem_damage, `description(client)`, `description(employee)`, service_provided, material_suplied) VALUE("'.$problem.'","'. $descri_client.'","'.$descri_employee.'","'.$service_provided.'","'.$material_supplied.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_equipment_problem = mysqli_insert_id($conn);
+
+                $query = 'INSERT INTO service_problem(id_service, `check`, budget, configuration, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'","'.$radio.'", "'.$reported_problem.'", "'. $sending_date.'","'.$delivery_date.'")';
+                                mysqli_query($conn, $query)or
+                    die("Error2:".mysqli_error($conn));
+                $id_service_problem = mysqli_insert_id($conn);
+
+                die('ENTROU3'. $id_service_problem);
+
+
+                echo $query = 'INSERT INTO internal(id_client, id_user, id_equipment_status, id_product, id_equipment_problem, id_service_problem, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', '.$id_product.','.$id_equipment_problem.','.$id_service_problem.',"'.$budget.'")';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_extend = mysqli_insert_id($conn);
 
                 if(isset($_POST['submit2'])) {
-                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=extend');
+                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=internal');
                 }else{
                     header('Location: '.check('home.php'));
                 }
-            }else{
             }
+
         }
     }
-}
 
-
-if(isset($_POST['submit']) || isset($_POST['submit2'])) {
-      $client = protect($_POST['client']);
-      $status = protect($_POST['status']);
-      $employee = protect($_POST['employee']);
-      $name = protect($_POST['name']);
-      $address = protect($_POST['address']);
-      $phone = protect($_POST['phone']);
-      $initial_date = protect($_POST['initial_date']);
-      $final_date = protect($_POST['final_date']);
-      $working_hours = protect($_POST['working_hours']);
-      $equipment = protect($_POST['equipment']);
-      $mark = protect($_POST['mark']);
-      $n_serie = protect($_POST['n_serie']);
-      $accessories = protect($_POST['accessories']);
-      $problem = protect($_POST['problem']);
-      $descri_client = protect($_POST['descri_client']);
-      $descri_employee = protect($_POST['descri_employee']);
-      $service_provided = protect($_POST['service_provided']);
-      $material_supplied = protect($_POST['material_supplied']);
-      $check = protect($_POST['check']);
-      $service = protect($_POST['service']);
-      $budget_service = protect($_POST['budget_service']);
-      $sending_date = protect($_POST['sending_date']);
-      $delivery_date = protect($_POST['delivery_date']);
-      $reported_problem = protect($_POST['reported_problem']);
-      $radio = protect($_POST['radio']);
-
-      $budget = protect($_POST['budget']);
-      $cod = rand();
-
-
-    if($check==0) {
-        $budget_service = ' ';
-        $sending_date = ' ';
-        $delivery_date = ' ';
-        $reported_problem = ' ';
-        $radio = ' ';
-        $service = ' ';
-    }
-
-    if($status==0 && $employee==0) {
-        echo 'Fill required fields';
-    }else{
-        if($client==0 ) {
-            if(empty($name)) {
-                   echo 'If not selected Client. Write at least name';
-                $verf = 1;
-            }else{
-                 mysqli_query($conn, "INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
-                 $client = mysqli_result(mysqli_query($conn, "SELECT MAX(`id_client`) FROM `client`"), 0, 0);
-            }
-            if(empty($verf)) {
-                  mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','".$service."','2','".$cod."','".$budget."','".$equipment."','".$mark."','".$n_serie."','".$accessories."','".$service_provided."','".$material_supplied."')")or die("Error:".mysqli_error($conn));
-                  mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','".$problem."','".$descri_client."','".$descri_employee."')")or die("Error:".mysqli_error($conn));
-                  mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','".$initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
-                  mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','".$check."','".$budget_service."','".$radio."','".$reported_problem."','".$sending_date."','".$delivery_date."')")or die("Error:".mysqli_error($conn));
-                if(isset($_POST['submit2'])) {
-                    $SQL = mysqli_query($conn, "Select * FROM `equipment` WHERE `cod`='$cod'");
-                    $SQL = mysqli_fetch_assoc($SQL);
-                    $id = $SQL['id'];
-                    $idcli = $SQL['id_client'];
-                    header('Location:'.check('home.php').'?imp=0&id='.$id.'&idcli='.$idcli.'');
-                }else{
-                    header('Location:'.check('home.php'));
-                }
-            }
-        }
-    }
 }
 ?>
 
@@ -291,7 +268,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                                 <label for="n_Serie">NºSerie*:</label>
-                                <input type="email" name="n_serie" class="form-control" id="n_Serie"/>
+                                <input type="text" name="n_serie" class="form-control" id="n_Serie"/>
                             </div>
 
                             <div class="form-group col-lg-3">
