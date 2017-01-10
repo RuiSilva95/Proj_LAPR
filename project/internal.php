@@ -1,69 +1,9 @@
+<?php require "inc/head.php";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php require "inc/head.php"; 
-
-if(!isset($_SESSION['id'])) {
+/*if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
-}
+}*/
 ?>
 <title>Takemore.com - Internal</title>
 <?php require "inc/header.php"; ?>
