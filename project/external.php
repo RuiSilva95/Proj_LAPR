@@ -33,6 +33,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
         if($id_employee==0) {
             echo 'Need Select Employee';
         }else{
+            $verf = 1;
             if($id_client==0) {
                 $query = 'SELECT * FROM client WHERE name="'.$name.'"';
                 $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
@@ -44,7 +45,6 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
                         mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                         $id_client = mysqli_insert_id($conn);
-                        $verf = 1;
                     }else{
                         echo 'Email client exist';
                         $verf = 0;
@@ -55,25 +55,21 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 }
             }
 
-
             if($verf==1) {
-                die('entrou1');
-                mysqli_query($conn, "INSERT INTO `equipment` VALUE('','".$employee."','".$client."','','1','".$cod."','".$budget."','','','','','".$service_provided."','')")or die("Error:".mysqli_error($conn));
-                mysqli_query($conn, "INSERT INTO `equip_problem` VALUE('','','','".$description."')")or die("Error:".mysqli_error($conn));
-                mysqli_query($conn, "INSERT INTO `equip_status` VALUE('','".$status."','". $initial_date."','".$final_date."','".$working_hours."')")or die("Error:".mysqli_error($conn));
-                mysqli_query($conn, "INSERT INTO `service_problem` VALUE('','','','','','','')")or die("Error:".mysqli_error($conn));
+                $query = 'INSERT INTO equipment_status(status, start_date, end_date, work_hours) VALUE("'.$id_status.'","'. $initial_date.'","'.$final_date.'","'.$working_hours.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_eqip = mysqli_insert_id($conn);
+
+                echo $query = 'INSERT INTO external(id_client, id_user, id_equipment_status, description, service_provided, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', "'.$description.'","'.$service_provided.'","'.$budget.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_extend = mysqli_insert_id($conn);
+
                 if(isset($_POST['submit2'])) {
-                     $SQL = mysqli_query($conn, "Select * FROM `equipment` WHERE `cod`='$cod'");
-                     $SQL = mysqli_fetch_assoc($SQL);
-                     $id = $SQL['id'];
-                     $idcli = $SQL['id_client'];
-                     header('Location:'.check('home.php').'?imp=1&id='.$id.'&idcli='.$idcli.'&empr='.$employee.'');
+                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=extend');
                 }else{
-                    header('Location:'.check('home.php'));
+                    header('Location: '.check('home.php'));
                 }
             }else{
-
-                die('entrou2');
             }
         }
     }
@@ -231,7 +227,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" name="submit1" class="btn btn-default" value="Create" />
+                                <input type="submit" name="submit1" class="btn btn-default" value="Save" />
                                 <input type="reset" name="clean" class="btn btn-default" value="Clean" />
                                 <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Bill" />
                             </div>

@@ -5,6 +5,76 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
+if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
+
+      $id_client = protect($_POST['client']);
+      $id_status = protect($_POST['status']);
+      $id_employee = protect($_POST['employee']);
+
+      $name = protect($_POST['name']);
+      $address = protect($_POST['address']);
+      $email = protect($_POST['email']);
+      $phone = protect($_POST['phone']);
+
+      $initial_date = protect($_POST['initial_date']);
+      $final_date = protect($_POST['final_date']);
+      $working_hours = protect($_POST['working_hours']);
+
+      $description = protect($_POST['description']);
+      $service_provided = protect($_POST['service_provided']);
+      $budget = protect($_POST['budget']);
+
+    if($id_status=='null') {
+        echo 'Need Select Status';
+
+    }else{
+
+        if($id_employee==0) {
+            echo 'Need Select Employee';
+        }else{
+            $verf = 1;
+            if($id_client==0) {
+                $query = 'SELECT * FROM client WHERE name="'.$name.'"';
+                $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                if(mysqli_num_rows($result)==0) {
+                    $query = 'SELECT * FROM client WHERE email="'.$email.'"';
+                    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+                    if(mysqli_num_rows($result)==0) {
+                        $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
+                        mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                        $id_client = mysqli_insert_id($conn);
+                    }else{
+                        echo 'Email client exist';
+                        $verf = 0;
+                    }
+                }else{
+                    echo 'Name client exist';
+                    $verf = 0;
+                }
+            }
+
+            if($verf==1) {
+                $query = 'INSERT INTO equipment_status(status, start_date, end_date, work_hours) VALUE("'.$id_status.'","'. $initial_date.'","'.$final_date.'","'.$working_hours.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_eqip = mysqli_insert_id($conn);
+
+                echo $query = 'INSERT INTO external(id_client, id_user, id_equipment_status, description, service_provided, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', "'.$description.'","'.$service_provided.'","'.$budget.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_extend = mysqli_insert_id($conn);
+
+                if(isset($_POST['submit2'])) {
+                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=extend');
+                }else{
+                    header('Location: '.check('home.php'));
+                }
+            }else{
+            }
+        }
+    }
+}
+
+
 if(isset($_POST['submit']) || isset($_POST['submit2'])) {
       $client = protect($_POST['client']);
       $status = protect($_POST['status']);
@@ -335,7 +405,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group">
-                                <input type="submit" name="submit1" class="btn btn-default" value="Create" />
+                                <input type="submit" name="submit1" class="btn btn-default" value="Save" />
                                 <input type="reset" name="clean" class="btn btn-default" value="Clean" />
                                 <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Bill" />
                             </div>
