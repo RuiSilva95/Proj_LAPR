@@ -13,63 +13,54 @@
     </div>
 
 
+<?php
+$result = mysqli_query($conn, $query);
+while ($row = mysqli_fetch_assoc($result)) {
 
+}
+?>
 
     <!-- Top Menu Items -->
     <ul class="nav navbar-right top-nav">
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
             <ul class="dropdown-menu message-dropdown">
+                <?php
+
+                $result = mysqli_query($conn, $query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $querypic = 'SELECT * FROM users WHERE id_user = "'.$row["de"].'"';
+                    $uid = mysqli_fetch_assoc(mysqli_query($conn, $querypic));
+                ?>
+
                 <li class="message-preview">
                     <a href="#">
                         <div class="media">
                             <span class="pull-left">
-                                <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                <?php
+                                $pinc = $uid['data'];
+                                if($pinc!=null) {
+                                    echo '<img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="50" height="50">';
+                                }else{
+                                    echo '<i class="fa fa-user" style="font-size:50px"> </i>';
+                                }
+                                ?>
                             </span>
                             <div class="media-body">
                                 <h5 class="media-heading">
-                                    <strong>John Smith</strong>
+                                    <strong><?php echo $uid["name"]; ?></strong>
                                 </h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                <p class="small text-muted"><i class="fa fa-clock-o"></i><?php echo $row["date"]; ?></p>
+                                <p><?php echo $row["title"]; ?></p>
                             </div>
                         </div>
                     </a>
                 </li>
-                <li class="message-preview">
-                    <a href="#">
-                        <div class="media">
-                            <span class="pull-left">
-                                <img class="media-object" src="http://placehold.it/50x50" alt="">
-                            </span>
-                            <div class="media-body">
-                                <h5 class="media-heading">
-                                    <strong>John Smith</strong>
-                                </h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-                <li class="message-preview">
-                    <a href="#">
-                        <div class="media">
-                            <span class="pull-left">
-                                <img class="media-object" src="http://placehold.it/50x50" alt="">
-                            </span>
-                            <div class="media-body">
-                                <h5 class="media-heading">
-                                    <strong>John Smith</strong>
-                                </h5>
-                                <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                            </div>
-                        </div>
-                    </a>
-                </li>
+                <?php
+                }
+                ?>
                 <li class="message-footer">
-                    <a href="#">Read All New Messages</a>
+                    <a href="<?php echo check('inbox.php'); ?>">Read All New Messages</a>
                 </li>
             </ul>
         </li>
@@ -110,7 +101,7 @@
                     echo '<i class="fa fa-user"> </i>';
                 }
                 ?>
-                &nbsp&nbsp<?php echo access('name'); ?>&nbsp&nbsp
+                &nbsp&nbspWelcome <?php echo access('name'); ?>&nbsp&nbsp
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
