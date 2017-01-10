@@ -16,5 +16,6 @@
 <script src="<?php echo check('js/plugins/flot/jquery.flot.resize.js'); ?>"></script>
 <script src="<?php echo check('js/plugins/flot/jquery.flot.pie.js'); ?>"></script>
 <script src="<?php echo check('js/plugins/flot/flot-data.js'); ?>"></script>
+<script src="<?php echo check('js/ajax.js'); ?>"></script>
 </body>
 </html>

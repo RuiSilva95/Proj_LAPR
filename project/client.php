@@ -20,7 +20,7 @@ if(isset($_POST['submit1'])) {
         $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
 
         if(mysqli_num_rows($result)==0) {
-            $query = 'INSERT INTO client(name, address, email, phone) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.');';
+            $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 0);';
             mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
         }else{
             $wrongpass = 2;
@@ -102,7 +102,7 @@ if(isset($_POST['submit1'])) {
                     }
                     ?>
                     <div class="col-lg-3">
-                        <form name="client_form" method="POST" action="<?php echo current_file(); ?>" enctype="multipart/form-data">
+                        <form name="client_form" method="POST" action="<?php echo current_file(); ?>">
                             <div class="form-group <?php echo($wrongpass==1)? 'has-error': ''; ?>">
                                 <label for="Name">Name*:</label>
                                 <input type="text" name="name" class="form-control" id="Name" required="required"/>
@@ -110,8 +110,8 @@ if(isset($_POST['submit1'])) {
                             </div>
 
                             <div class="form-group">
-                                <label for="Adress">Adress*:</label>
-                                <input type="text" name="address" class="form-control" id="Adress" required="required"/>
+                                <label for="Address">Address*:</label>
+                                <input type="text" name="address" class="form-control" id="Address" required="required"/>
                             </div>
 
                             <div class="form-group <?php echo($wrongpass==2)? 'has-error': ''; ?>">
