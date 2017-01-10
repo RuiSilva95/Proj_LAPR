@@ -100,14 +100,14 @@
                     <span class="fa-stack fa-4x">
                     <img src="img/services/pc.png" class="img-responsive img-circle" alt="">
                     </span>
-                    <h4 class="service-heading">Responsive Design</h4>
+                    <h4 class="service-heading">Software à sua medida</h4>
                     <p class="text-muted">Temos à sua disposição um departamento de desenvolvimento, instalação e configuração de software específico.</p>
                 </div>
                 <div class="col-md-4">
                     <span class="fa-stack fa-4x">
                     <img src="img/services/lock.png" class="img-responsive img-circle" alt="">
                     </span>
-                    <h4 class="service-heading">Web Security</h4>
+                    <h4 class="service-heading">TakeMore Cloud Backup Solution</h4>
                     <p class="text-muted">Garanta a Fiabilidade das suas cópias de segurança, nós guardamos uma cópia por si!
 A AT obriga a assegurar a realização de cópias de segurança de periodicidade obrigatória.
 Contacte-nos para mais informações.</p>
@@ -122,7 +122,7 @@ Contacte-nos para mais informações.</p>
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Portfolio</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted"></h3>
                 </div>
             </div>
             <div class="row">
@@ -220,7 +220,7 @@ Contacte-nos para mais informações.</p>
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">About</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted"></h3>
                 </div>
             </div>
             <div class="row">
@@ -232,11 +232,11 @@ Contacte-nos para mais informações.</p>
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>2009-2011</h4>
-                                    <h4 class="subheading">Our Humble Beginnings</h4>
+                                    <h4></h4>
+                                    <h4 class="subheading">Mais do que um grande serviço de suporte</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                                    <p class="text-muted">10 anos e mais de 300 clientes provaram que vamos sempre além do apoio tradicional e investimos em si, com serviços personalizados, pessoas familiarizadas com a sua empresa e recursos ajustados. Colocamos os Clientes em primeiro lugar. Sempre.</p>
                                 </div>
                             </div>
                         </li>
@@ -246,11 +246,12 @@ Contacte-nos para mais informações.</p>
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>March 2011</h4>
-                                    <h4 class="subheading">An Agency is Born</h4>
+                                    <h4></h4>
+                                    <h4 class="subheading">Pessoas que você pode confiar, pronto para ajudar. 7 dias por semana.</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                                    <p class="text-muted">Apoio que o faz confiar. Isso é o que define a nossa equipa. Ao ligar, vai falar com alguém que permanece na linha até que você tenha o que precisa.
+Ligue e fale com a nossa equipa quando quiser +351 220992008. Quer se trate de uma questão de estratégia, consulta de produto ou apoio a tarefas os nossos especialistas querem ajudar.</p>
                                 </div>
                             </div>
                         </li>
@@ -260,11 +261,13 @@ Contacte-nos para mais informações.</p>
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>December 2012</h4>
-                                    <h4 class="subheading">Transition to Full Service</h4>
+                                    <h4></h4>
+                                    <h4 class="subheading">Consultoria especializada e ajuda, perto de si.</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                                    <p class="text-muted">A nossa equipa de especialistas oferece apoio, serviços e formação na sua empresa, com os nossos serviços torna-se fácil aumentar as capacidades da sua equipa e minimizar erros.
+Deixe um profissional lidar com o seu sistema de informação.
+Nós vamos ligar a sua empresa com os sistemas de parceiros certificados, todos os nossos serviços são de confiança. </p>
                                 </div>
                             </div>
                         </li>
@@ -274,11 +277,11 @@ Contacte-nos para mais informações.</p>
                             </div>
                             <div class="timeline-panel">
                                 <div class="timeline-heading">
-                                    <h4>July 2014</h4>
-                                    <h4 class="subheading">Phase Two Expansion</h4>
+                                    <h4></h4>
+                                    <h4 class="subheading">Recursos na ponta dos dedos</h4>
                                 </div>
                                 <div class="timeline-body">
-                                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                                    <p class="text-muted">Emails informativos, formações online, aconselhamento técnico, aconselhamento comercial, serviços de consultoria, tudo disponível online, no site ou no email em qualquer altura de sua conveniência. Webinars de softwares gravados, tutoriais passo-a-passo, tudo on-line e pronto para ser acedido em qualquer lugar por si.</p>
                                 </div>
                             </div>
                         </li>
