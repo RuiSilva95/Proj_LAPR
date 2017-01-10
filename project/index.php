@@ -37,7 +37,7 @@
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                     <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
+                <a class="" href="#page-top"><img src="img/takemore_lg.png" height="36" width="200"></a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -93,7 +93,7 @@
                     <span class="fa-stack fa-4x">
                     <img src="img/services/cart.png" class="img-responsive img-circle" alt="">
                     </span>
-                    <h4 class="service-heading">E-Commerce</h4>
+                    <h4 class="service-heading">Serviços de Assistência Técnica</h4>
                     <p class="text-muted">Formatação, instalação e configuração de sistema;  Limpeza de vírus;  Instalação e configuração de equipamentos de rede;  etc</p>
                 </div>
                 <div class="col-md-4">
@@ -350,7 +350,7 @@ Contacte-nos para mais informações.</p>
             <div class="row">
                 <div class="col-md-3 col-sm-6">
                     <a href="#">
-                        <img src="img/logos/microsoft.jpg" class="img-responsive img-centered" alt="">
+                        <img src="img/logos/microsoft_partner.png" class="img-responsive img-centered" alt="">
                     </a>
                 </div>
                 <div class="col-md-3 col-sm-6">
