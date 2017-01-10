@@ -153,6 +153,7 @@ if(!isset($_SESSION['id'])) {
                                     </thead>
                                     <tbody>
                                         <?php
+                                        /*
                                         if($_POST['client']!=0) {
                                             $ext1 ="`client`.`id_client`='".$_POST['client']."' AND ";
                                         }elseif($_POST['client']=='priv') {
@@ -192,7 +193,7 @@ if(!isset($_SESSION['id'])) {
                                                          INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
                                                          INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
                                                          INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
-                            							 INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
+                                        INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
                                                          WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5." ORDER BY `equipment`.`id`";
 
                                         $sql = mysqli_query($conn, "SELECT $campos_query $final_query ") or die("Error:".mysqli_error($conn));
@@ -207,16 +208,17 @@ if(!isset($_SESSION['id'])) {
                                             if($result_SQL['enty']=='2') {
                                                 echo '<td>Internal</td>';
                                                 echo '<td>
-                                				<a class="myButton" href="'.check('internal.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
-                                				<a class="myButton" href="'.check('internal.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
+                                        <a class="myButton" href="'.check('internal.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
+                                        <a class="myButton" href="'.check('internal.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
                                             }else{
                                                 echo '<td>External</td>';
                                                 echo '<td>
-                                				<a class="myButton" href="'.check('external.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
-                                				<a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
+                                        <a class="myButton" href="'.check('external.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
+                                        <a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
                                             }
                                             echo '</tr>';
                                         }
+                                        */
                                     ?>
 
                                         <tr>
