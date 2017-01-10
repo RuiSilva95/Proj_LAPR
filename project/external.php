@@ -200,6 +200,7 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                 <label for="Budget">Budget:</label>
                                 <input type="text" name="budget" class="form-control" id="Budget"/>
                             </div>
+
                             <div class="form-group">
                                 <input type="submit" name="submit1" class="btn btn-default" value="Create" />
                                 <input type="reset" name="clean" class="btn btn-default" value="Clean" />

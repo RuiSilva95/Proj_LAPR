@@ -139,20 +139,20 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-4">
                                 <label for="Employee">Employee</label>
-                                    <select name="employee" class="form-control" id="employee">
-                                        <?php
-                                        echo '<option value="NULL"> -- Select Employee -- </option>';
-                                        $query = 'SELECT * FROM users ORDER BY name ASC;';
-                                        $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
-                                        if(mysqli_num_rows($result)>=1) {
-                                            while($row = mysqli_fetch_assoc($result)){
-                                                echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
-                                            }
-                                        }else{
-                                            echo '<option value="NULL">No value found</option>';
+                                <select name="employee" class="form-control" id="employee">
+                                    <?php
+                                    echo '<option value="NULL"> -- Select Employee -- </option>';
+                                    $query = 'SELECT * FROM users ORDER BY name ASC;';
+                                    $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                                    if(mysqli_num_rows($result)>=1) {
+                                        while($row = mysqli_fetch_assoc($result)){
+                                            echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
                                         }
-                                        ?>
-                                    </select>
+                                    }else{
+                                        echo '<option value="NULL">No value found</option>';
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -168,12 +168,12 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                                 <label for="Address">Address*:</label>
-                                <input type="text" name="address" class="form-control" id="Address" required="required"/>
+                                <input type="text" name="address" class="form-control" id="Address"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Email">Email*:</label>
-                                <input type="email" name="email" class="form-control" id="Email" required="required"/>
+                                <input type="email" name="email" class="form-control" id="Email"/>
                             </div>
 
                             <div class="form-group col-lg-3">
@@ -207,11 +207,47 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 
                     <br><br>
 
+                    <div class="row">
+                        <div class="col-lg-12 form-inline">
+                            <div class="form-group col-lg-3">
+                                <label for="Equipment">Equipment*:</label>
+                                <input type="text" name="equipment" class="form-control" id="Equipment"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="Mark">Mark/Model*:</label>
+                                <input type="text" name="mark" class="form-control" id="Mark"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="n_Serie">NºSerie*:</label>
+                                <input type="email" name="n_serie" class="form-control" id="n_Serie"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="Accessories">Extra Accessories:</label>
+                                <input type="text" name="accessories" class="form-control" id="Accessories" maxlength="9"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br><br>
+
                     <div class="row col-lg-12">
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <label for="Description">Description:</label>
-                                <textarea  name="description" class="form-control" id="Description" rows="3"></textarea>
+                                <label for="Problem/Damage">Problem/Damage:</label>
+                                <textarea  name="problem" class="form-control" id="Problem/Damage" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Descri_Client">Description(Client):</label>
+                                <textarea  name="descri_client" class="form-control" id="Descri_Client" rows="3"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Descri_Employee">Description(Employee):</label>
+                                <textarea  name="descri_employee" class="form-control" id="Descri_Employee" rows="3"></textarea>
                             </div>
 
                             <div class="form-group">
@@ -219,69 +255,85 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
                                 <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"></textarea>
                             </div>
 
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12 form-inline">
-                            <fieldset id="fieldset" disabled>
-                            <legend>Service<input name="check" type="checkbox" onclick="document.getElementById('fieldset').disabled = !this.checked;" /></legend>
-                                <table class="table-bordered>
-                                    <tr>
-                                    <td><label for="service">Service:</label></td>
-                                    <td>
-                                    <select name="service" id="service">
-                                    <?php
-                                    echo '<option value="0">Select Employee</option>';
-                                    $SQL = mysqli_query($conn, "SELECT * FROM `service` ORDER BY `name` ASC");
-                                    if(mysqli_num_rows($SQL)>=1) {
-                                        while($field = mysqli_fetch_assoc($SQL)){
-                                            echo '<option value='.$field['id_service'].'>'.$field['name'].'</option>';
-                                        }
-                                    }else{
-                                        echo '<option value="0">No value found</option>';
-                                    }
-                                    ?>
-                                    </select>
-                                    </td>
-                                        <td><label for="budget_service">Budget Service:</label></td>
-                                        <td><input type="text" name="budget_service" id="budget_service" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td><label for="sending_date">Sending Date:</label></td>
-                                        <td colspan="3"><input type="text" placeholder="0000-00-00 00:00:00" name="sending_date" id="sending_date" /></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td><label for="delivery_date">Delivery Date:</label></td>
-                                    <td colspan="3"><input type="text" placeholder="0000-00-00 00:00:00" name="delivery_date" id="delivery_date" /></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"><label for="reported_problem">Reported Problem:</label></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4"><textarea name="reported_problem" id="reported_problem" cols="45" rows="2"></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">Equipment has been Repaired:</td>
-                                        <td colspan="2"><input type="radio" name="radio" id="radio" value="1" />
-                                        <label for="radio">Yes</label>
-                                        <input type="radio" name="radio" id="radio" value="0" />
-                                        No</label></td>
-                                    </tr>
-                                </table>
-                            </fieldset>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-lg-12 form-inline">
                             <div class="form-group">
+                                <label for="Material_Supplied">Material Supplied:</label>
+                                <textarea  name="material_supplied" class="form-control" id="Material_Supplied" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <br><br>
+                            <fieldset id="fieldset" disabled>
+                                <legend>Service <input name="check" type="checkbox" onclick="document.getElementById('fieldset').disabled = !this.checked;" /></legend>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="Service">Service:</label>
+
+                                    <select name="service" class="form-control" id="Service">
+                                        <?php
+                                        echo '<option value="NULL"> -- Select Service -- </option>';
+                                        $query = 'SELECT * FROM service ORDER BY name ASC;';
+                                        $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                                        if(mysqli_num_rows($result)>=1) {
+                                            while($row = mysqli_fetch_assoc($result)){
+                                                echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
+                                            }
+                                        }else{
+                                            echo '<option value="NULL">No value found</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="budget_service">Budget Service:</label>
+                                    <input type="text" name="budget_service" class="form-control" id="budget_service" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="sending_date">Sending Date:</label>
+                                    <input type="datetime-local" name="sending_date" class="form-control" id="sending_date" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="delivery_date">Delivery Date:</label>
+                                    <input type="datetime-local" name="delivery_date" class="form-control" id="delivery_date" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="reported_problem">Reported Problem:</label>
+                                    <textarea name="reported_problem" id="reported_problem" class="form-control" cols="45" rows="2"></textarea>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <br>
+                                    <label for="reported_problem">Equipment has been Repaired:</label>
+                                    <br>
+                                    <input type="radio" name="radio" id="radio" value="1" />
+                                    <label for="radio">Yes</label>
+                                    <input type="radio" name="radio" id="radio" value="0" />
+                                    <label for="radio">No</label>
+
+                                </div>
+                            </fieldset>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group ">
                                 <label for="Budget">Budget:</label>
                                 <input type="text" name="budget" class="form-control" id="Budget"/>
                             </div>
+
                             <div class="form-group">
                                 <input type="submit" name="submit1" class="btn btn-default" value="Create" />
                                 <input type="reset" name="clean" class="btn btn-default" value="Clean" />
@@ -300,95 +352,3 @@ if(isset($_POST['submit']) || isset($_POST['submit2'])) {
 </div>
 <!-- /#wrapper -->
 <?php require "inc/footer.php"; ?>
-
-
-
-
-
-
-
-      <table>
-        <tr>
-          <td><label for="equipment">Equipment:</label></td>
-          <td><label for="mark">Mark/Model:</label></td>
-          <td><label for="n_serie">NºSerie:</label></td>
-          <td><label for="accessories">Extra Accessories:</label></td>
-        </tr>
-        <tr>
-          <td><input type="text" name="equipment" id="equipment" /></td>
-          <td><input type="text" name="mark" id="mark" /></td>
-          <td><input type="text" name="n_serie" id="n_serie" /></td>
-          <td><input type="text" name="accessories" id="accessories" /></td>
-        </tr>
-      </table>
-      <table>
-        <tr>
-          <td><label for="problem">Problem/Damage:</label></td>
-          <td><textarea name="problem" id="problem" cols="45" rows="2"></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="descri_client">Description(Client):</label></td>
-          <td><textarea name="descri_client" id="descri_client" cols="45" rows="2"></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="descri_employee">Description(Employee):</label></td>
-          <td><textarea name="descri_employee" id="descri_employee" cols="45" rows="2"></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="service_provided">Service Provided:</label></td>
-          <td><textarea name="service_provided" id="service_provided" cols="45" rows="2"></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="material_supplied">Material Supplied:</label></td>
-          <td><textarea name="material_supplied" id="material_supplied" cols="45" rows="2"></textarea></td>
-        </tr>
-      </table>
-      <fieldset id="fieldset" disabled>
-        <legend>Service<input name="check" type="checkbox" onclick="document.getElementById('fieldset').disabled = !this.checked;" /></legend>
-        <table>
-          <tr>
-            <td><label for="service">Service:</label></td>
-            <td>
-                <select name="service" id="service">
-                    <?php
-                    echo '<option value="0">Select Employee</option>';
-                    $SQL = mysqli_query($conn, "SELECT * FROM `service` ORDER BY `name` ASC");
-                    if(mysqli_num_rows($SQL)>=1) {
-                        while($field = mysqli_fetch_assoc($SQL)){
-                              echo '<option value='.$field['id_service'].'>'.$field['name'].'</option>';
-                        }
-                    }else{
-                                  echo '<option value="0">No value found</option>';
-                    }
-        ?>
-                </select>
-            </td>
-            <td><label for="budget_service">Budget Service:</label></td>
-            <td><input type="text" name="budget_service" id="budget_service" /></td>
-          </tr>
-          <tr>
-            <td><label for="sending_date">Sending Date:</label></td>
-            <td colspan="3"><input type="text" placeholder="0000-00-00 00:00:00" name="sending_date" id="sending_date" /></td>
-
-          </tr>
-          <tr>
-            <td><label for="delivery_date">Delivery Date:</label></td>
-            <td colspan="3"><input type="text" placeholder="0000-00-00 00:00:00" name="delivery_date" id="delivery_date" /></td>
-
-          </tr>
-          <tr>
-            <td colspan="4"><label for="reported_problem">Reported Problem:</label></td>
-
-          </tr>
-          <tr>
-            <td colspan="4"><textarea name="reported_problem" id="reported_problem" cols="45" rows="2"></textarea></td>
-          </tr>
-          <tr>
-            <td colspan="2">Equipment has been Repaired:</td>
-            <td colspan="2"><input type="radio" name="radio" id="radio" value="1" />
-            <label for="radio">Yes</label>
-              <input type="radio" name="radio" id="radio" value="0" />
-            No</label></td>
-          </tr>
-        </table>
-      </fieldset>
