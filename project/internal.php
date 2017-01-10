@@ -42,13 +42,14 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
       $budget = protect($_POST['budget']);
 
 
-    if($check==0) {
-        $budget_service = ' ';
-        $sending_date = ' ';
-        $delivery_date = ' ';
-        $reported_problem = ' ';
-        $radio = ' ';
-        $id_service = ' ';
+
+    if($check!='on') {
+        $budget_service = ' 1';
+        $sending_date = '1 ';
+        $delivery_date = '1 ';
+        $reported_problem = ' 1';
+        $radio = ' 1';
+        $id_service = null;
     }
 
     if($id_status=='null') {
@@ -98,7 +99,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_equipment_problem = mysqli_insert_id($conn);
 
-                $query = 'INSERT INTO service_problem(id_service, `check`, budget, configuration, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'","'.$radio.'", "'.$reported_problem.'", "'. $sending_date.'","'.$delivery_date.'")';
+                $query = 'INSERT INTO service_problem(id_service, `check`, budget, configuration, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$radio.', "'.$reported_problem.'", "'. $sending_date.'","'.$delivery_date.'")';
                                 mysqli_query($conn, $query)or
                     die("Error2:".mysqli_error($conn));
                 $id_service_problem = mysqli_insert_id($conn);
@@ -323,12 +324,12 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                                     <select name="service" class="form-control" id="Service">
                                         <?php
-                                        echo '<option value="NULL"> -- Select Service -- </option>';
+                                        echo '<option value="0"> -- Select Service -- </option>';
                                         $query = 'SELECT * FROM service ORDER BY name ASC;';
                                         $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                                         if(mysqli_num_rows($result)>=1) {
                                             while($row = mysqli_fetch_assoc($result)){
-                                                echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
+                                                echo '<option value='.$row['id_service'].' '.active($row['id_service'], $_POST['service']).'>'.$row['name'].'</option>';
                                             }
                                         }else{
                                             echo '<option value="NULL">No value found</option>';
