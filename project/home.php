@@ -188,25 +188,15 @@ if(!isset($_SESSION['id'])) {
                                             //*************************************************************
                                         $campos_query = "`client`.`name` AS 'client_name' ,`equipment`.`entity` AS 'enty' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'id_cli' , `users`.`name` AS 'user_name' ,`equip_problem`.`description(employee)` AS 'descript' , `equipment`.`id` AS 'idd'";
 
-                                            $final_query  = "FROM `equipment`
-                                                             INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
-                                                             INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
-                                                             INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
-                                							 INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
-                                                             WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5." ORDER BY `equipment`.`id`";
-                                             $maximo = 5;
-                                                $pagina = $_GET["pagina"];
-                                        if($pagina == "") {
-                                            $pagina = "1";
-                                        }
-                                                $inicio = $pagina - 1;
-                                                $inicio = $maximo * $inicio;
+                                        $final_query  = "FROM `equipment`
+                                                         INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
+                                                         INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
+                                                         INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
+                            							 INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
+                                                         WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5." ORDER BY `equipment`.`id`";
 
-                                                $strCount = "SELECT COUNT(*) AS 'num_registros' $final_query";
-                                                $query = mysqli_query($conn, $strCount);
-                                                $row = mysqli_fetch_array($query);
-                                                $total = $row["num_registros"];
-                                                $sql = mysqli_query($conn, "SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die("Error:".mysqli_error($conn));
+                                        $sql = mysqli_query($conn, "SELECT $campos_query $final_query ") or die("Error:".mysqli_error($conn));
+
                                         while ($result_SQL = mysqli_fetch_assoc($sql)) {
                                             echo '<tr>';
                                             echo '<td >'.$result_SQL['idd'].'</td>';
@@ -226,27 +216,6 @@ if(!isset($_SESSION['id'])) {
                                 				<a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
                                             }
                                             echo '</tr>';
-                                        }
-
-                                        $menos = $pagina - 1;
-                                                $mais = $pagina + 1;
-                                                $pgs = ceil($total / $maximo);
-                                        if($pgs > 1 ) {
-                                            echo "<br /><span>";
-                                            if($menos > 0) {
-                                                echo "<a href=".$_SERVER['PHP_SELF']."?pagina=$menos>anterior</a>&nbsp; ";
-                                            }
-                                            for($i=1;$i <= $pgs;$i++) {
-                                                if($i != $pagina) {
-                                                    echo " <a href=".$_SERVER['PHP_SELF']."?pagina=".($i).">$i</a> | ";
-                                                }else{
-                                                    echo " <strong>".$i."</strong> | ";
-                                                }
-                                            }
-                                            if($mais <= $pgs) {
-                                                echo " <a href=".$_SERVER['PHP_SELF']."?pagina=$mais>próxima</a>";
-                                            }
-                                            echo '</span>';
                                         }
                                     ?>
 
