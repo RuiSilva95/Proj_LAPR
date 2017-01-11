@@ -147,7 +147,7 @@
                     <a href="javascript:;" data-toggle="collapse" data-target="#drop2"><i class="fa fa-fw fa-unlock-alt"></i> Administration <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="drop2" class="collapse">
                         <li>
-                            <a href="'.check('admin/mapping.php').'">Mapping</a>
+                            <a href="'.check('admin/mapping.php').'"><i class="fa fa-fw fa-calendar-plus-o"> </i> Mapping</a>
                         </li>
                         <li>
                             <a href="'.check('admin/user.php').'"><i class="fa fa-fw fa-user"> </i> User Management</a>
