@@ -36,7 +36,7 @@ if(!isset($_SESSION['id'])) {
                         <form method="POST" name="filterInternal" class="form-inline" action="<?php echo current_file(); ?>">
                             <legend><h2>Internal</h2></legend>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Client">Client</label>
                                 <select name="client1" class="form-control" id="Client" >
                                     <?php
@@ -55,7 +55,7 @@ if(!isset($_SESSION['id'])) {
                                 </select>
                             </div>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Status">Status</label>
                                 <select name="status1" class="form-control" id="Status">
                                     <option value="*" <?php active('*', $_POST['status']); ?>>&nbsp&nbsp&nbsp&nbsp- See All -&nbsp&nbsp&nbsp&nbsp</option>
@@ -69,7 +69,7 @@ if(!isset($_SESSION['id'])) {
                                 </select>
                             </div>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Employee">Employee</label>
                                     <select name="employee1" class="form-control" id="employee">
                                         <?php
@@ -86,7 +86,10 @@ if(!isset($_SESSION['id'])) {
                                         ?>
                                     </select>
                             </div>
+                        </div>
 
+                        <div class="col-lg-12">
+                            <br><br>
                             <div class="form-group col-lg-3">
                               <label for="initial_date">Initial Date:</label></td>
                               <input type="datetime-local" name="date_int1" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
@@ -231,7 +234,7 @@ if(!isset($_SESSION['id'])) {
                         <form method="POST" name="filterExternal" class="form-inline" action="<?php echo current_file(); ?>">
                             <legend><h2>External</h2></legend>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Client">Client</label>
                                 <select name="client2" class="form-control" id="Client" >
                                     <?php
@@ -250,7 +253,7 @@ if(!isset($_SESSION['id'])) {
                                 </select>
                             </div>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Status">Status</label>
                                 <select name="status2" class="form-control" id="Status">
                                     <option value="0">&nbsp&nbsp&nbsp&nbsp- See All -&nbsp&nbsp&nbsp&nbsp</option>
@@ -264,7 +267,7 @@ if(!isset($_SESSION['id'])) {
                                 </select>
                             </div>
 
-                            <div class="col-lg-2 form-group">
+                            <div class="col-lg-3 form-group">
                                 <label for="Employee">Employee</label>
                                     <select name="employee2" class="form-control" id="employee">
                                         <?php
@@ -281,7 +284,10 @@ if(!isset($_SESSION['id'])) {
                                         ?>
                                     </select>
                             </div>
+                        </div>
 
+                        <div class="col-lg-12">
+                            <br><br>
                             <div class="form-group col-lg-3">
                               <label for="initial_date">Initial Date:</label></td>
                               <input type="datetime-local" name="date_ext1" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
