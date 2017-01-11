@@ -1,8 +1,7 @@
 <?php require "../inc/head.php";
 
 if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
-    echo "Não tens acesso a esta pagina";
-    header("refresh:1;url=../login.php");
+    header("refresh:1;url=../404.php");
     die();
 }
 

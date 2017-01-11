@@ -1,11 +1,9 @@
 <?php require "../inc/head.php";
 
 if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
-    echo "Não tens acesso a esta pagina";
-    header("refresh:1;url=../login.php");
+    header("refresh:0;url=../404.php");
     die();
 }
-
 
 if(isset($_POST['submit1'])) {
     $name = protect($_POST['name']);
