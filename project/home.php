@@ -200,8 +200,8 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['int_description'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
-                                                            <a class="btn btn-default href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit=1&id_internal='.$row['int_id'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                             }
@@ -375,8 +375,8 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['ext_description'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
-                                                            <a class="btn btn-default href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                             }

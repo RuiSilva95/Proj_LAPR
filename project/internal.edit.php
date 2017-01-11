@@ -1,291 +1,418 @@
-<?php include("inc/head.php"); 
+<?php require "inc/head.php";
 
-if(!isset($_SESSION['id'])){
+if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
-?>
-<?php include("inc/header.php"); ?>
-<?php include("inc/menu.php"); ?>
-<div id="content">
-  <div class="titlecontent">
-    <p><a href="<?php echo check('home.php'); ?>">Home</a> <span> >> </span><a href="#">Sheet Repair</a><span> >> </span><a href="#">Internal</a><span> >> </span><a href="#">Internal Edit</a></p>
-  </div>
-  <div class="bodycontent">
-        <?php
-        $id = protect($_GET['id']);
-        $apg = protect($_GET['apg']);
-        $cli = protect($_GET['cli']);
-        $empr = protect($_GET['empr']);
-        
-        if(!empty($apg)){
-            mysqli_query($conn,"DELETE FROM `equip_problem` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn,"DELETE FROM `equipment` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn,"DELETE FROM `equip_status` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn,"DELETE FROM `service_problem` WHERE `id`='$apg'")or die("Error:".mysqli_error($conn));
-            mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='$cli' AND `private`='1'")or die("Error:".mysqli_error($conn));
-            
-            header('Location:'.'home.php');
-        }elseif(!empty($id)){
-            $SQL1 = mysqli_query($conn,"SELECT * FROM `equip_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-            $SQL2 = mysqli_query($conn,"SELECT * FROM `equipment` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-            $SQL3 = mysqli_query($conn,"SELECT * FROM `equip_status` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-            $SQL4 = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='$cli'")or die("Error:".mysqli_error($conn));
-            $SQL5 = mysqli_query($conn,"SELECT * FROM `service_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-			
-            $field1 = mysqli_fetch_assoc($SQL1);
-            $field2 = mysqli_fetch_assoc($SQL2);
-            $field3 = mysqli_fetch_assoc($SQL3);
-            $field4 = mysqli_fetch_assoc($SQL4);
-            $field5 = mysqli_fetch_assoc($SQL5);
-        }
-      ?>  
-  <form id="repair_form" name="repair_form" method="POST">      
-      <table>
-        <tr>
-          <td><label for="client">Client:</label></td>
-          <td>
-              <select name="client" onchange="verificaOpcao(this.value)">
-               <?php 
-				echo '<option value="0">Select Client</option>';
-                $SQL = mysqli_query($conn,"SELECT * FROM `client` WHERE `private`='0' ORDER BY `name` ASC");
-                  if(mysqli_num_rows($SQL)>=1){
-                     while($field = mysqli_fetch_assoc($SQL)){
-                       echo '<option ';?><?php active($field['id_client'],$cli)?><?php echo' value="'.$field['id_client'].'">'.$field['name'].'</option>'; 
-                     }
-                  }else{
-                       echo '<option value="0">No value found</option>'; 
-                  }
-               ?>
-              </select>
-          </td>
-          <td><label for="status">Status*:</label></td>
-          <td>
-              <select name="status" id="status">
-               <option <?php active('0',$field3['status'])?> value='0'>Select Status</option>
-               <option <?php active('Waits',$field3['status'])?> value="Waits">Waits</option>
-               <option <?php active('Budgeted',$field3['status'])?> value="Budgeted">Budgeted</option>
-               <option <?php active('Under Repair',$field3['status'])?> value="Under Repair">Under Repair</option>
-               <option <?php active('Closed Billing',$field3['status'])?> value="Closed Billing">Closed Billing</option>
-               <option <?php active('Closed Guaranty',$field3['status'])?> value="Closed Guaranty">Closed Guaranty</option>
-               <option <?php active('Closed Contract',$field3['status'])?> value="Closed Contract">Closed Contract</option>
-               <option <?php active('Archive',$_POST['status'])?> value="Archive">Archive</option>
-              </select>
-          </td>
-          <td><label for="employee">Employee*:</label></td>
-          <td>
-             <select name="employee" id="employee">
-               <?php 
-				echo '<option value="">Select Status</option>';
-                $SQL = mysqli_query($conn,"SELECT * FROM `users` ORDER BY `name` ASC");
-                  if(mysqli_num_rows($SQL)>=1){
-                     while($field = mysqli_fetch_assoc($SQL)){
-                       echo '<option ';?><?php active($field['name'],$empr)?><?php echo ' value="'.$field['id_user'].'">'.$field['name'].'</option>';
-                     }
-                  }else{
-                       echo '<option value="0">No value found</option>'; 
-                  }
-               ?>
-              </select>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="name">Name:</label></td>
-          <td><input <?php if($field4['private']!=1){echo 'disabled="true"';}else{$var = $field4['name'];}?> type="text" name="name" id="client" value="<?php echo $var; ?>"/></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td><label for="address">Address:</label></td>
-          <td><input <?php if($field4['private']!=1){echo 'disabled="true"';}else{$var = $field4['address'];}?> type="text" name="address" id="client1" value="<?php echo $var; ?>"/></td>
-          <td><label for="phone">Phone:</label></td>
-          <td><input <?php if($field4['private']!=1){echo 'disabled="true"';}else{$var = $field4['phone'];}?> type="text" name="phone" id="client2" value="<?php echo $var; ?>"/></td>
-          <td>&nbsp;</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td><label for="initial_date">Initial Date:</label></td>
-          <td><input type="text" value="<?php echo $field3['start_date']; ?>" placeholder="0000-00-00 00:00:00" name="initial_date" id="initial_date" onchange="javascript('1')"/></td>
-          <td><label for="final_date">Final Date:</label></td>
-          <td><input type="text" value="<?php echo $field3['end_date']; ?>" placeholder="0000-00-00 00:00:00" name="final_date" id="final_date" onchange="javascript('1')"/></td>
-          <td><label for="working_hours">Working Hours:</label></td>
-          <td><input type="text" value="<?php echo $field3['final_time']; ?>" name="working_hours" id="working_hours" readonly/></td>
-        </tr>
-      </table>
-      <table>
-        <tr>
-          <td><label for="equipment">Equipment:</label></td>
-          <td><label for="mark">Mark/Model:</label></td>
-          <td><label for="n_serie">NºSerie:</label></td>
-          <td><label for="accessories">Extra Accessories:</label></td>
-        </tr>
-        <tr>
-          <td><input type="text" value="<?php echo $field2['equipment']; ?>" name="equipment" id="equipment" /></td>
-          <td><input type="text" value="<?php echo $field2['mark/model']; ?>" name="mark" id="mark" /></td>
-          <td><input type="text" value="<?php echo $field2['n_serie']; ?>" name="n_serie" id="n_serie" /></td>
-          <td><input type="text" value="<?php echo $field2['accessories']; ?>" name="accessories" id="accessories" /></td>
-        </tr>
-      </table>
-      <table>
-        <tr>
-          <td><label for="problem">Problem/Damage:</label></td>
-          <td><textarea name="problem" id="problem" cols="45" rows="2"><?php echo $field1['problem/damage']; ?></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="descri_client">Description(Client):</label></td>
-          <td><textarea name="descri_client" id="descri_client" cols="45" rows="2"><?php echo $field1['description(client)']; ?></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="descri_employee">Description(Employee):</label></td>
-          <td><textarea name="descri_employee" id="descri_employee" cols="45" rows="2"><?php echo $field1['description(employee)']; ?></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="service_provided">Service Provided:</label></td>
-          <td><textarea name="service_provided" id="service_provided" cols="45" rows="2"><?php echo $field2['service']; ?></textarea></td>
-        </tr>
-        <tr>
-          <td><label for="material_supplied">Material Supplied:</label></td>
-          <td><textarea name="material_supplied" id="material_supplied" cols="45" rows="2"><?php echo $field2['provided']; ?></textarea></td>
-        </tr>
-      </table>
-      <fieldset id="fieldset" <?php if($field5['check'] != '1'){echo 'disabled';}?> >
-        <legend>Service<input name="check" type="checkbox" value="1" <?php if($field5['check'] == '1') echo 'checked = "checked"'; ?> onclick="document.getElementById('fieldset').disabled = !this.checked;" /></legend>
-        <table>
-          <tr>
-            <td><label for="service">Service:</label></td>
-            <td>
-                <select name="service" id="service">
-                	<?php
-					  echo '<option value="0">Select Employee</option>';
-						$SQL = mysqli_query($conn,"SELECT * FROM `service` ORDER BY `name` ASC");
-						  if(mysqli_num_rows($SQL)>=1){
-							 while($field = mysqli_fetch_assoc($SQL)){
-							   echo '<option ';?><?php active($field['id_service'],$field2['id_service'])?><?php echo' value='.$field['id_service'].'>'.$field['name'].'</option>'; 
-							 }
-						  }else{
-							   echo '<option value="0">No value found</option>'; 
-						  }
-					  ?>
-                </select>
-            </td>
-            <td><label for="budget_service">Budget Service:</label></td>
-            <td><input type="text" value="<?php echo $field5['budget'];?>" name="budget_service" id="budget_service" /></td>
-          </tr>
-          <tr>
-            <td><label for="sending_date">Sending Date:</label></td>
-            <td colspan="3"><input type="text"value="<?php echo $field5['sending_date'];?>" placeholder="0000-00-00 00:00:00" name="sending_date" id="sending_date" /></td>
 
-          </tr>
-          <tr>
-            <td><label for="delivery_date">Delivery Date:</label></td>
-            <td colspan="3"><input type="text" value="<?php echo $field5['delivery_date'];?>" placeholder="0000-00-00 00:00:00" name="delivery_date" id="delivery_date" /></td>
 
-          </tr>
-          <tr>
-            <td colspan="4"><label for="reported_problem">Reported Problem:</label></td>
 
-          </tr>
-          <tr>
-            <td colspan="4"><textarea name="reported_problem" id="reported_problem" cols="45" rows="2"><?php echo $field5['reported_problem'];?></textarea></td>
-          </tr>
-          <tr>
-            <td colspan="2">Equipment has been Repaired:</td>
-            <td colspan="2"><input type="radio" name="radio" id="radio" value="1" <?php if($field5['confirmation']=='1'){ echo 'checked="checked"';}?>/>
-            <label for="radio">Yes</label>
-              <input type="radio" name="radio" id="radio" value="0" <?php if($field5['confirmation']=='0'){ echo 'checked="checked"';}?>/>
-            No</label></td>
-          </tr>
-        </table>
-      </fieldset>
-      <table>
-        <tr>
-          <td><label for="budget">Budget:</label></td>
-          <td colspan="2"><input type="text" value="<?php echo $field2['budget'];?>" name="budget" id="budget" /></td>
-        </tr>
-        <tr>
-        	<td colspan="3">&nbsp;</td>
-        </tr>
-        <tr>
-          <td><input type="submit" name="submit" class="submit" value="Save" /></td>
-          <td><input type="submit" name="submit2" class="submit" value="Save and Print" /></td>
-          <td><input type="submit" name="submit3" class="submit" value="Save and Print Bill" /></td>
-        </tr>
-      </table>
-    </form>  
-  </div>
-</div>
-<?php 
-if(isset($_POST['submit']) || isset($_POST['submit2'])|| isset($_POST['submit3'])){
-    $client = protect($_POST['client']);
-	$status = protect($_POST['status']);
-	$employee = protect($_POST['employee']);
-	$initial_date = protect($_POST['initial_date']);
-	$final_date = protect($_POST['final_date']);
-	$working_hours = protect($_POST['working_hours']);
-	$equipment = protect($_POST['equipment']);
-	$mark = protect($_POST['mark']);
-	$n_serie = protect($_POST['n_serie']);
-	$accessories = protect($_POST['accessories']);
-	$problem = protect($_POST['problem']);
-	$descri_client = protect($_POST['descri_client']);
-	$descri_employee = protect($_POST['descri_employee']);
-	$service_provided = protect($_POST['service_provided']);
-	$material_supplied = protect($_POST['material_supplied']);
-	$check = protect($_POST['check']);
-	$service = protect($_POST['service']);
-	$budget_service = protect($_POST['budget_service']);
-	$sending_date = protect($_POST['sending_date']);
-	$delivery_date = protect($_POST['delivery_date']);
-	$reported_problem = protect($_POST['reported_problem']);
-	$radio = protect($_POST['radio']);
-	$budget = protect($_POST['budget']);
+    $apg = protect($_GET['apg']);
+    $edit = protect($_GET['edit']);
 
-	if($check==0){
-		$budget_service = ' ';
-		$sending_date = ' ';
-		$delivery_date = ' ';
-		$reported_problem = ' ';
-		$radio = ' ';
-		$servic = ' ';
-		$name = protect($_POST['name']);
-    	$address = protect($_POST['address']);
-    	$phone = protect($_POST['phone']);  
-		}
+if(!empty($apg)) {
+    mysqli_query($conn, "DELETE FROM internal WHERE id_internal=$apg ")or die("Error:".mysqli_error($conn));
 
-   if($client==0){
-		if($field4['private']==0){
-		mysqli_query($conn,"INSERT INTO `client` VALUE('','".$name."','".$address."','','".$phone."','1')");
-		$cli = mysqli_result(mysqli_query($conn,"SELECT MAX(`id_client`) FROM `client`"),0,0);	
-		} else{
-		mysqli_query($conn,"UPDATE `client` SET `name`='".$name."' , `address`='".$address."' , `phone`='".$phone."' , `private`='1' WHERE `id_client`='".$cli."'")or die("Error:".mysqli_error($conn));	
-		}
-    }else{
-		if($field4['private']==1){
-		mysqli_query($conn,"DELETE FROM `client` WHERE `id_client`='".$cli."'")or die("Error:".mysqli_error($conn));
-		$cli = $client;	
-		}
-	}
-	
-    mysqli_query($conn,"UPDATE `equipment` SET `id_user`='".$employee."' , `id_client`='".$client."' , `id_service`='".$service."' ,  `budget`='".$budget."' , `equipment`='".$equipment."' , `mark/model`='".$mark."' , `n_serie`='".$n_serie."' , `accessories`='".$accessories."' , `service`='".$service_provided."' , `provided`='".$material_supplied."' WHERE `id`='".$_GET['id']."'")or die("Error:".mysqli_error($conn));
-	
-    mysqli_query($conn,"UPDATE `equip_problem` SET `problem/damage`='".$problem."' , `description(client)`='".$descri_client."' , `description(employee)`='".$descri_employee."'  WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
-	
-    mysqli_query($conn,"UPDATE `equip_status` SET `start_date`='".$initial_date."' , `end_date`='".$final_date."' , `final_time`='".$working_hours."' , `status`='".$status."' WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
-	
-    mysqli_query($conn,"UPDATE `service_problem` SET `check`='".$check."' , `budget`='".$budget_service."' , `reported_problem`='".$reported_problem."' , `sending_date`='".$sending_date."' , `delivery_date`='".$delivery_date."' , `confirmation`='".$radio."'  WHERE `id`='".$id."'")or die("Error:".mysqli_error($conn));
-	
-    
-    
-       
-    if(isset($_POST['submit2'])){
-        header('Location:'.check('home.php').'?imp=0&id='.$id.'&idcli='.$cli.'');
-    }elseif(isset($_POST['submit3'])){
-        header('Location:'.check('home.php').'?imp=1&id='.$id.'&idcli='.$cli.'&empr='.$empr.'');
-    }else{
-        header('Location:'.check('home.php')); 
+    header('Location:'.'home.php');
+}elseif(!empty($id)) {
+
+    $SQL1 = mysqli_query($conn, "SELECT * FROM `equip_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+    $SQL2 = mysqli_query($conn, "SELECT * FROM `equipment` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+    $SQL3 = mysqli_query($conn, "SELECT * FROM `equip_status` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
+    $SQL4 = mysqli_query($conn, "SELECT * FROM `client` WHERE `id_client`='$cli'")or die("Error:".mysqli_error($conn));
+
+    $field1 = mysqli_fetch_assoc($SQL1);
+    $field2 = mysqli_fetch_assoc($SQL2);
+    $field3 = mysqli_fetch_assoc($SQL3);
+    $field4 = mysqli_fetch_assoc($SQL4);
+}if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
+
+      $id_client = protect($_POST['client']);
+      $id_status = protect($_POST['status']);
+      $id_employee = protect($_POST['employee']);
+
+      $name = protect($_POST['name']);
+      $address = protect($_POST['address']);
+      $email = protect($_POST['email']);
+      $phone = protect($_POST['phone']);
+
+      $initial_date = protect($_POST['initial_date']);
+      $final_date = protect($_POST['final_date']);
+      $working_hours = protect($_POST['working_hours']);
+
+      $equipment = protect($_POST['equipment']);
+      $mark = protect($_POST['mark']);
+      $n_serie = protect($_POST['n_serie']);
+      $accessories = protect($_POST['accessories']);
+
+      $problem = protect($_POST['problem']);
+      $descri_client = protect($_POST['descri_client']);
+      $descri_employee = protect($_POST['descri_employee']);
+      $service_provided = protect($_POST['service_provided']);
+      $material_supplied = protect($_POST['material_supplied']);
+
+      $check = protect($_POST['check']);
+      $id_service = protect($_POST['service']);
+      $budget_service = protect($_POST['budget_service']);
+      $sending_date = protect($_POST['sending_date']);
+      $delivery_date = protect($_POST['delivery_date']);
+      $reported_problem = protect($_POST['reported_problem']);
+      $confirm = protect($_POST['radio']);
+
+      $budget = protect($_POST['budget']);
+
+    if($check!='on') {
+        $budget_service = ' ';
+        $sending_date = ' ';
+        $delivery_date = ' ';
+        $reported_problem = ' ';
+        $confirm = 'null';
+        $id_service = 'null';
     }
+
+    if($id_status=="NULL") {
+        $message = '<div class="alert alert-danger">
+                    <strong>Oh snap!</strong> Need Select Status.
+                    </div>';
+    }else{
+        if($id_employee==0) {
+            $message = '<div class="alert alert-danger">
+                        <strong>Oh snap!</strong> Need Select Employee.
+                        </div>';
+        }else{
+            $verf = 1;
+            if($id_client==0) {
+                $query = 'SELECT * FROM client WHERE name="'.$name.'"';
+                $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                if(mysqli_num_rows($result)==0) {
+                    $query = 'SELECT * FROM client WHERE email="'.$email.'"';
+                    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+
+                    if(mysqli_num_rows($result)==0) {
+                        $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
+                        mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                        $id_client = mysqli_insert_id($conn);
+                    }else{
+                        echo 'Email client exist';
+                        $verf = 0;
+                    }
+                }else{
+                    echo 'Name client exist';
+                    $verf = 0;
+                }
+            }
+
+            if($verf==1) {
+                $query = 'INSERT INTO equipment_status(status, start_date, end_date, work_hours) VALUE("'.$id_status.'","'. $initial_date.'","'.$final_date.'","'.$working_hours.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_eqip = mysqli_insert_id($conn);
+
+                $query = 'INSERT INTO product(equipment, mark_models, nSeries, acessories) VALUE("'.$equipment.'","'. $mark.'","'.$n_serie.'","'.$accessories.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_product = mysqli_insert_id($conn);
+
+                $query = 'INSERT INTO equip_problem(problem_damage, `description(client)`, `description(employee)`, service_provided, material_suplied) VALUE("'.$problem.'","'. $descri_client.'","'.$descri_employee.'","'.$service_provided.'","'.$material_supplied.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_equipment_problem = mysqli_insert_id($conn);
+
+                $query = 'INSERT INTO service_problem(id_service, `check`, budget, confirm, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$confirm.', "'.$reported_problem.'", "'.$sending_date.'","'.$delivery_date.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_service_problem = mysqli_insert_id($conn);
+
+                echo $query = 'INSERT INTO internal(id_client, id_user, id_equipment_status, id_product, id_equipment_problem, id_service_problem, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', '.$id_product.','.$id_equipment_problem.','.$id_service_problem.',"'.$budget.'")';
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                $id_extend = mysqli_insert_id($conn);
+
+                if(isset($_POST['submit2'])) {
+                     header('Location: '.check('home.php').'?imp=1&id='.$id_extend.'&entity=internal');
+                }else{
+                    header('Location: '.check('home.php'));
+                }
+            }
+
+        }
+    }
+
 }
 ?>
-<?php include("inc/footer.php"); ?>
+
+<div id="wrapper">
+        <?php require "inc/menu.php"; ?>
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <form name="external_form" method="POST" action="<?php echo current_file(); ?>">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h1 class="page-header">
+                                Sheet Repair Internal
+                            </h1>
+                            <ol class="breadcrumb">
+                                <li>
+                                    <a href="../home.php">Dashboard</a>
+                                </li>
+                                <li>
+                                    <a href="#">Sheet Repair</a>
+                                </li>
+                                <li class="active">
+                                     Internal
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <br>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-inline">
+                            <?php
+                            if(!empty($message)) {
+                                echo $message;
+                            }?>
+                            <div class="form-group col-lg-3">
+                                <label for="Client">Client*</label>
+                                <select name="client" class="form-control" id="client" onchange="verificaOpcao(this.value)">
+                                    <?php
+                                    echo '<option value="NULL"> -- Select Client -- </option>';
+                                    $query = 'SELECT * FROM client WHERE private=0 ORDER BY name ASC;';
+                                    $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
+                                    if(mysqli_num_rows($result)>=1) {
+                                        while($row = mysqli_fetch_assoc($result)){
+                                            echo '<option value="'.$row['id_client'].'" '.active($row['id_client'], $_POST['client']).' >'.$row['name'].'</option>';
+                                        }
+                                    }else{
+                                        echo '<option value="NULL">No value found</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="Status">Status*</label>
+                                <select name="status" class="form-control" id="Status">
+                                    <option value='NULL'> -- Select Status -- </option>
+                                    <option value="Waits" <?php echo active('Waits', $_POST['status']); ?>>Waits</option>
+                                    <option value="Budgeted" <?php echo active('Budgeted', $_POST['status']); ?>>Budgeted</option>
+                                    <option value="Under Repair" <?php echo active('Under Repair', $_POST['status']); ?>>Under Repair</option>
+                                    <option value="Closed Billing" <?php echo active('Closed Billing', $_POST['status']); ?>>Closed Billing</option>
+                                    <option value="Closed Guaranty" <?php echo active('Closed Guaranty', $_POST['status']); ?>>Closed Guaranty</option>
+                                    <option value="Closed Contract" <?php echo active('Closed Contract', $_POST['status']); ?>>Closed Contract</option>
+                                    <option value="Archive" <?php echo active('Archive', $_POST['status']); ?> >Archive</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <label for="Employee">Employee*</label>
+                                <select name="employee" class="form-control" id="employee">
+                                    <?php
+                                    echo '<option value="NULL"> -- Select Employee -- </option>';
+                                    $query = 'SELECT * FROM users ORDER BY name ASC;';
+                                    $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                                    if(mysqli_num_rows($result)>=1) {
+                                        while($row = mysqli_fetch_assoc($result)){
+                                            echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
+                                        }
+                                    }else{
+                                        echo '<option value="NULL">No value found</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-inline">
+                            <div class="form-group col-lg-3">
+                              <label for="Name">Name*:</label>
+                              <input type="text" name="name" class="form-control" id="Name"  value="<?php echo $name; ?>" required="required"/>
+                          </div>
+
+                          <div class="form-group col-lg-3">
+                              <label for="Address">Address:</label>
+                              <input type="text" name="address" class="form-control" id="Address" value="<?php echo $address; ?>"/>
+                          </div>
+
+                          <div class="form-group col-lg-3">
+                              <label for="Email">Email*:</label>
+                              <input type="email" name="email" class="form-control" id="Email" value="<?php echo $email; ?>" required="required"/>
+                          </div>
+
+                          <div class="form-group col-lg-3">
+                              <label for="Phone">Phone:</label>
+                              <input type="number" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
+                          </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-inline">
+                          <div class="form-group col-lg-3">
+                            <label for="initial_date">Initial Date:</label></td>
+                            <input type="datetime-local" name="initial_date" class="form-control" value="<?php echo $initial_date; ?>" id="initial_date" onchange="javascript('1')"/></td>
+                          </div>
+
+                          <div class="form-group col-lg-3">
+                            <label for="final_date">Final Date:</label></td>
+                            <input type="datetime-local" name="final_date" class="form-control" value="<?php echo $final_date; ?>" id="final_date" onchange="javascript('1')"/></td>
+                        </div>
+
+                            <div class="form-group col-lg-3">
+                              <label for="working_hours">Working Hours:</label></td>
+                              <input type="text" name="working_hours" class="form-control" id="working_hours" value="<?php echo $working_hours; ?>" readonly /></td>
+                            </div>
+                          </table>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-lg-12 form-inline">
+                            <div class="form-group col-lg-3">
+                                <label for="Equipment">Equipment*:</label>
+                                <input type="text" name="equipment" value="<?php echo $equipment; ?>" class="form-control" id="Equipment"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="Mark">Mark/Model*:</label>
+                                <input type="text" name="mark" value="<?php echo $mark; ?>" class="form-control" id="Mark"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="n_Serie">NºSerie*:</label>
+                                <input type="text" name="n_serie" value="<?php echo $n_serie; ?>" class="form-control" id="n_Serie"/>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <label for="Accessories">Extra Accessories:</label>
+                                <input type="text" name="accessories" value="<?php echo $accessories; ?>" class="form-control" id="Accessories"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br><br>
+
+                    <div class="row col-lg-12">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="Problem/Damage">Problem/Damage:</label>
+                                <textarea  name="problem" class="form-control" id="Problem/Damage" rows="3"><?php echo $problem; ?></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Descri_Client">Description(Client):</label>
+                                <textarea  name="descri_client" class="form-control" id="Descri_Client" rows="3"><?php echo $descri_client; ?></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Descri_Employee">Description(Employee):</label>
+                                <textarea  name="descri_employee" class="form-control" id="Descri_Employee" rows="3"><?php echo $descri_employee; ?></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Service_Provided">Service Provided:</label>
+                                <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"><?php echo $service_provided; ?></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Material_Supplied">Material Supplied:</label>
+                                <textarea  name="material_supplied" class="form-control" id="Material_Supplied" rows="3"><?php echo $material_supplied; ?></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <br><br>
+                            <fieldset id="fieldset" disabled>
+                                <legend>Service <input name="check" type="checkbox" onclick="document.getElementById('fieldset').disabled = !this.checked;" /></legend>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="Service">Service:</label>
+
+                                    <select name="service" class="form-control" id="Service">
+                                        <?php
+                                        echo '<option value="0"> -- Select Service -- </option>';
+                                        $query = 'SELECT * FROM service ORDER BY name ASC;';
+                                        $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
+                                        if(mysqli_num_rows($result)>=1) {
+                                            while($row = mysqli_fetch_assoc($result)){
+                                                echo '<option value='.$row['id_service'].' '.active($row['id_service'], $_POST['service']).'>'.$row['name'].'</option>';
+                                            }
+                                        }else{
+                                            echo '<option value="NULL">No value found</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="budget_service">Budget Service:</label>
+                                    <input type="text" name="budget_service" class="form-control" value="<?php echo $budget_service; ?>" id="budget_service" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="sending_date">Sending Date:</label>
+                                    <input type="datetime-local" name="sending_date" value="<?php echo $sending_date; ?>" class="form-control" id="sending_date" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="delivery_date">Delivery Date:</label>
+                                    <input type="datetime-local" name="delivery_date" value="<?php echo $delivery_date; ?>" class="form-control" id="delivery_date" />
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label for="reported_problem">Reported Problem:</label>
+                                    <textarea name="reported_problem" id="reported_problem" class="form-control" cols="45" rows="2"><?php echo $reported_problem; ?></textarea>
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <br>
+                                    <label for="reported_problem">Equipment has been Repaired:</label>
+                                    <br>
+                                    <input type="radio" name="radio" id="radio" value="1" />
+                                    <label for="radio">Yes</label>
+                                    <input type="radio" name="radio" id="radio" value="0" />
+                                    <label for="radio">No</label>
+
+                                </div>
+                            </fieldset>
+                            <hr />
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group ">
+                                <label for="Budget">Budget:</label>
+                                <input type="text" name="budget" value="<?php echo $budget ?>"class="form-control" id="Budget"/>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" name="submit1" class="btn btn-default" value="Save" />
+                                <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Draft" />
+                                <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Bill" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        <!-- /.container-fluid -->
+    </div>
+</div>
+<!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+<?php require "inc/footer.php"; ?>

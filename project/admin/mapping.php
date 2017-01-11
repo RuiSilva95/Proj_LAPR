@@ -201,8 +201,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td>'.$row['int_description'].'</td>';
                                                     echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
-                                                            <a class="btn btn-default href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                                 $value1 = explode(" ", $row['equip_workhours']);
@@ -223,7 +223,7 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         $hora1 += $sep1[0];
                                         $minutos1 = $sep1[1];
                                         echo '<td colspan="1">'.sprintf('%02d Horas e %02d Minutos', $hora1, $minutos1).'</td>';
-                                        echo '<td><a class="btn btn-default href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
+                                        echo '<td><a class="btn btn-default" href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
                                         echo '</tr>';
                                         ?>
                                     </tbody>
@@ -413,8 +413,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td>'.$row['ext_description'].'</td>';
                                                     echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
-                                                            <a class="btn btn-default href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
 
