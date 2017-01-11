@@ -53,8 +53,24 @@ if(isset($_POST['submit2'])) {
                             <button type="submit" name="sendmail" class="btn btn-danger">Compor</button>
                             </form>
                             <?php
+                            $pageNumber=5;
 
-                            $sql = 'SELECT * FROM message where para = "'.$name.'" ORDER BY id desc;';
+                            $offset= (mysqli_real_escape_string($conn, $_GET["page"])-1)*$pageNumber;
+                            if($offset<0) {
+                                $offset=0;
+                            }
+                            $offset2= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$pageNumber;
+                            if($offset2<0) {
+                                $offset2=0;
+                            }
+
+                            $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM message where para = "'.$name.'";'));
+                            $count2 = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM message where de = "'.$name.'";'));
+
+                            //$query = 'SELECT * FROM client WHERE private=0 ORDER BY name ASC LIMIT '.$pageNumber.' OFFSET '.$offset.';';
+
+
+                            $sql = 'SELECT * FROM message where para = "'.$name.'" ORDER BY id desc LIMIT '.$pageNumber.' OFFSET '.$offset.';';
                             $result = mysqli_query($conn, $sql);
                             echo "<h1>Correio Recebido</h1>";
                             echo '<table align="center" class="table table-striped table-bordered"><tr><th>FROM</th><th>TO</th><th>TITLE</th><th>DATE</th><th>ACTIONS</th></tr>';
@@ -74,15 +90,28 @@ if(isset($_POST['submit2'])) {
                                 echo '</tr>';
                                 echo '</form>';
                             }
+                            echo '</table>';
                             //mysqli_close($conn);
                                 ?>
+                                <nav aria-label="...">
+                                    <center>
+                                        <ul class="pagination pagination-sm">
+                                                <?php
+                                                for($i=0;$i<($count/$pageNumber);$i++){
+                                                    echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page='.($i+1).'">'.($i+1).'</a></li>';
+                                                }
+                                                ?>
+                                        </ul>
+                                    </center>
+                                </nav>
+
                               </div>
                           </div>
                                 <div class="row">
                                     <div class="col-lg-12">
                                       <table class="table">
                                 <?php
-                                $sql = 'SELECT * FROM message where de = "'.$name.'" ORDER BY id desc;';
+                                $sql = 'SELECT * FROM message where de = "'.$name.'" ORDER BY id desc LIMIT '.$pageNumber.' OFFSET '.$offset2.';';
                                 $result = mysqli_query($conn, $sql);
                                 echo "<h1>Correio Enviado</h1>";
                                 echo '<table align="center" class="table table-striped table-bordered"><tr><th>FROM</th><th>TO</th><th>TITLE
@@ -104,8 +133,20 @@ if(isset($_POST['submit2'])) {
                                     ?>
                         </tbody>
                       </table>
+                      <nav aria-label="...">
+                          <center>
+                              <ul class="pagination pagination-sm">
+                                        <?php
+                                        for($i=0;$i<($count2/$pageNumber);$i++){
+                                            echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page2='.($i+1).'">'.($i+1).'</a></li>';
+                                        }
+                                        ?>
+                              </ul>
+                          </center>
+                      </nav>
                     </div>
                 </div>
+
 
                 <h1>Mensagem:</h1>
                 <div class="row">
