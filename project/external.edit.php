@@ -38,10 +38,16 @@ if(!empty($_GET['apg'])) {
     $row3 = mysqli_fetch_assoc($result3);
     $row4 = mysqli_fetch_assoc($result4);
 
-    $name = protect($row3['name']);
-    $address = protect($row3['address']);
-    $email = protect($row3['email']);
-    $phone = protect($row3['phone']);
+
+    $result = mysqli_query($conn, "SELECT * FROM client WHERE id_client = $id_client AND private = 1");
+    if(mysqli_num_rows($result) == 1) {
+        $name = protect($row3['name']);
+        $address = protect($row3['address']);
+        $email = protect($row3['email']);
+        $phone = protect($row3['phone']);
+    }
+
+
 
     $initial_date = protect($row2['start_date']);
     $final_date = protect($row2['end_date']);
@@ -86,30 +92,34 @@ if(!empty($_GET['apg'])) {
             if($id_client==0) {
                 $query = 'SELECT * FROM client WHERE name="'.$name.'"';
                 $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
-                if(mysqli_num_rows($result)==0) {
+                if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_client'])) {
                     $query = 'SELECT * FROM client WHERE email="'.$email.'"';
                     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
 
-                    if(mysqli_num_rows($result)==0) {
-                        $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
+                    if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_client'])) {
+                        $query = 'UPDATE client SET name = "'.$name.'", address = "'.$address.'", email = "'.$email.'", phone = '.$phone.', private = 1 WHERE id_client ="'.$id_client.'"';
                         mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                         $id_client = mysqli_insert_id($conn);
                     }else{
-                        echo 'Email client exist';
+                        $message = '<div class="alert alert-danger">
+                                  <strong>Oh snap!</strong> Need Email.
+                                  </div>';
                         $verf = 0;
                     }
                 }else{
-                    echo 'Name client exist';
+                    $message = '<div class="alert alert-danger">
+                              <strong>Oh snap!</strong> Client Exist.
+                              </div>';
                     $verf = 0;
                 }
             }
 
             if($verf==1) {
-                $query = 'INSERT INTO equipment_status(status, start_date, end_date, work_hours) VALUE("'.$id_status.'","'. $initial_date.'","'.$final_date.'","'.$working_hours.'")';
+                $query = 'UPDATE equipment_status SET status = "'.$id_status.'", start_date = "'. $initial_date.'" , end_date = "'.$final_date.'", work_hours = "'.$working_hours.'" WHERE id_equipment_status ="'.$id_status2.'"';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_eqip = mysqli_insert_id($conn);
 
-                echo $query = 'INSERT INTO external(id_client, id_user, id_equipment_status, description, service_provided, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', "'.$description.'","'.$service_provided.'","'.$budget.'")';
+                echo $query = 'UPDATE external SET id_client = '.$id_client.', id_user = '.$id_employee.', id_equipment_status = '.$id_eqip.', description = "'.$description.'", service_provided = "'.$service_provided.'", budget = "'.$budget.'"WHERE id_external ="'.$id_external.'"';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_extend = mysqli_insert_id($conn);
 
@@ -124,7 +134,6 @@ if(!empty($_GET['apg'])) {
     }
 }
 ?>
-
 
 <div id="wrapper">
         <?php require "inc/menu.php"; ?>
