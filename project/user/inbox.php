@@ -7,8 +7,7 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
-echo $_SESSION['id'];
-
+$name = access('name');
 
 if(isset($_POST['delete'])) {
     $query = 'delete from message where id ="'.$_POST['delete'].'"';
@@ -21,12 +20,7 @@ if(isset($_POST['submit2'])) {
     $result = mysqli_query($conn, $query);
 }
 
-
-
-
-
 ?>
-
 
 <div id="wrapper">
         <?php require "../inc/menu.php"; ?>
@@ -60,7 +54,7 @@ if(isset($_POST['submit2'])) {
                             </form>
                             <?php
 
-                            $sql = 'SELECT * FROM message where para = "'.$_SESSION['id'].'" ORDER BY id desc;';
+                            $sql = 'SELECT * FROM message where para = "'.$name.'" ORDER BY id desc;';
                             $result = mysqli_query($conn, $sql);
                             echo "<h1>Correio Recebido</h1>";
                             echo '<table align="center" class="table table-striped table-bordered"><tr><th>FROM</th><th>TO</th><th>TITLE</th><th>DATE</th><th>ACTIONS</th></tr>';
@@ -88,8 +82,7 @@ if(isset($_POST['submit2'])) {
                                     <div class="col-lg-12">
                                       <table class="table">
                                 <?php
-
-                                $sql = 'SELECT * FROM message where de = "'.$_SESSION['id'].'" ORDER BY id desc;';
+                                $sql = 'SELECT * FROM message where de = "'.$name.'" ORDER BY id desc;';
                                 $result = mysqli_query($conn, $sql);
                                 echo "<h1>Correio Enviado</h1>";
                                 echo '<table align="center" class="table table-striped table-bordered"><tr><th>FROM</th><th>TO</th><th>TITLE
@@ -158,9 +151,9 @@ if(isset($_POST['submit2'])) {
                               <div class="col-sm-10">
                                 <?php
                                 if(isset($_POST['responder'])) {
-                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name"  value="'.$_SESSION['id'].'" readonly>';
+                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name"  value="'.$name.'" readonly>';
                                 }else{
-                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name" value="'.$_SESSION['id'].'" readonly>';
+                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name" value="'.$name.'" readonly>';
                                 }
                                     ?>
                                   </div>
@@ -215,17 +208,8 @@ if(isset($_POST['submit2'])) {
           <!-- /#page-wrapper -->
       </div>
       <!-- /#wrapper -->
-    <?php require "../inc/footer.php"; ?>
-
-
-<div class="container">
-  <h2 href="inbox.php">Inbox</h2>
-
-</div>
-
-
-
-
+    <?php require "../inc/footer.php";
+    ?>
 
 
 </body>

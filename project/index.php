@@ -398,7 +398,7 @@ Nós vamos ligar a sua empresa com os sistemas de parceiros certificados, todos 
                                     <p class="help-block text-danger"></p>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Please enter your phone number.">
+                                    <input type="text" class="form-control" placeholder="Your Phone *" id="phone" required data-validation-required-message="Describe your doubt.">
                                     <p class="help-block text-danger"></p>
                                 </div>
                             </div>
