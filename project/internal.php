@@ -96,7 +96,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 $id_equipment_problem = mysqli_insert_id($conn);
 
                 $query = 'INSERT INTO service_problem(id_service, `check`, budget, confirm, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$confirm.', "'.$reported_problem.'", "'.$sending_date.'","'.$delivery_date.'")';
-                mysqli_query($conn, $query)or die("Error2:".mysqli_error($conn));
+                mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_service_problem = mysqli_insert_id($conn);
 
                 echo $query = 'INSERT INTO internal(id_client, id_user, id_equipment_status, id_product, id_equipment_problem, id_service_problem, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', '.$id_product.','.$id_equipment_problem.','.$id_service_problem.',"'.$budget.'")';
