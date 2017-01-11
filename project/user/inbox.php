@@ -16,7 +16,8 @@ if(isset($_POST['delete'])) {
 }
 
 if(isset($_POST['submit2'])) {
-    $query = 'insert into message(de,para,title,message,date) values ("'.$_POST["de"].'","'.$_POST["para"].'","'.$_POST["title"].'","'.$_POST["message"].'",curdate()) ';
+    $query = 'insert into message(de,para,title,message,date) values ("'.$name.'","'.$_POST["para"].'","'.$_POST["title"].'","'.$_POST["message"].'",curdate()) ';
+    echo $query;
     $result = mysqli_query($conn, $query);
 }
 
@@ -170,9 +171,9 @@ if(isset($_POST['submit2'])) {
 
                                                         $sql=mysqli_query($conn, "SELECT id_user,name FROM users");
                                                         if(mysqli_num_rows($sql)) {
-                                                            $select= '<select name="select">';
+                                                            $select= '<select name="para">';
                                                             while($rs=mysqli_fetch_array($sql)){
-                                                                $select.='<option value="'.$rs['id_user'].'">'.$rs['name'].'</option>';
+                                                                $select.='<option value="'.$rs['name'].'">'.$rs['name'].'</option>';
                                                             }
                                                         }
                                                         $select.='</select>';
