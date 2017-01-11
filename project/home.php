@@ -206,14 +206,14 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['int_description'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit=1&id_internal'.$row['int_id'].'"&id_client'.$row['int_cli'].'"&id_user'.$row['int_user'].'"
-                                                            &id_equipment_status'.$row['int_equip_status'].'"&id_product'.$row['int_product'].'"
-                                                            &id_equipment_problem'.$row['int_equip_problem'].'"&id_service_problem'.$row['int_serv_problem'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit=1&id_internal='.$row['int_id'].'&id_client='.$row['int_cli'].'&id_user='.$row['int_user'].'
+                                                            &id_equipment_status='.$row['int_equip_status'].'&id_product='.$row['int_product'].'
+                                                            &id_equipment_problem='.$row['int_equip_problem'].'&id_service_problem='.$row['int_serv_problem'].'">Edit</a>
 
                                                             <a class="btn btn-default" href="'.check('internal.edit.php').'?
-                                                            apg=1&id_internal'.$row['int_id'].'"&id_client'.$row['int_cli'].'"
-                                                            &id_equipment_status'.$row['int_equip_status'].'"&id_product'.$row['int_product'].'"
-                                                            &id_equipment_problem'.$row['int_equip_problem'].'"&id_service_problem'.$row['int_serv_problem'].'">Delete</a>
+                                                            apg=1&id_internal='.$row['int_id'].'&id_client='.$row['int_cli'].'
+                                                            &id_equipment_status='.$row['int_equip_status'].'&id_product='.$row['int_product'].'
+                                                            &id_equipment_problem='.$row['int_equip_problem'].'&id_service_problem='.$row['int_serv_problem'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                             }
@@ -390,12 +390,12 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['ext_description'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit=1&id_external'.$row['ext_id'].'"&id_client'.$row['ext_cli'].'"&id_user'.$row['int_user'].'"
-                                                            &id_equipment_status'.$row['ext_equip_status'].'">Edit</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit=1&id_external='.$row['ext_id'].'&id_client='.$row['ext_cli'].'&id_user='.$row['ext_user'].'
+                                                            &id_equipment_status='.$row['ext_equip_status'].'">Edit</a>
 
                                                             <a class="btn btn-default" href="'.check('external.edit.php').'?
-                                                            apg=1&id_external'.$row['ext_id'].'"&id_client'.$row['ext_cli'].'"
-                                                            &id_equipment_status'.$row['ext_equip_status'].'">Delete</a>
+                                                            apg=1&id_external='.$row['ext_id'].'&id_client='.$row['ext_cli'].'
+                                                            &id_equipment_status='.$row['ext_equip_status'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                             }

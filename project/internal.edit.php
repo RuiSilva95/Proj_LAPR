@@ -5,7 +5,7 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
-if(empty($_GET['apg'])) {
+if(!empty($_GET['apg'])) {
     $id_internal = protect($_GET['id_internal']);
     $id_client = protect($_GET['id_client']);
     $id_equipment_status = protect($_GET['id_equipment_status']);
@@ -23,7 +23,7 @@ if(empty($_GET['apg'])) {
 
     mysqli_query($conn, "DELETE FROM equipment_status WHERE id_equipment_status=$id_equipment_status ")or die("Error:".mysqli_error($conn));
     mysqli_query($conn, "DELETE FROM product WHERE id_product=$id_product ")or die("Error:".mysqli_error($conn));
-    mysqli_query($conn, "DELETE FROM equipment_problem WHERE id_equipment_problem=$id_equipment_problem ")or die("Error:".mysqli_error($conn));
+    mysqli_query($conn, "DELETE FROM equip_problem WHERE id_equipment_problem=$id_equipment_problem ")or die("Error:".mysqli_error($conn));
     mysqli_query($conn, "DELETE FROM service_problem WHERE id_service_problem=$id_service_problem ")or die("Error:".mysqli_error($conn));
 
     header('Location:'.'home.php');
@@ -40,7 +40,7 @@ if(empty($_GET['apg'])) {
     $result2 = mysqli_query($conn, "SELECT * FROM internal WHERE id_internal=$id_internal ")or die("Error:".mysqli_error($conn));
     $result3 = mysqli_query($conn, "SELECT * FROM equipment_status WHERE id_equipment_status=$id_status2 ")or die("Error:".mysqli_error($conn));
     $result4 = mysqli_query($conn, "SELECT * FROM product WHERE id_product=$id_product ")or die("Error:".mysqli_error($conn));
-    $result5 = mysqli_query($conn, "SELECT * FROM equipment_problem WHERE id_equipment_problem=$id_equipment_problem ")or die("Error:".mysqli_error($conn));
+    $result5 = mysqli_query($conn, "SELECT * FROM equip_problem WHERE id_equipment_problem=$id_equipment_problem ")or die("Error:".mysqli_error($conn));
     $result6 = mysqli_query($conn, "SELECT * FROM service_problem WHERE id_service_problem=$id_service_problem ")or die("Error:".mysqli_error($conn));
     $result7 = mysqli_query($conn, "SELECT * FROM users WHERE id_user=$id_employee ")or die("Error:".mysqli_error($conn));
 
