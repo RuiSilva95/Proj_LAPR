@@ -142,42 +142,42 @@ if(!empty($_GET['apg'])) {
             if($id_client==0) {
                 $query = 'SELECT * FROM client WHERE name="'.$name.'"';
                 $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
-                if(mysqli_num_rows($result)==0) {
+                if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_client'])) {
                     $query = 'SELECT * FROM client WHERE email="'.$email.'"';
                     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
 
-                    if(mysqli_num_rows($result)==0) {
-                        $query = 'INSERT INTO client(name, address, email, phone, private) VALUE("'.$name.'","'.$address.'","'.$email.'",'.$phone.', 1);';
+                    if(mysqli_num_rows($result)==0 || (mysqli_num_rows($result)==1 && $id==$row['id_client'])) {
+                        $query = 'UPDATE client SET name="'.$name.'", address="'.$address.'", email="'.$email.'", phone='.$phone.', private=1  WHERE id_client='.$id_client.');';
                         mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                         $id_client = mysqli_insert_id($conn);
                     }else{
-                        echo 'Email client exist';
+                        $message = 'Email client exist';
                         $verf = 0;
                     }
                 }else{
-                    echo 'Name client exist';
+                    $message = 'Name client exist';
                     $verf = 0;
                 }
             }
 
             if($verf==1) {
-                $query = 'INSERT INTO equipment_status(status, start_date, end_date, work_hours) VALUE("'.$id_status.'","'. $initial_date.'","'.$final_date.'","'.$working_hours.'")';
+                $query = 'UPDATE equipment_status SET status="'.$id_status.'", start_date="'. $initial_date.'", end_date="'.$final_date.'", work_hours="'.$working_hours.'" WHERE id_equipment_status = '.$id_equipment_status.' )';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_eqip = mysqli_insert_id($conn);
 
-                $query = 'INSERT INTO product(equipment, mark_models, nSeries, acessories) VALUE("'.$equipment.'","'. $mark.'","'.$n_serie.'","'.$accessories.'")';
+                $query = 'UPDATE product SET equipment="'.$equipment.'", mark_models="'. $mark.'", nSeries="'.$n_serie.'", acessories="'.$accessories.'" WHERE id_product = '.$id_product.')';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_product = mysqli_insert_id($conn);
 
-                $query = 'INSERT INTO equip_problem(problem_damage, `description(client)`, `description(employee)`, service_provided, material_suplied) VALUE("'.$problem.'","'. $descri_client.'","'.$descri_employee.'","'.$service_provided.'","'.$material_supplied.'")';
+                $query = 'UPDATE equip_problem SET problem_damage="'.$problem.'", `description(client)`="'. $descri_client.'", `description(employee)`="'.$descri_employee.'", service_provided="'.$service_provided.'", material_suplied="'.$material_supplied.'") WHERE id_equip_problem = '.$id_equipment_problem.')';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_equipment_problem = mysqli_insert_id($conn);
 
-                $query = 'INSERT INTO service_problem(id_service, `check`, budget, confirm, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$confirm.', "'.$reported_problem.'", "'.$sending_date.'","'.$delivery_date.'")';
+                $query = 'UPDATE service_problem SET id_service='.$id_service.', `check`"'.$check.'", "'.$budget_service.'", confirm='.$confirm.', report_problem="'.$reported_problem.'", sending_date="'.$sending_date.'", deliver_date="'.$delivery_date.'" WHERE id_service_problem = '.$id_service_problem.')';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_service_problem = mysqli_insert_id($conn);
 
-                echo $query = 'INSERT INTO internal(id_client, id_user, id_equipment_status, id_product, id_equipment_problem, id_service_problem, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', '.$id_product.','.$id_equipment_problem.','.$id_service_problem.',"'.$budget.'")';
+                echo $query = 'UPDATE internal SET id_client='.$id_client.', id_user='.$id_employee.', id_equipment_status='.$id_eqip.', id_product='.$id_product.', id_equipment_problem='.$id_equipment_problem.', id_service_problem='.$id_service_problem.', budget="'.$budget.'" WHERE id_internal = '.$id_internal.')';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_extend = mysqli_insert_id($conn);
 
