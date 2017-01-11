@@ -1,10 +1,10 @@
 <?php require "inc/head.php";
-/*
+
 if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
-*/
+
 ?>
 
 <script>
@@ -169,6 +169,15 @@ if(!isset($_SESSION['id'])) {
                                         }
                                         //*************************************************************
                                         //*************************************************************
+                                        $pageNumber=3;
+
+                                        $offset= (mysqli_real_escape_string($conn, $_GET["page1"])-1)*$pageNumber;
+                                        if($offset<0) {
+                                            $offset=0;
+                                        }
+
+                                        $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM internal;'));
+
                                         $query = 'SELECT internal.id_internal AS int_id,
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
@@ -337,6 +346,15 @@ if(!isset($_SESSION['id'])) {
                                         }
                                         //*************************************************************
                                         //*************************************************************
+                                        $pageNumber=3;
+
+                                        $offset= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$pageNumber;
+                                        if($offset<0) {
+                                            $offset=0;
+                                        }
+
+                                        $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM external;'));
+
                                         $query = 'SELECT external.id_external AS ext_id,
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
