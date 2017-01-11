@@ -12,14 +12,12 @@ $name = access('name');
 if(isset($_POST['delete'])) {
     $query = 'delete from message where id ="'.$_POST['delete'].'"';
     $result = mysqli_query($conn, $query);
-    echo $query;
 }
 
-if(isset($_POST['submit2'])) {
-    $query = 'insert into message(de,para,title,message,date) values ("'.$name.'","'.$_POST["para"].'","'.$_POST["title"].'","'.$_POST["message"].'",curdate()) ';
-    echo $query;
-    $result = mysqli_query($conn, $query);
-}
+$random_number1 = mt_rand(0, 10);
+$random_number2 = mt_rand(0, 10);
+$checkTotal = $random_number1 + $random_number2;
+
 
 ?>
 
@@ -114,6 +112,23 @@ if(isset($_POST['submit2'])) {
                           </div>
                           <div class="row">
                               <div class="col-lg-12">
+                                <?php
+
+                                if(isset($_POST['submit2'])) {
+                                    $captchaResult = $_POST["captchaResult"];
+                                    $firstNumber = $_POST["firstNumber"];
+                                    $secondNumber = $_POST["secondNumber"];
+                                    $checkTotal = $firstNumber + $secondNumber;
+                                    if ($captchaResult == $checkTotal) {
+                                          $query = 'insert into message(de,para,title,message,date) values ("'.$name.'","'.$_POST["para"].'","'.$_POST["title"].'","'.$_POST["message"].'",curdate()) ';
+                                          $result = mysqli_query($conn, $query);
+                                    } else {
+                                        echo '<div class="alert alert-danger">
+                                        <strong>Wrong Captcha!</strong> Message not sent.
+                                        </div>';
+                                    }
+                                }
+                                    ?>
                                         <?php
                                         if(isset($_POST['submit'])) {
                                             echo '<h1>Mensagem:</h1>';
@@ -200,9 +215,13 @@ if(isset($_POST['submit2'])) {
                                                         </div>
                                                         </div>
                                                         <div class="form-group">
-                                                        <label for { ="human" class="col-sm-2 control-label">2 + 3 = ?</label>
+                                                        <label for { ="human" class="col-sm-2 control-label"><?php
+                                                          echo $random_number1 . ' + ' . $random_number2 . ' = ';
+                                                            ?></label>
                                                         <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer">
+                                                        <input name="captchaResult" type="text" size="2" />
+                                                        <input name="firstNumber" type="hidden" value="<?php echo $random_number1; ?>" />
+                                                            <input name="secondNumber" type="hidden" value="<?php echo $random_number2; ?>" />
                                                         </div>
                                                         </div>
                                                         <div class="form-group col-sm-10 col-sm-offset-2">

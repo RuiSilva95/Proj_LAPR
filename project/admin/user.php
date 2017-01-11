@@ -208,7 +208,7 @@ if(isset($_POST['submit1'])) {
                                                         </select>
                                                  </td>';
                                                 if($row['data']!=null) {
-                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
+                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($row['data']) . '"  width="38" height="38"></td>';
                                                 }else{
                                                     echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
                                                 }
@@ -228,7 +228,7 @@ if(isset($_POST['submit1'])) {
                                                 echo '<td> '. $stat .' </td>';
 
                                                 if($row['data']!=null) {
-                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($pinc) . '"  width="38" height="38"></td>';
+                                                    echo '<td style="text-align:center;vertical-align:middle"><img src="data:image/jpg;base64,' . base64_encode($row['data']) . '"  width="38" height="38"></td>';
                                                 }else{
                                                     echo '<td style="text-align:center;vertical-align:middle"><i class="fa fa-user" style="font-size:38px"> </i></td>';
                                                 }
