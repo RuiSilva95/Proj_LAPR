@@ -104,15 +104,14 @@ if(isset($_POST['submit2'])) {
                                         </ul>
                                     </center>
                                 </nav>
-
                               </div>
                           </div>
-
                           <div class="row">
                               <div class="col-lg-12">
                                         <?php
                                         if(isset($_POST['submit'])) {
                                             echo '<h1>Mensagem:</h1>';
+                                            echo "<br /><br />";
                                             $id = $_POST['submit'];
                                             $query = "select * from message where id=$id";
                                             $result = mysqli_query($conn, $query);
@@ -130,6 +129,7 @@ if(isset($_POST['submit2'])) {
                                             <br>
                                             <input type='hidden' name='de' value='<?php echo "$de";?>'/>
                                             <button type="submit" name="responder" class="btn btn-primary">Responder</button>
+                                            <br><br>
                                             </form>
                                                 <?php
                                                 $query = "update message set leu=1 where id=$id";
@@ -166,7 +166,17 @@ if(isset($_POST['submit2'])) {
                                                     if(isset($_POST['responder'])) {
                                                         echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name"  value="'.$_POST['de'].'">';
                                                     }else{
-                                                        echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name" value="">';
+                                                        //echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name" value="">';
+
+                                                        $sql=mysqli_query($conn, "SELECT id_user,name FROM users");
+                                                        if(mysqli_num_rows($sql)) {
+                                                            $select= '<select name="select">';
+                                                            while($rs=mysqli_fetch_array($sql)){
+                                                                $select.='<option value="'.$rs['id_user'].'">'.$rs['name'].'</option>';
+                                                            }
+                                                        }
+                                                        $select.='</select>';
+                                                        echo $select;
                                                     }
                                                         ?>
                                                     </div>
