@@ -58,16 +58,16 @@ function tint($var)
         return 'bgcolor="#ffffff"';
         break;
     case 'Closed Billing':
-        return 'bgcolor="#0dfd01"';
+        return 'bgcolor="#38bf31"';
         break;
     case 'Closed Guaranty':
-        return 'bgcolor="#08b000"';
+        return 'bgcolor="#38bf31"';
         break;
     case 'Closed Contract':
-        return 'bgcolor="#98FF92"';
+        return 'bgcolor="#38bf31"';
         break;
     case 'Archive':
-        return 'bgcolor="b3b3b3"';
+        return 'bgcolor="#5c5c58"';
         break;
     }
 }
