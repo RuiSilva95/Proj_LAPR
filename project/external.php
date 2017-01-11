@@ -1,37 +1,38 @@
 <?php require "inc/head.php";
 
 if(!isset($_SESSION['id'])) {
-    echo "Não tes acesso a esta pagina";
+    echo "Não tens acesso a esta pagina";
     die();
 }
 
-
 if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
-      $id_client = protect($_POST['client']);
-      $id_status = protect($_POST['status']);
-      $id_employee = protect($_POST['employee']);
+    $id_client = protect($_POST['client']);
+    $id_status = protect($_POST['status']);
+    $id_employee = protect($_POST['employee']);
 
-      $name = protect($_POST['name']);
-      $address = protect($_POST['address']);
-      $email = protect($_POST['email']);
-      $phone = protect($_POST['phone']);
+    $name = protect($_POST['name']);
+    $address = protect($_POST['address']);
+    $email = protect($_POST['email']);
+    $phone = protect($_POST['phone']);
 
-      $initial_date = protect($_POST['initial_date']);
-      $final_date = protect($_POST['final_date']);
-      $working_hours = protect($_POST['working_hours']);
+    $initial_date = protect($_POST['initial_date']);
+    $final_date = protect($_POST['final_date']);
+    $working_hours = protect($_POST['working_hours']);
 
-      $description = protect($_POST['description']);
-      $service_provided = protect($_POST['service_provided']);
-      $budget = protect($_POST['budget']);
+    $description = protect($_POST['description']);
+    $service_provided = protect($_POST['service_provided']);
+    $budget = protect($_POST['budget']);
 
-    if($id_status=='null') {
-        echo 'Need Select Status';
-
+    if($id_status=='0') {
+        $message = '<div class="alert alert-danger">
+                    <strong>Oh snap!</strong> Need Select Status.
+                    </div>';
     }else{
-
         if($id_employee==0) {
-            echo 'Need Select Employee';
+            $message = '<div class="alert alert-danger">
+                        <strong>Oh snap!</strong> Need Select Employee.
+                        </div>';
         }else{
             $verf = 1;
             if($id_client==0) {
@@ -74,9 +75,8 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
         }
     }
 }
-
-
 ?>
+
 
 <div id="wrapper">
         <?php require "inc/menu.php"; ?>
@@ -107,6 +107,10 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                     <div class="row">
                         <div class="col-lg-12 form-inline">
+                            <?php
+                            if(!empty($message)) {
+                                echo $message;
+                            }?>
                             <div class="form-group col-lg-3">
                                 <label for="Client">Client</label>
                                 <select name="client" class="form-control" id="client" onchange="verificaOpcao(this.value)">
@@ -126,7 +130,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <label for="Status">Status</label>
+                                <label for="Status">Status *</label>
                                 <select name="status" class="form-control" id="Status">
                                     <option value="0"> -- Select Status -- </option>
                                     <option value="Waits" <?php echo active('Waits', $_POST['status']); ?>>Waits</option>
@@ -140,7 +144,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group col-lg-4">
-                                <label for="Employee">Employee</label>
+                                <label for="Employee">Employee *</label>
                                     <select name="employee" class="form-control" id="employee">
                                         <?php
                                         echo '<option value="0"> -- Select Employee -- </option>';
@@ -165,22 +169,22 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
                                 <label for="Name">Name*:</label>
-                                <input type="text" name="name" class="form-control" id="Name"  required="required"/>
+                                <input type="text" name="name" class="form-control" id="Name"  value="<?php echo $name; ?>" required="required"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Address">Address:</label>
-                                <input type="text" name="address" class="form-control" id="Address"/>
+                                <input type="text" name="address" class="form-control" id="Address" value="<?php echo $address; ?>"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Email">Email*:</label>
-                                <input type="email" name="email" class="form-control" id="Email" required="required"/>
+                                <input type="email" name="email" class="form-control" id="Email" value="<?php echo $email; ?>" required="required"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Phone">Phone:</label>
-                                <input type="text" name="phone" class="form-control" id="Phone" maxlength="9"/>
+                                <input type="text" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
                             </div>
                         </div>
                     </div>
@@ -191,12 +195,12 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
                               <label for="initial_date">Initial Date:</label></td>
-                              <input type="datetime-local" name="initial_date" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
+                              <input type="datetime-local" name="initial_date" class="form-control" value="<?php echo $initial_date; ?>" id="initial_date" onchange="javascript('1')"/></td>
                             </div>
 
                             <div class="form-group col-lg-3">
                               <label for="final_date">Final Date:</label></td>
-                              <input type="datetime-local" name="final_date" class="form-control" id="final_date" onchange="javascript('1')"/></td>
+                              <input type="datetime-local" name="final_date" class="form-control" value="<?php echo $final_date; ?>" id="final_date" onchange="javascript('1')"/></td>
                           </div>
 
                             <div class="form-group col-lg-3">
@@ -213,12 +217,12 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="Description">Description:</label>
-                                <textarea  name="description" class="form-control" id="Description" rows="3"></textarea>
+                                <textarea  name="description" class="form-control" id="Description" <?php echo $description; ?> rows="3"></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Service_Provided">Service Provided:</label>
-                                <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"></textarea>
+                                <textarea  name="service_provided" class="form-control" id="Service_Provided" <?php echo $service_provided; ?> rows="3"></textarea>
                             </div>
 
                             <div class="form-group">

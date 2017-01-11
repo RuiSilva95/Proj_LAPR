@@ -7,6 +7,7 @@ if(!isset($_SESSION['id'])) {
 
 
 if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
+
       $id_client = protect($_POST['client']);
       $id_status = protect($_POST['status']);
       $id_employee = protect($_POST['employee']);
@@ -41,8 +42,6 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
       $budget = protect($_POST['budget']);
 
-
-
     if($check!='on') {
         $budget_service = ' ';
         $sending_date = ' ';
@@ -51,14 +50,17 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
         $confirm = 'null';
         $id_service = 'null';
     }
+    echo $id_status;
 
-    if($id_status=='null') {
-        echo 'Need Select Status';
-
+    if($id_status=="NULL") {
+        $message = '<div class="alert alert-danger">
+                    <strong>Oh snap!</strong> Need Select Status.
+                    </div>';
     }else{
-
         if($id_employee==0) {
-            echo 'Need Select Employee';
+            $message = '<div class="alert alert-danger">
+                        <strong>Oh snap!</strong> Need Select Employee.
+                        </div>';
         }else{
             $verf = 1;
             if($id_client==0) {
@@ -145,6 +147,10 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                     <div class="row">
                         <div class="col-lg-12 form-inline">
+                            <?php
+                            if(!empty($message)) {
+                                echo $message;
+                            }?>
                             <div class="form-group col-lg-3">
                                 <label for="Client">Client*</label>
                                 <select name="client" class="form-control" id="client" onchange="verificaOpcao(this.value)">
@@ -202,24 +208,24 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                     <div class="row">
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
-                                <label for="Name">Name*:</label>
-                                <input type="text" name="name" class="form-control" id="Name"  required="required"/>
-                            </div>
+                              <label for="Name">Name*:</label>
+                              <input type="text" name="name" class="form-control" id="Name"  value="<?php echo $name; ?>" required="required"/>
+                          </div>
 
-                            <div class="form-group col-lg-3">
-                                <label for="Address">Address:</label>
-                                <input type="text" name="address" class="form-control" id="Address"/>
-                            </div>
+                          <div class="form-group col-lg-3">
+                              <label for="Address">Address:</label>
+                              <input type="text" name="address" class="form-control" id="Address" value="<?php echo $address; ?>"/>
+                          </div>
 
-                            <div class="form-group col-lg-3">
-                                <label for="Email">Email*:</label>
-                                <input type="email" name="email" class="form-control" id="Email"  required="required"/>
-                            </div>
+                          <div class="form-group col-lg-3">
+                              <label for="Email">Email*:</label>
+                              <input type="email" name="email" class="form-control" id="Email" value="<?php echo $email; ?>" required="required"/>
+                          </div>
 
-                            <div class="form-group col-lg-3">
-                                <label for="Phone">Phone:</label>
-                                <input type="text" name="phone" class="form-control" id="Phone" maxlength="9"/>
-                            </div>
+                          <div class="form-group col-lg-3">
+                              <label for="Phone">Phone:</label>
+                              <input type="text" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
+                          </div>
                         </div>
                     </div>
 
@@ -227,15 +233,15 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                     <div class="row">
                         <div class="col-lg-12 form-inline">
-                            <div class="form-group col-lg-3">
-                              <label for="initial_date">Initial Date:</label></td>
-                              <input type="datetime-local" name="initial_date" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
-                            </div>
-
-                            <div class="form-group col-lg-3">
-                              <label for="final_date">Final Date:</label></td>
-                              <input type="datetime-local" name="final_date" class="form-control" id="final_date" onchange="javascript('1')"/></td>
+                          <div class="form-group col-lg-3">
+                            <label for="initial_date">Initial Date:</label></td>
+                            <input type="datetime-local" name="initial_date" class="form-control" value="<?php echo $initial_date; ?>" id="initial_date" onchange="javascript('1')"/></td>
                           </div>
+
+                          <div class="form-group col-lg-3">
+                            <label for="final_date">Final Date:</label></td>
+                            <input type="datetime-local" name="final_date" class="form-control" value="<?php echo $final_date; ?>" id="final_date" onchange="javascript('1')"/></td>
+                        </div>
 
                             <div class="form-group col-lg-3">
                               <label for="working_hours">Working Hours:</label></td>
@@ -251,22 +257,22 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
                                 <label for="Equipment">Equipment*:</label>
-                                <input type="text" name="equipment" class="form-control" id="Equipment"/>
+                                <input type="text" name="equipment" value="<?php echo $equipment; ?>" class="form-control" id="Equipment"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Mark">Mark/Model*:</label>
-                                <input type="text" name="mark" class="form-control" id="Mark"/>
+                                <input type="text" name="mark" value="<?php echo $mark; ?>" class="form-control" id="Mark"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="n_Serie">NºSerie*:</label>
-                                <input type="text" name="n_serie" class="form-control" id="n_Serie"/>
+                                <input type="text" name="n_serie" value="<?php echo $n_serie; ?>" class="form-control" id="n_Serie"/>
                             </div>
 
                             <div class="form-group col-lg-3">
                                 <label for="Accessories">Extra Accessories:</label>
-                                <input type="text" name="accessories" class="form-control" id="Accessories"/>
+                                <input type="text" name="accessories" value="<?php echo $accessories; ?>" class="form-control" id="Accessories"/>
                             </div>
                         </div>
                     </div>
