@@ -44,6 +44,7 @@ if(isset($_SESSION['id'])) {
 
                     if(hash_equals($row['password'], crypt($password, $row['password']))) {
                         $_SESSION['id'] = $row['id_user'];
+                        $_SESSION['priority'] = $row['status'];
                         mysqli_close($conn);
                         header('Location:'.'home.php');
 
