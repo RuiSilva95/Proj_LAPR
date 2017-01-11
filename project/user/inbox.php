@@ -107,6 +107,100 @@ if(isset($_POST['submit2'])) {
 
                               </div>
                           </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                        <?php
+                                        if(isset($_POST['submit'])) {
+                                            echo '<h1>Mensagem:</h1>';
+                                            $id = $_POST['submit'];
+                                            $query = "select * from message where id=$id";
+                                            $result = mysqli_query($conn, $query);
+                                            while ($row = mysqli_fetch_assoc($result)){
+                                                echo '<h3>Topico:</h3>';
+                                                echo '<td>' . $row["title"] . '</td>';
+                                                $de = $row["de"];
+                                                echo '<h3>Mensagem:</h3>';
+                                                echo '<td>' . $row["message"] . '</td>';
+                                            }
+                                            if ($result) {
+                                        ?>
+
+                                            <form method="POST" action="">
+                                            <br>
+                                            <input type='hidden' name='de' value='<?php echo "$de";?>'/>
+                                            <button type="submit" name="responder" class="btn btn-primary">Responder</button>
+                                            </form>
+                                                <?php
+                                                $query = "update message set leu=1 where id=$id";
+                                                $result = mysqli_query($conn, $query);
+                                            }
+                                        }
+                                        ?>
+                              </div>
+                          </div>
+
+                          <div class="row">
+                              <div class="col-lg-12">
+                                    <?php
+
+                                    if(isset($_POST['sendmail']) || isset($_POST['responder'])) {
+                                        ?>
+                                        <form class="form-horizontal" role="form" method="POST" action="">
+                                        <div class="form-group">
+                                        <label for { ="name" class="col-sm-2 control-label">De</label>
+                                        <div class="col-sm-10">
+                                            <?php
+                                            if(isset($_POST['responder'])) {
+                                                echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name"  value="'.$name.'" readonly>';
+                                            }else{
+                                                echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name" value="'.$name.'" readonly>';
+                                            }
+                                                ?>
+                                                </div>
+                                                </div>
+                                                <div class="form-group">
+                                                <label for { ="email" class="col-sm-2 control-label">Para</label>
+                                                <div class="col-sm-10">
+                                                    <?php
+                                                    if(isset($_POST['responder'])) {
+                                                        echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name"  value="'.$_POST['de'].'">';
+                                                    }else{
+                                                        echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name" value="">';
+                                                    }
+                                                        ?>
+                                                    </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                    <label for { ="message" class="col-sm-2 control-label">Title</label>
+                                                        <div class="col-sm-10">
+                                                        <textarea class="form-control" rows="4" name="title"></textarea>
+                                                        </div>
+                                                        </div>
+                                                    <div class="form-group">
+                                                    <label for { ="message" class="col-sm-2 control-label">Message</label>
+                                                        <div class="col-sm-10">
+                                                        <textarea class="form-control" rows="4" name="message"></textarea>
+                                                        </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <label for { ="human" class="col-sm-2 control-label">2 + 3 = ?</label>
+                                                        <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer">
+                                                        </div>
+                                                        </div>
+                                                        <div class="form-group col-sm-10 col-sm-offset-2">
+                                                        <input name="submit2" type="submit" value="Send" class="btn btn-primary">
+                                                        </div>
+                                                        <div class="form-group col-sm-10 col-sm-offset-2">
+                                                        <! Will be used to display an alert to the user>
+                                                        </div>
+                                                        </form>
+
+                                    <?php } ?>
+                              </div>
+                          </div>
+
                                 <div class="row">
                                     <div class="col-lg-12">
                                       <table class="table">
@@ -146,102 +240,6 @@ if(isset($_POST['submit2'])) {
                       </nav>
                     </div>
                 </div>
-
-
-                <h1>Mensagem:</h1>
-                <div class="row">
-                    <div class="col-lg-12">
-                            <?php
-                            if(isset($_POST['submit'])) {
-                                  $id = $_POST['submit'];
-                                  $query = "select * from message where id=$id";
-                                  $result = mysqli_query($conn, $query);
-                                while ($row = mysqli_fetch_assoc($result)){
-                                    echo '<h3>Topico:</h3>';
-                                    echo '<td>' . $row["title"] . '</td>';
-                                    $de = $row["de"];
-                                    echo '<h3>Mensagem:</h3>';
-                                    echo '<td>' . $row["message"] . '</td>';
-                                }
-                                if ($result) {
-                            ?>
-
-                                  <form method="POST" action="">
-                                  <br>
-                                  <input type='hidden' name='de' value='<?php echo "$de";?>'/>
-                                  <button type="submit" name="responder" class="btn btn-primary">Responder</button>
-                                  </form>
-                                    <?php
-                                    $query = "update message set leu=1 where id=$id";
-                                    $result = mysqli_query($conn, $query);
-                                }
-                            }
-                            ?>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <?php
-
-                        if(isset($_POST['sendmail']) || isset($_POST['responder'])) {
-                            ?>
-                            <form class="form-horizontal" role="form" method="POST" action="">
-                            <div class="form-group">
-                            <label for { ="name" class="col-sm-2 control-label">De</label>
-                              <div class="col-sm-10">
-                                <?php
-                                if(isset($_POST['responder'])) {
-                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name"  value="'.$name.'" readonly>';
-                                }else{
-                                    echo '<input type="text" class="form-control" id="name" name="de" placeholder="First & Last Name" value="'.$name.'" readonly>';
-                                }
-                                    ?>
-                                  </div>
-                                  </div>
-                                  <div class="form-group">
-                                  <label for { ="email" class="col-sm-2 control-label">Para</label>
-                                    <div class="col-sm-10">
-                                        <?php
-                                        if(isset($_POST['responder'])) {
-                                            echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name"  value="'.$_POST['de'].'">';
-                                        }else{
-                                            echo '<input type="text" class="form-control" id="name" name="para" placeholder="First & Last Name" value="">';
-                                        }
-                                            ?>
-                                      </div>
-                                      </div>
-                                      <div class="form-group">
-                                      <label for { ="message" class="col-sm-2 control-label">Title</label>
-                                          <div class="col-sm-10">
-                                          <textarea class="form-control" rows="4" name="title"></textarea>
-                                          </div>
-                                          </div>
-                                      <div class="form-group">
-                                      <label for { ="message" class="col-sm-2 control-label">Message</label>
-                                          <div class="col-sm-10">
-                                          <textarea class="form-control" rows="4" name="message"></textarea>
-                                          </div>
-                                          </div>
-                                          <div class="form-group">
-                                          <label for { ="human" class="col-sm-2 control-label">2 + 3 = ?</label>
-                                            <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="human" name="human" placeholder="Your Answer">
-                                            </div>
-                                            </div>
-                                            <div class="form-group col-sm-10 col-sm-offset-2">
-                                            <input name="submit2" type="submit" value="Send" class="btn btn-primary">
-                                            </div>
-                                            <div class="form-group col-sm-10 col-sm-offset-2">
-                                            <! Will be used to display an alert to the user>
-                                            </div>
-                                            </form>
-
-                        <?php } ?>
-                    </div>
-                </div>
-
-
 
               </div>
               <!-- /.container-fluid -->
