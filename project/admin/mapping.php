@@ -178,6 +178,12 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM internal;'));
 
                                         $query = 'SELECT internal.id_internal AS int_id,
+                                                  internal.id_client AS int_cli,
+                                                  internal.id_user AS int_user,
+                                                  internal.id_equipment_status AS int_equip_status,
+                                                  internal.id_product AS int_product,
+                                                  internal.id_equipment_problem AS int_equip_problem,
+                                                  internal.id_service_problem AS int_serv_problem,
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
                                                                 client.name AS client_name,
@@ -201,8 +207,14 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td>'.$row['int_description'].'</td>';
                                                     echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
-                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?edit=1&id_internal'.$row['int_id'].'"&id_client'.$row['int_cli'].'"&id_user'.$row['int_user'].'"
+                                                            &id_equipment_status'.$row['int_equip_status'].'"&id_product'.$row['int_product'].'"
+                                                            &id_equipment_problem'.$row['int_equip_problem'].'"&id_service_problem'.$row['int_serv_problem'].'">Edit</a>
+
+                                                            <a class="btn btn-default" href="'.check('internal.edit.php').'?
+                                                            apg=1&id_internal'.$row['int_id'].'"&id_client'.$row['int_cli'].'"&id_user'.$row['int_user'].'"
+                                                            &id_equipment_status'.$row['int_equip_status'].'"&id_product'.$row['int_product'].'"
+                                                            &id_equipment_problem'.$row['int_equip_problem'].'"&id_service_problem'.$row['int_serv_problem'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
                                                 $value1 = explode(" ", $row['equip_workhours']);
@@ -391,6 +403,9 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         $count = mysqli_num_rows(mysqli_query($conn, 'SELECT * FROM external;'));
 
                                         $query = 'SELECT external.id_external AS ext_id,
+                                                  external.id_client AS ext_cli,
+                                                  external.id_user AS ext_user,
+                                                  external.id_equipment_status AS ext_equip_status,
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
                                                                 client.name AS client_name,
@@ -413,8 +428,12 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td>'.$row['ext_description'].'</td>';
                                                     echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
-                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
-                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?edit=1&id_external'.$row['ext_id'].'"&id_client'.$row['ext_cli'].'"&id_user'.$row['int_user'].'"
+                                                            &id_equipment_status'.$row['ext_equip_status'].'">Edit</a>
+
+                                                            <a class="btn btn-default" href="'.check('external.edit.php').'?
+                                                            apg=1&id_external'.$row['ext_id'].'"&id_client'.$row['ext_cli'].'"
+                                                            &id_equipment_status'.$row['ext_equip_status'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
 

@@ -5,17 +5,6 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
-+---------------------+---------+------+-----+---------+----------------+
-| id_external         | int(11) | NO   | PRI | null    | auto_increment |
-| id_client           | int(11) | YES  |     | null    |                |
-| id_user             | int(11) | YES  |     | null    |                |
-| id_equipment_status | int(11) | YES  | MUL | null    |                |
-| description         | text    | YES  |     | null    |                |
-| service_provided    | text    | YES  |     | null    |                |
-| budget              | text    | YES  |     | null    |                |
-+---------------------+---------+------+-----+---------+----------------+
-
-
 if(!empty($_GET['apg'])) {
 
       $id_external = protect($_GET['id_external']);
