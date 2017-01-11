@@ -74,23 +74,28 @@ if(isset($_POST['submit2'])) {
                             $sql = 'SELECT * FROM message where para = "'.$name.'" ORDER BY id desc LIMIT '.$pageNumber.' OFFSET '.$offset.';';
                             $result = mysqli_query($conn, $sql);
                             echo "<h1>Correio Recebido</h1>";
-                            echo '<table align="center" class="table table-striped table-bordered"><tr><th>FROM</th><th>TO</th><th>TITLE</th><th>DATE</th><th>ACTIONS</th></tr>';
+                            echo '<table align="center" class="table table-striped table-bordered">
+                            <tr>
+                              <th>FROM</th>
+                              <th>TO</th>
+                              <th>TITLE</th>
+                              <th>DATE</th>
+                              <th>ACTIONS</th>
+                            </tr>';
+                            echo '<form method="POST" action="">';
                             while ($row = mysqli_fetch_assoc($result))
                             {
-                                echo '<form method="POST" action="">';
-                                echo '<td>' . $row["de"] . '</td>';
-                                echo '<td>' . $row["para"] . '</td>';
-                                //echo '<td>' . $row["title"] . '</td>';
-                                if($row["leu"]==1) {
-                                    echo '<td><button style="background-color: transparent;" type="submit" name="submit" value="' . $row["id"] . '">' . $row["title"] . '</button></td>';
-                                }else{
-                                    echo '<td><button style="background-color: grey;" type="submit" name="submit" value="' . $row["id"] . '">' . $row["title"] . '</button></td>';
-                                }
-                                echo '<td>' . $row["date"] . '</td>';
-                                echo '<td><button style="background-color: white;" type="submit" name="delete" value="' . $row["id"] . '">Delete</button></td>';
-                                echo '</tr>';
-                                echo '</form>';
+                                    echo ($row["leu"]==0) ?'<tr style="background-color: rgba(250, 229, 84, 0.83);">': '<tr>';
+                                    echo '<td>' . $row["de"] . '</td>';
+                                    echo '<td>' . $row["para"] . '</td>';
+                                    echo '<td>' . $row["title"] . '</td>';
+                                    echo '<td>' . $row["date"] . '</td>';
+                                    echo '<td><button type="submit" class="btn btn-default" name="submit" value="' . $row["id"] . '">View</button>
+                                    <button type="submit" class="btn btn-default" name="delete" value="' . $row["id"] . '">Delete</button></td>';
+
+                                    echo '</tr>';
                             }
+                            echo '</form>';
                             echo '</table>';
                             //mysqli_close($conn);
                                 ?>
