@@ -1,7 +1,8 @@
 <?php require "../inc/head.php";
 
 if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
-    header("refresh:1;url=../404.php");
+    echo "Não tens acesso a esta pagina";
+    header("refresh:1;url=../login.php");
     die();
 }
 
@@ -154,7 +155,7 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
 
                                         //*************************************************************
                                         if(!empty($_POST['date_int1']) AND !empty($_POST['date_int2'])) {
-                                             $ext4 = "(`start_date`>='".$_POST['date1']."' AND `end_date`<='".$_POST['date2']."') AND ";
+                                             $ext4 = '(equipment_status.start_date >="'.$_POST['date_int1'].'" AND equipment_status.end_date <="'.$_POST['date_int2'].'") AND';
                                         }else{
                                              $ext4 = ' ';
                                         }
@@ -180,7 +181,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
                                                                 client.name AS client_name,
-                                                                equip_problem.`description(employee)` AS int_description
+                                                                equip_problem.`description(employee)` AS int_description,
+                                                                equipment_status.work_hours AS equip_workhours,
                                                         FROM internal
                                                             INNER JOIN client ON internal.id_client = client.id_client
                                                             INNER JOIN users ON internal.id_user = users.id_user
@@ -197,7 +199,7 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td '.tint($row['equip_status']).'>'.$row['equip_status'].'</td>';
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['int_description'].'</td>';
-                                                    echo '<td>Internal</td>';
+                                                    echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
                                                             <a class="btn btn-default href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
                                                             <a class="btn btn-default href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
@@ -351,8 +353,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         }
 
                                         //*************************************************************
-                                        if(!empty($_POST['date1']) AND !empty($_POST['date2'])) {
-                                             $ext4 = "(`start_date`>='".$_POST['date1']."' AND `end_date`<='".$_POST['date2']."') AND ";
+                                        if(!empty($_POST['date_ext1']) AND !empty($_POST['date_ext2'])) {
+                                             $ext4 = '(equipment_status.start_date >="'.$_POST['date_ext1'].'" AND equipment_status.end_date <="'.$_POST['date_ext2'].'") AND';
                                         }else{
                                              $ext4 = ' ';
                                         }
