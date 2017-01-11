@@ -5,24 +5,65 @@ if(!isset($_SESSION['id'])) {
     die();
 }
 
-    $apg = protect($_GET['apg']);
-    $edit = protect($_GET['edit']);
++---------------------+---------+------+-----+---------+----------------+
+| id_external         | int(11) | NO   | PRI | null    | auto_increment |
+| id_client           | int(11) | YES  |     | null    |                |
+| id_user             | int(11) | YES  |     | null    |                |
+| id_equipment_status | int(11) | YES  | MUL | null    |                |
+| description         | text    | YES  |     | null    |                |
+| service_provided    | text    | YES  |     | null    |                |
+| budget              | text    | YES  |     | null    |                |
++---------------------+---------+------+-----+---------+----------------+
 
-if(!empty($apg)) {
-    mysqli_query($conn, "DELETE FROM external WHERE id_external=$apg ")or die("Error:".mysqli_error($conn));
+
+if(!empty($_GET['apg'])) {
+
+      $id_external = protect($_GET['id_external']);
+      $id_equipment_status = protect($_GET['id_equipment_status']);
+      $id_client = protect($_GET['id_client']);
+
+      mysqli_query($conn, "DELETE FROM external WHERE id_external=$id_external ")or die("Error:".mysqli_error($conn));
+      mysqli_query($conn, "DELETE FROM equipment_status WHERE id_equipment_status=$id_equipment_status ")or die("Error:".mysqli_error($conn));
+      $result = mysqli_query($conn, "SELECT * FROM client WHERE id_client = $id_client AND private = 1");
+    if(mysqli_num_rows($result) == 1) {
+        mysqli_query($conn, "DELETE FROM client WHERE id_client=$id_client ")or die("Error:".mysqli_error($conn));
+    }
+
 
     header('Location:'.'home.php');
-}elseif(!empty($id)) {
+}elseif(!empty($_GET['edit'])) {
 
-    $SQL1 = mysqli_query($conn, "SELECT * FROM `equip_problem` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-    $SQL2 = mysqli_query($conn, "SELECT * FROM `equipment` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-    $SQL3 = mysqli_query($conn, "SELECT * FROM `equip_status` WHERE `id`='$id'")or die("Error:".mysqli_error($conn));
-    $SQL4 = mysqli_query($conn, "SELECT * FROM `client` WHERE `id_client`='$cli'")or die("Error:".mysqli_error($conn));
+    $id_external = protect($_GET['id_external']);
+    $id_status2 = protect($_GET['id_equipment_status']);
+    $id_client = protect($_GET['id_client']);
+    $id_employee = protect($_GET['id_user']);
 
-    $field1 = mysqli_fetch_assoc($SQL1);
-    $field2 = mysqli_fetch_assoc($SQL2);
-    $field3 = mysqli_fetch_assoc($SQL3);
-    $field4 = mysqli_fetch_assoc($SQL4);
+    $result1 = mysqli_query($conn, "SELECT * FROM external WHERE id_external=$id_external ")or die("Error:".mysqli_error($conn));
+    $result2 = mysqli_query($conn, "SELECT * FROM equipment_status WHERE id_equipment_status=$id_status2 ")or die("Error:".mysqli_error($conn));
+    $result3 = mysqli_query($conn, "SELECT * FROM client WHERE id_client=$id_client ")or die("Error:".mysqli_error($conn));
+    $result4 = mysqli_query($conn, "SELECT * FROM users WHERE id_user=$id_employee ")or die("Error:".mysqli_error($conn));
+
+
+    $row1 = mysqli_fetch_assoc($result1);
+    $row2 = mysqli_fetch_assoc($result2);
+    $row3 = mysqli_fetch_assoc($result3);
+    $row4 = mysqli_fetch_assoc($result4);
+
+    $name = protect($row3['name']);
+    $address = protect($row3['address']);
+    $email = protect($row3['email']);
+    $phone = protect($row3['phone']);
+
+    $initial_date = protect($row2['start_date']);
+    $final_date = protect($row2['end_date']);
+    $working_hours = protect($row2['working_hours']);
+    $id_status = protect($row2['status']);
+
+    $description = protect($row1['description']);
+    $service_provided = protect($row1['service_provided']);
+    $budget = protect($row1['budget']);
+
+
 }else if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
     $id_client = protect($_POST['client']);
@@ -141,7 +182,7 @@ if(!empty($apg)) {
                                     $result = mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                                     if(mysqli_num_rows($result)>=1) {
                                         while($row = mysqli_fetch_assoc($result)){
-                                            echo '<option value="'.$row['id_client'].'" '.active($row['id_client'], $_POST['client']).' >'.$row['name'].'</option>';
+                                            echo '<option value="'.$row['id_client'].'" '.active($row['id_client'], $id_client).' >'.$row['name'].'</option>';
                                         }
                                     }else{
                                         echo '<option value="0">No value found</option>';
@@ -154,13 +195,13 @@ if(!empty($apg)) {
                                 <label for="Status">Status *</label>
                                 <select name="status" class="form-control" id="Status">
                                     <option value="0"> -- Select Status -- </option>
-                                    <option value="Waits" <?php echo active('Waits', $_POST['status']); ?>>Waits</option>
-                                    <option value="Budgeted" <?php echo active('Budgeted', $_POST['status']); ?>>Budgeted</option>
-                                    <option value="Under Repair" <?php echo active('Under Repair', $_POST['status']); ?>>Under Repair</option>
-                                    <option value="Closed Billing" <?php echo active('Closed Billing', $_POST['status']); ?>>Closed Billing</option>
-                                    <option value="Closed Guaranty" <?php echo active('Closed Guaranty', $_POST['status']); ?>>Closed Guaranty</option>
-                                    <option value="Closed Contract" <?php echo active('Closed Contract', $_POST['status']); ?>>Closed Contract</option>
-                                    <option value="Archive" <?php echo active('Archive', $_POST['status']); ?> >Archive</option>
+                                    <option value="Waits" <?php echo active('Waits', $id_status); ?>>Waits</option>
+                                    <option value="Budgeted" <?php echo active('Budgeted', $id_status); ?>>Budgeted</option>
+                                    <option value="Under Repair" <?php echo active('Under Repair', $id_status); ?>>Under Repair</option>
+                                    <option value="Closed Billing" <?php echo active('Closed Billing', $id_status); ?>>Closed Billing</option>
+                                    <option value="Closed Guaranty" <?php echo active('Closed Guaranty', $id_status); ?>>Closed Guaranty</option>
+                                    <option value="Closed Contract" <?php echo active('Closed Contract', $id_status); ?>>Closed Contract</option>
+                                    <option value="Archive" <?php echo active('Archive', $id_status); ?> >Archive</option>
                                 </select>
                             </div>
 
@@ -173,7 +214,7 @@ if(!empty($apg)) {
                                         $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                                         if(mysqli_num_rows($result)>=1) {
                                             while($row = mysqli_fetch_assoc($result)){
-                                                echo '<option value='.$row['id_user'].' '.active($row['id_user'], $_POST['employee']).'>'.$row['name'].'</option>';
+                                                echo '<option value='.$row['id_user'].' '.active($row['id_user'], $id_employee).'>'.$row['name'].'</option>';
                                             }
                                         }else{
                                             echo '<option value="0">No value found</option>';
