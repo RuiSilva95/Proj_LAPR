@@ -37,19 +37,19 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
       $sending_date = protect($_POST['sending_date']);
       $delivery_date = protect($_POST['delivery_date']);
       $reported_problem = protect($_POST['reported_problem']);
-      $radio = protect($_POST['radio']);
+      $confirm = protect($_POST['radio']);
 
       $budget = protect($_POST['budget']);
 
 
 
     if($check!='on') {
-        $budget_service = ' 1';
-        $sending_date = '1 ';
-        $delivery_date = '1 ';
-        $reported_problem = ' 1';
-        $radio = ' 1';
-        $id_service = null;
+        $budget_service = ' ';
+        $sending_date = ' ';
+        $delivery_date = ' ';
+        $reported_problem = ' ';
+        $confirm = 'null';
+        $id_service = 'null';
     }
 
     if($id_status=='null') {
@@ -87,25 +87,17 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_eqip = mysqli_insert_id($conn);
 
-
-
                 $query = 'INSERT INTO product(equipment, mark_models, nSeries, acessories) VALUE("'.$equipment.'","'. $mark.'","'.$n_serie.'","'.$accessories.'")';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_product = mysqli_insert_id($conn);
-
-
 
                 $query = 'INSERT INTO equip_problem(problem_damage, `description(client)`, `description(employee)`, service_provided, material_suplied) VALUE("'.$problem.'","'. $descri_client.'","'.$descri_employee.'","'.$service_provided.'","'.$material_supplied.'")';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
                 $id_equipment_problem = mysqli_insert_id($conn);
 
-                $query = 'INSERT INTO service_problem(id_service, `check`, budget, configuration, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$radio.', "'.$reported_problem.'", "'. $sending_date.'","'.$delivery_date.'")';
-                                mysqli_query($conn, $query)or
-                    die("Error2:".mysqli_error($conn));
+                $query = 'INSERT INTO service_problem(id_service, `check`, budget, confirm, report_problem, sending_date, deliver_date) VALUE('.$id_service.', "'.$check.'", "'.$budget_service.'",'.$confirm.', "'.$reported_problem.'", "'.$sending_date.'","'.$delivery_date.'")';
+                mysqli_query($conn, $query)or die("Error2:".mysqli_error($conn));
                 $id_service_problem = mysqli_insert_id($conn);
-
-                die('ENTROU3'. $id_service_problem);
-
 
                 echo $query = 'INSERT INTO internal(id_client, id_user, id_equipment_status, id_product, id_equipment_problem, id_service_problem, budget) VALUE('.$id_client.','.$id_employee.', '.$id_eqip.', '.$id_product.','.$id_equipment_problem.','.$id_service_problem.',"'.$budget.'")';
                 mysqli_query($conn, $query)or die("Error:".mysqli_error($conn));
@@ -154,7 +146,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                     <div class="row">
                         <div class="col-lg-12 form-inline">
                             <div class="form-group col-lg-3">
-                                <label for="Client">Client</label>
+                                <label for="Client">Client*</label>
                                 <select name="client" class="form-control" id="client" onchange="verificaOpcao(this.value)">
                                     <?php
                                     echo '<option value="NULL"> -- Select Client -- </option>';
@@ -172,7 +164,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <label for="Status">Status</label>
+                                <label for="Status">Status*</label>
                                 <select name="status" class="form-control" id="Status">
                                     <option value='NULL'> -- Select Status -- </option>
                                     <option value="Waits" <?php echo active('Waits', $_POST['status']); ?>>Waits</option>
@@ -186,7 +178,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group col-lg-4">
-                                <label for="Employee">Employee</label>
+                                <label for="Employee">Employee*</label>
                                 <select name="employee" class="form-control" id="employee">
                                     <?php
                                     echo '<option value="NULL"> -- Select Employee -- </option>';
@@ -215,7 +207,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <label for="Address">Address*:</label>
+                                <label for="Address">Address:</label>
                                 <input type="text" name="address" class="form-control" id="Address"/>
                             </div>
 
@@ -274,7 +266,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                                 <label for="Accessories">Extra Accessories:</label>
-                                <input type="text" name="accessories" class="form-control" id="Accessories" maxlength="9"/>
+                                <input type="text" name="accessories" class="form-control" id="Accessories"/>
                             </div>
                         </div>
                     </div>
