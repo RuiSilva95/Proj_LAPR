@@ -223,7 +223,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                           <div class="form-group col-lg-3">
                               <label for="Phone">Phone:</label>
-                              <input type="text" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
+                              <input type="number" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
                           </div>
                         </div>
                     </div>
@@ -282,27 +282,27 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="Problem/Damage">Problem/Damage:</label>
-                                <textarea  name="problem" class="form-control" id="Problem/Damage" rows="3"></textarea>
+                                <textarea  name="problem" class="form-control" id="Problem/Damage" rows="3"><?php echo $problem; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Descri_Client">Description(Client):</label>
-                                <textarea  name="descri_client" class="form-control" id="Descri_Client" rows="3"></textarea>
+                                <textarea  name="descri_client" class="form-control" id="Descri_Client" rows="3"><?php echo $descri_client; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Descri_Employee">Description(Employee):</label>
-                                <textarea  name="descri_employee" class="form-control" id="Descri_Employee" rows="3"></textarea>
+                                <textarea  name="descri_employee" class="form-control" id="Descri_Employee" rows="3"><?php echo $descri_employee; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Service_Provided">Service Provided:</label>
-                                <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"></textarea>
+                                <textarea  name="service_provided" class="form-control" id="Service_Provided" rows="3"><?php echo $service_provided; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Material_Supplied">Material Supplied:</label>
-                                <textarea  name="material_supplied" class="form-control" id="Material_Supplied" rows="3"></textarea>
+                                <textarea  name="material_supplied" class="form-control" id="Material_Supplied" rows="3"><?php echo $material_supplied; ?></textarea>
                             </div>
 
                         </div>
@@ -337,22 +337,22 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                                 <div class="form-group col-lg-6">
                                     <label for="budget_service">Budget Service:</label>
-                                    <input type="text" name="budget_service" class="form-control" id="budget_service" />
+                                    <input type="text" name="budget_service" class="form-control" value="<?php echo $budget_service; ?>" id="budget_service" />
                                 </div>
 
                                 <div class="form-group col-lg-6">
                                     <label for="sending_date">Sending Date:</label>
-                                    <input type="datetime-local" name="sending_date" class="form-control" id="sending_date" />
+                                    <input type="datetime-local" name="sending_date" value="<?php echo $sending_date; ?>" class="form-control" id="sending_date" />
                                 </div>
 
                                 <div class="form-group col-lg-6">
                                     <label for="delivery_date">Delivery Date:</label>
-                                    <input type="datetime-local" name="delivery_date" class="form-control" id="delivery_date" />
+                                    <input type="datetime-local" name="delivery_date" value="<?php echo $delivery_date; ?>" class="form-control" id="delivery_date" />
                                 </div>
 
                                 <div class="form-group col-lg-6">
                                     <label for="reported_problem">Reported Problem:</label>
-                                    <textarea name="reported_problem" id="reported_problem" class="form-control" cols="45" rows="2"></textarea>
+                                    <textarea name="reported_problem" id="reported_problem" class="form-control" cols="45" rows="2"><?php echo $reported_problem; ?></textarea>
                                 </div>
 
                                 <div class="form-group col-lg-6">
@@ -376,12 +376,11 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-4">
                             <div class="form-group ">
                                 <label for="Budget">Budget:</label>
-                                <input type="text" name="budget" class="form-control" id="Budget"/>
+                                <input type="text" name="budget" value="<?php echo $budget ?>"class="form-control" id="Budget"/>
                             </div>
 
                             <div class="form-group">
                                 <input type="submit" name="submit1" class="btn btn-default" value="Save" />
-                                <input type="reset" name="clean" class="btn btn-default" value="Clean" />
                                 <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Bill" />
                             </div>
                         </div>

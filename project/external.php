@@ -184,7 +184,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                                 <label for="Phone">Phone:</label>
-                                <input type="text" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
+                                <input type="number" name="phone" class="form-control" id="Phone" value="<?php echo $phone; ?>" maxlength="9"/>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                               <label for="working_hours">Working Hours:</label></td>
-                              <input type="text" name="working_hours" class="form-control" id="working_hours" readonly/></td>
+                              <input type="text" name="working_hours" class="form-control" value="<?php echo $working_hours; ?>" id="working_hours" readonly/></td>
                             </div>
                           </table>
                         </div>
@@ -217,22 +217,21 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="Description">Description:</label>
-                                <textarea  name="description" class="form-control" id="Description" <?php echo $description; ?> rows="3"></textarea>
+                                <textarea  name="description" class="form-control" id="Description"  rows="3"><?php echo $description; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Service_Provided">Service Provided:</label>
-                                <textarea  name="service_provided" class="form-control" id="Service_Provided" <?php echo $service_provided; ?> rows="3"></textarea>
+                                <textarea  name="service_provided" class="form-control" id="Service_Provided"  rows="3"><?php echo $service_provided; ?></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label for="Budget">Budget:</label>
-                                <input type="text" name="budget" class="form-control" id="Budget"/>
+                                <input type="text" name="budget" value="<?php echo $budget; ?>" class="form-control" id="Budget"/>
                             </div>
 
                             <div class="form-group">
                                 <input type="submit" name="submit1" class="btn btn-default" value="Save" />
-                                <input type="reset" name="clean" class="btn btn-default" value="Clean" />
                                 <input type="submit" name="submit2" class="btn btn-default" value="Save and Print Bill" />
                             </div>
                         </div>

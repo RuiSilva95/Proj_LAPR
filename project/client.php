@@ -122,7 +122,7 @@ if(isset($_POST['submit1'])) {
 
                             <div class="form-group">
                                 <label for="Phone">Phone:</label>
-                                <input type="text" name="phone" class="form-control" id="Phone" maxlength="9"/>
+                                <input type="number" name="phone" class="form-control" id="Phone" maxlength="9"/>
                             </div>
 
                             <div class="form-group">
@@ -167,7 +167,7 @@ if(isset($_POST['submit1'])) {
                                             echo '<td class="col-md-2"> <input type="text" name="name" class="form-control" width="10" value="'.$row['name'].'" required="required"> </td>';
                                             echo '<td class="col-md-2"> <input type="text" name="address" class="form-control" value="'.$row['address'].'" required="required"> </td>';
                                             echo '<td> <input type="email" name="email" class="form-control" value="'.$row['email'].'" required="required"> </td>';
-                                            echo '<td> <input type="text" name="phone" class="form-control" value="'.$row['phone'].'" maxlength="9"</td>';
+                                            echo '<td> <input type="number" name="phone" class="form-control" value="'.$row['phone'].'" maxlength="9"</td>';
                                             echo '<td>
                                                   <button type="submit" name="sav" class="btn btn-default">Save</button>
                                                   <a class="btn btn-default" href="'.current_file().'?page='.$_GET['page'].'">Cancel</a>

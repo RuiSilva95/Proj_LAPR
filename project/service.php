@@ -123,7 +123,7 @@ if(isset($_POST['submit1'])) {
 
                             <div class="form-group">
                                 <label for="Phone">Phone:</label>
-                                <input type="text" name="phone" class="form-control" id="Phone" maxlength="9"/>
+                                <input type="number" name="phone" class="form-control" id="Phone" maxlength="9"/>
                             </div>
 
                             <div class="form-group">
