@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.52, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.5.53, for debian-linux-gnu (i686)
 --
 -- Host: localhost    Database: take
 -- ------------------------------------------------------
--- Server version	5.5.52-0+deb7u1
+-- Server version	5.5.53-0+deb7u1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +30,7 @@ CREATE TABLE `client` (
   `phone` int(9) NOT NULL,
   `private` int(1) NOT NULL,
   PRIMARY KEY (`id_client`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,6 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'manel','rua dos ananas','rui_flexa@hotmail.com',921812821,0),(4,'rui','rui','rui@rui.com',987654321,1);
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +83,7 @@ CREATE TABLE `equipment_status` (
   `end_date` timestamp NULL DEFAULT NULL,
   `work_hours` text,
   PRIMARY KEY (`id_equipment_status`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +92,6 @@ CREATE TABLE `equipment_status` (
 
 LOCK TABLES `equipment_status` WRITE;
 /*!40000 ALTER TABLE `equipment_status` DISABLE KEYS */;
-INSERT INTO `equipment_status` VALUES (1,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(2,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(3,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(4,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(5,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(6,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(7,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(8,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(9,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(10,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(11,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(12,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(13,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(14,'','2017-01-10 10:00:00','2017-01-10 20:00:00','10H : 00 M'),(15,'','0000-00-00 00:00:00','0000-00-00 00:00:00',''),(16,'Waits','0000-00-00 00:00:00','0000-00-00 00:00:00',''),(17,'Waits','0000-00-00 00:00:00','0000-00-00 00:00:00',''),(18,'Waits','0000-00-00 00:00:00','0000-00-00 00:00:00',''),(19,'Waits','0000-00-00 00:00:00','0000-00-00 00:00:00',''),(20,'Budgeted','2017-01-18 10:00:00','2017-01-19 12:00:00','26H : 00 M'),(21,'Under Repair','2017-01-19 10:00:00','2017-01-12 10:00:00','-168H : 00 M');
 /*!40000 ALTER TABLE `equipment_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +113,7 @@ CREATE TABLE `external` (
   PRIMARY KEY (`id_external`),
   KEY `external_ibfk_1` (`id_equipment_status`),
   CONSTRAINT `external_ibfk_1` FOREIGN KEY (`id_equipment_status`) REFERENCES `equipment_status` (`id_equipment_status`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +122,6 @@ CREATE TABLE `external` (
 
 LOCK TABLES `external` WRITE;
 /*!40000 ALTER TABLE `external` DISABLE KEYS */;
-INSERT INTO `external` VALUES (5,1,1,14,'asdasd','asdasdasd','87'),(6,4,1,15,'asdasd','sadsadasd','98'),(7,1,1,19,'','',''),(8,1,1,20,'','',''),(9,1,1,21,'','','');
 /*!40000 ALTER TABLE `external` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +178,7 @@ CREATE TABLE `message` (
   `date` date DEFAULT NULL,
   `leu` int(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +187,6 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,1,8,NULL,'Ola tudo bem','2017-01-10',1),(2,2,8,NULL,'Ola','2017-01-10',1),(3,3,8,NULL,'Teste','2017-01-10',1),(4,3,8,NULL,'Teste','2017-01-10',1),(5,0,0,NULL,'Teste3','2017-01-10',NULL),(6,0,0,NULL,'KY','2017-01-10',NULL),(7,8,1,NULL,'crazy','2017-01-10',NULL),(8,2,8,NULL,'CRazzzz','2017-01-10',NULL);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -234,7 +230,7 @@ CREATE TABLE `service` (
   `email` text,
   `phone` int(9) NOT NULL,
   PRIMARY KEY (`id_service`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +239,6 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (1,'rui','rua das couves','rasdasdas@hotmail.com',435435435);
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,7 +289,7 @@ CREATE TABLE `users` (
   `status` int(1) NOT NULL,
   `data` mediumblob,
   PRIMARY KEY (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +298,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Rui','admin','$1$r1C0feSA$H3R.bZ53GoCA9oVCgaylN/','rmns95@gmail.com',1,NULL);
+INSERT INTO `users` VALUES (1,'Rui','admin','$1$r1C0feSA$H3R.bZ53GoCA9oVCgaylN/','rmns95@gmail.com',1,''),(4,'Nuno','nuno','$1$r1C0feSA$H3R.bZ53GoCA9oVCgaylN/','nunoneto17@gmail.com',1,'');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -316,4 +311,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-10 14:52:48
+-- Dump completed on 2017-01-10 23:17:13
