@@ -182,7 +182,7 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                                 equipment_status.status AS equip_status,
                                                                 client.name AS client_name,
                                                                 equip_problem.`description(employee)` AS int_description,
-                                                                equipment_status.work_hours AS equip_workhours,
+                                                                equipment_status.work_hours AS equip_workhours
                                                         FROM internal
                                                             INNER JOIN client ON internal.id_client = client.id_client
                                                             INNER JOIN users ON internal.id_user = users.id_user
@@ -208,7 +208,7 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                             }
                                         }else{
                                             echo '<tr>';
-                                                echo '<td colspan="6"> <center>No field found</center></td>';
+                                                echo '<td colspan="7"> <center>No field found</center></td>';
                                             echo '</tr>';
                                         }
                                         ?>
@@ -380,7 +380,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                                 users.name AS user_name,
                                                                 equipment_status.status AS equip_status,
                                                                 client.name AS client_name,
-                                                                external.description AS ext_description
+                                                                external.description AS ext_description,
+                                                                equipment_status.work_hours AS equip_workhours
                                                         FROM external
                                                             INNER JOIN client ON external.id_client = client.id_client
                                                             INNER JOIN users ON external.id_user = users.id_user
@@ -396,18 +397,33 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                     echo '<td '.tint($row['equip_status']).'>'.$row['equip_status'].'</td>';
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['ext_description'].'</td>';
-                                                    echo '<td>External</td>';
+                                                    echo '<td>'.$row['equip_workhours'].'</td>';
                                                     echo '<td>
                                                             <a class="btn btn-default href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
                                                             <a class="btn btn-default href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
+
+                                                $value = explode(" ", $row['equip_workhours']);
+                                                $hora += $value[0];
+                                                $minutos += $value[2];
                                             }
                                         }else{
                                             echo '<tr>';
-                                                echo '<td colspan="6"> <center>No field found</center></td>';
+                                                echo '<td colspan="7"> <center>No field found</center></td>';
                                             echo '</tr>';
                                         }
+                                        echo '<tr><td colspan="7"> </td></tr>';
+                                        echo '<tr><td colspan="4"></td><th>Total Hours:</hd>';
+                                        $h = floor($minutos / 60);
+                                        $m = ($minutos - ($h * 60)) / 100;
+                                        $horas = $h + $m;
+                                        $sep = explode('.', $horas);
+                                        $hora += $sep[0];
+                                        $minutos = $sep[1];
+                                        echo '<td colspan="1">'.sprintf('%02d Horas e %02d Minutos', $hora, $minutos).'</td>';
+                                        echo '<td><a class="btn btn-default href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
+                                        echo '</tr>';
                                         ?>
                                     </tbody>
                                 </table>
@@ -435,64 +451,3 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
     </div>
     <!-- /// wrapper -->
 <?php require "../inc/footer.php"; ?>
-
-        $campos_query = "`client`.`name` AS 'client_name' ,`equipment`.`entity` AS 'enty' , `equip_status`.`status` AS 'stats' , `equipment`.`id_client` AS 'id_cli' , `users`.`name` AS 'user_name' ,`equip_problem`.`description(employee)` AS 'descript' , `equipment`.`id` AS 'idd' ,`equip_status`.`final_time` AS 'total_temp' ";
-
-            $final_query  = "FROM `equipment`
-                             INNER JOIN `equip_status` ON `equip_status`.`id` = `equipment`.`id`
-                             INNER JOIN `client` ON `client`.`id_client` = `equipment`.`id_client`
-                             INNER JOIN `users` ON `users`.`id_user` = `equipment`.`id_user`
-                             INNER JOIN `equip_problem` ON `equip_problem`.`id` = `equipment`.`id`
-                             WHERE ".$ext1." ".$ext2." ".$ext3." ".$ext4." ".$ext5." ORDER BY `equipment`.`id`";
-        $maximo = 5;
-                $pagina = $_GET["pagina"];
-        if($pagina == "") {
-            $pagina = "1";
-        }
-                $inicio = $pagina - 1;
-                $inicio = $maximo * $inicio;
-
-                $strCount = "SELECT COUNT(*) AS 'num_registros' $final_query";
-                $query = mysqli_query($conn, $strCount);
-                $row = mysqli_fetch_array($query);
-                $total = $row["num_registros"];
-                $sql = mysqli_query($conn, "SELECT $campos_query $final_query LIMIT $inicio,$maximo") or die("Error:".mysqli_error($conn));
-        while ($result_SQL = mysqli_fetch_assoc($sql)) {
-            echo '<tr>';
-            echo '<td>'.$result_SQL['idd'].'</td>';
-            echo '<td>'.$result_SQL['client_name'].'</td>';
-            echo '<td>'.$result_SQL['descript'].'</td>';
-            echo '<td '; echo ''.tint($result_SQL['stats']).'>'.$result_SQL['stats'].'</td>';
-            echo '<td>'.$result_SQL['user_name'].'</td>';
-            echo '<td>'.$result_SQL['total_temp'].'</td>';
-            if($result_SQL['enty']=='2') {
-                echo '<td>Internal</td>';
-                echo '<td>
-                <a class="myButton" href="'.check('internal.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
-                <a class="myButton" href="'.check('internal.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
-            }else{
-                echo '<td>External</td>';
-                echo '<td>
-                <a class="myButton" href="'.check('external.edit.php').'?id='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'&empr='.$result_SQL['user_name'].'">Edit</a>
-                <a class="myButton" href="'.check('external.edit.php').'?apg='.$result_SQL['idd'].'&cli='.$result_SQL['id_cli'].'">Delete</a> </td>';
-            }
-            $value = explode(" ", $result_SQL['total_temp']);
-            $hora += $value[0];
-            $minutos += $value[2];
-        }
-        echo '<tr><td colspan="8"></td></tr>';
-            echo '</tr>';
-            echo '<tr></tr>';
-            echo '<td colspan="4"></td>';
-            echo '<th scope="col">Total Hours:</hd>';
-        $h = floor($minutos / 60);
-        $m = ($minutos - ($h * 60)) / 100;
-        $horas = $h + $m;
-
-        $sep = explode('.', $horas);
-        $hora += $sep[0];
-        $minutos = $sep[1];
-
-            echo '<td colspan="2">'.sprintf('%02d Horas e %02d Minutos', $hora, $minutos).'</td>';
-            echo '<td><a class="myButton" href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
-                    echo '</tr>';

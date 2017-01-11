@@ -199,7 +199,6 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td '.tint($row['equip_status']).'>'.$row['equip_status'].'</td>';
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['int_description'].'</td>';
-                                                    echo '<td>Internal</td>';
                                                     echo '<td>
                                                             <a class="btn btn-default href="'.check('internal.edit.php').'?edit='.$row['int_id'].'">Edit</a>
                                                             <a class="btn btn-default href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
@@ -375,7 +374,6 @@ if(!isset($_SESSION['id'])) {
                                                     echo '<td '.tint($row['equip_status']).'>'.$row['equip_status'].'</td>';
                                                     echo '<td>'.$row['client_name'].'</td>';
                                                     echo '<td>'.$row['ext_description'].'</td>';
-                                                    echo '<td>External</td>';
                                                     echo '<td>
                                                             <a class="btn btn-default href="'.check('external.edit.php').'?edit='.$row['ext_id'].'">Edit</a>
                                                             <a class="btn btn-default href="'.check('external.edit.php').'?apg='.$row['ext_id'].'">Delete</a>
