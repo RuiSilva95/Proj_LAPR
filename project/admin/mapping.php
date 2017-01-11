@@ -93,12 +93,12 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                             <br><br>
                             <div class="form-group col-lg-3">
                               <label for="initial_date">Initial Date:</label></td>
-                              <input type="datetime-local" name="date_int1" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
+                              <input type="datetime-local" name="date_ext1" class="form-control" id="initial_date" onchange="javascript('1')"/></td>
                             </div>
 
                             <div class="form-group col-lg-3">
                               <label for="final_date">Final Date:</label></td>
-                              <input type="datetime-local" name="date_int2" class="form-control" id="final_date" onchange="javascript('1')"/></td>
+                              <input type="datetime-local" name="date_ext2" class="form-control" id="final_date" onchange="javascript('1')"/></td>
                             </div>
 
                             <div class="col-lg-3 form-group">
@@ -154,8 +154,8 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         }
 
                                         //*************************************************************
-                                        if(!empty($_POST['date_int1']) AND !empty($_POST['date_int2'])) {
-                                             $ext4 = '(equipment_status.start_date >="'.$_POST['date_int1'].'" AND equipment_status.end_date <="'.$_POST['date_int2'].'") AND';
+                                        if(!empty($_POST['date_ext2']) AND !empty($_POST['date_ext2'])) {
+                                             $ext4 = '(equipment_status.start_date >="'.$_POST['date_ext2'].'" AND equipment_status.end_date <="'.$_POST['date_ext2'].'") AND';
                                         }else{
                                              $ext4 = ' ';
                                         }
@@ -205,12 +205,26 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                             <a class="btn btn-default href="'.check('internal.edit.php').'?apg='.$row['int_id'].'">Delete</a>
                                                           </td>';
                                                 echo '</tr>';
+                                                $value1 = explode(" ", $row['equip_workhours']);
+                                                $hora1 += $value1[0];
+                                                $minutos1 += $value1[2];
                                             }
                                         }else{
                                             echo '<tr>';
                                                 echo '<td colspan="7"> <center>No field found</center></td>';
                                             echo '</tr>';
                                         }
+                                        echo '<tr><td colspan="7"> </td></tr>';
+                                        echo '<tr><td colspan="4"></td><th>Total Hours:</hd>';
+                                        $h1 = floor($minutos1 / 60);
+                                        $m1 = ($minutos1 - ($h1 * 60)) / 100;
+                                        $horas1 = $h1 + $m1;
+                                        $sep1 = explode('.', $horas1);
+                                        $hora1 += $sep1[0];
+                                        $minutos1 = $sep1[1];
+                                        echo '<td colspan="1">'.sprintf('%02d Horas e %02d Minutos', $hora1, $minutos1).'</td>';
+                                        echo '<td><a class="btn btn-default href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
+                                        echo '</tr>';
                                         ?>
                                     </tbody>
                                 </table>
@@ -404,9 +418,9 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                                           </td>';
                                                 echo '</tr>';
 
-                                                $value = explode(" ", $row['equip_workhours']);
-                                                $hora += $value[0];
-                                                $minutos += $value[2];
+                                                $value2 = explode(" ", $row['equip_workhours']);
+                                                $hora2 += $value2[0];
+                                                $minutos2 += $value2[2];
                                             }
                                         }else{
                                             echo '<tr>';
@@ -415,13 +429,13 @@ if(!isset($_SESSION['id']) || $_SESSION['priority'] != 1) {
                                         }
                                         echo '<tr><td colspan="7"> </td></tr>';
                                         echo '<tr><td colspan="4"></td><th>Total Hours:</hd>';
-                                        $h = floor($minutos / 60);
-                                        $m = ($minutos - ($h * 60)) / 100;
-                                        $horas = $h + $m;
-                                        $sep = explode('.', $horas);
-                                        $hora += $sep[0];
-                                        $minutos = $sep[1];
-                                        echo '<td colspan="1">'.sprintf('%02d Horas e %02d Minutos', $hora, $minutos).'</td>';
+                                        $h2 = floor($minutos2 / 60);
+                                        $m2 = ($minutos2 - ($h2 * 60)) / 100;
+                                        $horas2 = $h2 + $m2;
+                                        $sep2 = explode('.', $horas2);
+                                        $hora2 += $sep2[0];
+                                        $minutos2 = $sep2[1];
+                                        echo '<td colspan="1">'.sprintf('%02d Horas e %02d Minutos', $hora2, $minutos2).'</td>';
                                         echo '<td><a class="btn btn-default href="'.check('print_maps.php').'?client='.$_POST['client'].'&status='.$_POST['status'].'&date1='.$_POST['date1'].'&date2='.$_POST['date2'].'&employee='.$_POST['employee'].'&entity='.$_POST['entity'].'" target="_black">Print Table</a></td>';
                                         echo '</tr>';
                                         ?>

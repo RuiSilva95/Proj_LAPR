@@ -50,7 +50,6 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
         $confirm = 'null';
         $id_service = 'null';
     }
-    echo $id_status;
 
     if($id_status=="NULL") {
         $message = '<div class="alert alert-danger">
@@ -245,7 +244,7 @@ if(isset($_POST['submit1']) || isset($_POST['submit2'])) {
 
                             <div class="form-group col-lg-3">
                               <label for="working_hours">Working Hours:</label></td>
-                              <input type="text" name="working_hours" class="form-control" id="working_hours" readonly/></td>
+                              <input type="text" name="working_hours" class="form-control" id="working_hours" value="<?php echo $working_hours; ?>" readonly /></td>
                             </div>
                           </table>
                         </div>
