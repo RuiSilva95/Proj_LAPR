@@ -1,9 +1,11 @@
 <?php require "../inc/head.php";
 
 if(!isset($_SESSION['id'])) {
-    echo "Não tes acesso a esta pagina";
+    echo "Não tens acesso a esta pagina";
+    header("refresh:1;url=../login.php");
     die();
 }
+
 $wrongpass=0;
 
 if(isset($_POST['submit1'])) {

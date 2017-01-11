@@ -3,7 +3,7 @@ require "../inc/head.php";
 
 if(!isset($_SESSION['id'])) {
     echo "Não tens acesso a esta pagina";
-    header("refresh:1;url=index.php");
+    header("refresh:1;url=../login.php");
     die();
 }
 
@@ -17,7 +17,6 @@ if(isset($_POST['delete'])) {
 $random_number1 = mt_rand(0, 10);
 $random_number2 = mt_rand(0, 10);
 $checkTotal = $random_number1 + $random_number2;
-
 
 ?>
 
