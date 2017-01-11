@@ -49,25 +49,25 @@ function tint($var)
 {
     switch($var){
     case 'Waits':
-        echo 'bgcolor="#eff773"';
+        return 'bgcolor="#eff773"';
         break;
     case 'Budgeted':
-        echo 'bgcolor="#1c85fb"';
+        return 'bgcolor="#1c85fb"';
         break;
     case 'Under Repair':
-        echo 'bgcolor="#ffffff"';
+        return 'bgcolor="#ffffff"';
         break;
     case 'Closed Billing':
-        echo 'bgcolor="#0dfd01"';
+        return 'bgcolor="#0dfd01"';
         break;
     case 'Closed Guaranty':
-        echo 'bgcolor="#08b000"';
+        return 'bgcolor="#08b000"';
         break;
     case 'Closed Contract':
-        echo 'bgcolor="#98FF92"';
+        return 'bgcolor="#98FF92"';
         break;
     case 'Archive':
-        echo 'bgcolor="b3b3b3"';
+        return 'bgcolor="b3b3b3"';
         break;
     }
 }
