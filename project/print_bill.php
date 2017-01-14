@@ -1,6 +1,6 @@
-﻿<?php 
-require ('core/init.php');
-if(!isset($_SESSION['id'])){
+﻿<?php
+require 'core/init.php';
+if(!isset($_SESSION['id'])) {
     echo "Não tes acesso a esta pagina";
     die();
 }
@@ -14,12 +14,12 @@ if(!isset($_SESSION['id'])){
     $id = protect($_GET['id']);
     $idcli = protect($_GET['idcli']);
     $empr = protect($_GET['empr']);
-    
-    $SQL1 = mysqli_query($conn,"SELECT * FROM `equip_status` WHERE `id`='".$id."'");
-    $SQL2 = mysqli_query($conn,"SELECT * FROM `client` WHERE `id_client`='".$idcli."'");
-    $SQL3 = mysqli_query($conn,"SELECT * FROM `equipment` WHERE `id`='".$id."'");
-    $SQL4 = mysqli_query($conn,"SELECT * FROM `equip_problem` WHERE `id`='".$id."'");
-    
+
+    $SQL1 = mysqli_query($conn, "SELECT * FROM `equip_status` WHERE `id`='".$id."'");
+    $SQL2 = mysqli_query($conn, "SELECT * FROM `client` WHERE `id_client`='".$idcli."'");
+    $SQL3 = mysqli_query($conn, "SELECT * FROM `equipment` WHERE `id`='".$id."'");
+    $SQL4 = mysqli_query($conn, "SELECT * FROM `equip_problem` WHERE `id`='".$id."'");
+
     $field1 = mysqli_fetch_assoc($SQL1);
     $field2 = mysqli_fetch_assoc($SQL2);
     $field3 = mysqli_fetch_assoc($SQL3);
@@ -35,7 +35,7 @@ if(!isset($_SESSION['id'])){
                         4585-907 Rebordosa<br />
                     </span>
                     <span class="right">
-                        t. 00351 220992008<br />
+                      t. 00351 220992008<br />
                         e. info@takemore.pt<br />
                         w. www.takemore.pt<br />
                     </span>
@@ -55,12 +55,13 @@ if(!isset($_SESSION['id'])){
                             <td>
                                 <span>Contacto</span>
                                 <br />
-                                <?php 
-                                if($field2['phone']!=0){
-                                    echo $field2['phone'];}
-                                elseif(empty($field2['email'])){
+                                <?php
+                                if($field2['phone']!=0) {
+                                    echo $field2['phone'];
+                                }
+                                elseif(empty($field2['email'])) {
                                     echo $field2['email'];
-                                } 
+                                }
                                 ?>
                                 <br />
                             </td>
@@ -96,35 +97,36 @@ if(!isset($_SESSION['id'])){
                         </td>
                     </tr>
                 </table>
-                <?php 
-                if(!empty($field4['problem/damage'])){
+                <?php
+                if(!empty($field4['problem/damage'])) {
                     echo '<h2>Problema da Avaria</h2>';
                     echo '<p>'.$field4['problem/damage'].'</p>';
                 }
                 ?>
                 <?php
-                if(!empty($field4['description(employee)'])){ 
+                if(!empty($field4['description(employee)'])) {
                     echo '<h2>Diagnostico tecnico</h2>';
                     echo '<p>'.$field4['description(employee)'].'</p>';
                 }
                 ?>
                 <?php
-                if(!empty($field3['service'])){ 
+                if(!empty($field3['service'])) {
                     echo '<h2>Serviço efetuado</h2>';
                     echo '<p>'.$field3['service'].'</p>';
                 }
                 ?>
                 <?php
-                if(!empty($field3['provided'])){ 
+                if(!empty($field3['provided'])) {
                     echo '<h2>Material fornecido</h2>';
                     echo '<p>'.$field3['provided'].'</p>';
                 }
                 ?>
-                 <?php
-                if(!empty($field3['budget'])){ 
-                    echo '<h2>Price:</h2>';
-                    echo '<p>'.$field3['budget'].'€</p>';
-                }else{echo '<h2>Price:</h2> <br> _______________€';}
+                    <?php
+                    if(!empty($field3['budget'])) {
+                        echo '<h2>Price:</h2>';
+                        echo '<p>'.$field3['budget'].'€</p>';
+                    }else{echo '<h2>Price:</h2> <br> _______________€';
+                    }
                 ?>
             </div>
             <p class="long"><span class="left1">O Cliente <br /><br /><br /> ________________________________________</span><span class="right1">O Técnico/Consultor <br /><br /><br />________________________________________</span></p>

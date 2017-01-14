@@ -169,7 +169,7 @@ if(!isset($_SESSION['id'])) {
                                         }
                                         //*************************************************************
                                         //*************************************************************
-                                        $pageNumber=3;
+                                        $pageNumber=1;
 
                                         $offset= (mysqli_real_escape_string($conn, $_GET["page1"])-1)*$pageNumber;
                                         if($offset<0) {
@@ -194,7 +194,7 @@ if(!isset($_SESSION['id'])) {
                                                             INNER JOIN users ON internal.id_user = users.id_user
                                                             INNER JOIN equipment_status ON internal.id_equipment_status = equipment_status.id_equipment_status
                                                             INNER JOIN equip_problem ON internal.id_equipment_problem = equip_problem.id_equipment_problem
-                                                            WHERE  '.$ext1.' '.$ext2.' '.$ext3.' '.$ext4.'  ORDER BY internal.id_internal DESC';
+                                                            WHERE  '.$ext1.' '.$ext2.' '.$ext3.' '.$ext4.' ORDER BY internal.id_internal DESC LIMIT '.$pageNumber.' OFFSET '.$offset.';';
 
                                         $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                                         if(mysqli_num_rows($result)>0) {
@@ -357,9 +357,9 @@ if(!isset($_SESSION['id'])) {
                                         }
                                         //*************************************************************
                                         //*************************************************************
-                                        $pageNumber=3;
+                                        $pageNumber=2;
 
-                                        $offset= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$pageNumber;
+                                        $offset= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$;
                                         if($offset<0) {
                                             $offset=0;
                                         }
@@ -378,7 +378,7 @@ if(!isset($_SESSION['id'])) {
                                                             INNER JOIN client ON external.id_client = client.id_client
                                                             INNER JOIN users ON external.id_user = users.id_user
                                                             INNER JOIN equipment_status ON external.id_equipment_status = equipment_status.id_equipment_status
-                                                            WHERE  '.$ext1.' '.$ext2.' '.$ext3.' '.$ext4.'  ORDER BY external.id_external DESC';
+                                                            WHERE  '.$ext1.' '.$ext2.' '.$ext3.' '.$ext4.'  ORDER BY external.id_external DESC LIMIT '.$pageNumber.' OFFSET '.$offset.';';
 
                                         $result = mysqli_query($conn, $query) or die("Error:".mysqli_error($conn));
                                         if(mysqli_num_rows($result)>0) {
@@ -411,7 +411,7 @@ if(!isset($_SESSION['id'])) {
                                     <center>
                                         <ul class="pagination pagination-sm">
                                             <?php
-                                            for($i=0;$i<($count/$pageNumber);$i++){
+                                            for($i=0;$i<($count/$);$i++){
                                                 echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page2='.($i+1).'">'.($i+1).'</a></li>';
                                             }
                                             ?>
