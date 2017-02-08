@@ -359,7 +359,7 @@ if(!isset($_SESSION['id'])) {
                                         //*************************************************************
                                         $pageNumber=2;
 
-                                        $offset= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$;
+                                        $offset= (mysqli_real_escape_string($conn, $_GET["page2"])-1)*$pageNumber;
                                         if($offset<0) {
                                             $offset=0;
                                         }
@@ -411,7 +411,7 @@ if(!isset($_SESSION['id'])) {
                                     <center>
                                         <ul class="pagination pagination-sm">
                                             <?php
-                                            for($i=0;$i<($count/$);$i++){
+                                            for($i=0;$i<($count/$pageNumber);$i++){
                                                 echo '<li class="page-item"><a class="page-link" href="'.current_file().'?page2='.($i+1).'">'.($i+1).'</a></li>';
                                             }
                                             ?>
